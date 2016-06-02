@@ -1,0 +1,36 @@
+Parâmetros Definidos inicialmente:
+
+Valor Inicial de Investimento
+
+Modelo de Carro a ser produzido
+
+Preço do Carro (barato, normal ou caro) -> barato vende mais mas com prejuizo, caro vende menos mas dá maior lucro por unidade.
+
+Tamanho da Fábrica (Pequena, Normal ou Grande) -> pequeno mais barato e produz menos, grande produz mais e tem maior custo
+
+Tempo de Fabricação - + rap + caro. Limitado pelo tamanho da fábrica, ex: se você quer produzir o melhor carro em 1 dia, mas a sua fábrica é pequena e o tempo minimo é de 3 dias.
+
+Dinheiro para Marketing - Quanto mais grana, mais provável de vender
+
+Gastos fixos
+
+Número Máximo de trabalhadores
+
+Número Minímo de Carros produzidos por rodadas - caso a empresa não tenha dinheiro para produzir o minimo, ela sai do jogo
+
+Tempo de jogo
+
+
+Variáveis da rodada:
+Aumentar fábrica - nota-se não pode diminuir
+
+Tempo de Fabricação
+
+Variar Dinheiro de Marketing
+
+Variar modelo do carro
+
+Variar preço do carro
+
+Número de trabalhadores
+
