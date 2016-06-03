@@ -16,25 +16,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="labelNumEmpresas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="spinnerNumEmpresas" max="32767" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="painelRodadas" max="32767" attributes="0"/>
+                  <Component id="painelJogadores" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="radioPvsP" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="95" max="32767" attributes="0"/>
-                      <Component id="botaoIniciar" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="radioPvsPC" min="-2" max="-2" attributes="0"/>
-                          <Component id="radioPCvsPC" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="botaoIniciar" min="-2" pref="69" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -45,31 +34,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="labelNumEmpresas" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="spinnerNumEmpresas" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="radioPCvsPC" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="radioPvsPC" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="radioPvsP" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="8" max="32767" attributes="0"/>
-              <Component id="botaoIniciar" min="-2" max="-2" attributes="0"/>
+              <Component id="painelJogadores" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="painelRodadas" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="botaoIniciar" min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="labelNumEmpresas">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="N&#xfa;mero de Empresas"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSpinner" name="spinnerNumEmpresas">
-    </Component>
     <Component class="javax.swing.JButton" name="botaoIniciar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Iniciar"/>
@@ -78,26 +53,111 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoIniciarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="radioPCvsPC">
+    <Container class="javax.swing.JPanel" name="painelJogadores">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Computador versus Computador"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Jogadores"/>
+          </Border>
+        </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPCvsPCActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="radioPvsPC">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="numIA" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="numPessoas" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="spinnerPessoas" max="32767" attributes="0"/>
+                      <Component id="spinnerIA" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="numPessoas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spinnerPessoas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="numIA" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spinnerIA" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="numPessoas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero de Pessoas:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="spinnerPessoas">
+        </Component>
+        <Component class="javax.swing.JLabel" name="numIA">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero de Intelig&#xea;ncias Artificiais:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="spinnerIA">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="painelRodadas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Pessoa versus Computador"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Rodadas"/>
+          </Border>
+        </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPvsPCActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="radioPvsP">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Pessoa versus Pessoa"/>
-      </Properties>
-    </Component>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="numRodadas" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="spinnerRodadas" pref="181" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="numRodadas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spinnerRodadas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="numRodadas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero de Rodadas (em meses):"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="spinnerRodadas">
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

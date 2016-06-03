@@ -1,22 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ButtonGroup;
 import javax.swing.SpinnerNumberModel;
 
-/**
- *
- * @author João Otávio
- */
 public class PainelInicial extends javax.swing.JPanel {
-
-    private ButtonGroup grupoRadio;
     
     public PainelInicial() {
         initComponents();
@@ -24,14 +12,9 @@ public class PainelInicial extends javax.swing.JPanel {
     }
     
     private void configurarComponentes(){
-        grupoRadio = new ButtonGroup();
-        grupoRadio.add(radioPvsP);
-        grupoRadio.add(radioPvsPC);
-        grupoRadio.add(radioPCvsPC);
-        
-        radioPCvsPC.setSelected(true);
-        
-        spinnerNumEmpresas.setModel(new SpinnerNumberModel(2, 2, 15, 1));
+        spinnerPessoas.setModel(new SpinnerNumberModel(1, 0, 5, 1));
+        spinnerIA.setModel(new SpinnerNumberModel(1, 0, 5, 1));
+        spinnerRodadas.setModel(new SpinnerNumberModel(1, 1, 15, 1));
         
         botaoIniciar.addActionListener(new AcaoBotaoIniciar());
     }
@@ -52,14 +35,15 @@ public class PainelInicial extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelNumEmpresas = new javax.swing.JLabel();
-        spinnerNumEmpresas = new javax.swing.JSpinner();
         botaoIniciar = new javax.swing.JButton();
-        radioPCvsPC = new javax.swing.JRadioButton();
-        radioPvsPC = new javax.swing.JRadioButton();
-        radioPvsP = new javax.swing.JRadioButton();
-
-        labelNumEmpresas.setText("Número de Empresas");
+        painelJogadores = new javax.swing.JPanel();
+        numPessoas = new javax.swing.JLabel();
+        spinnerPessoas = new javax.swing.JSpinner();
+        numIA = new javax.swing.JLabel();
+        spinnerIA = new javax.swing.JSpinner();
+        painelRodadas = new javax.swing.JPanel();
+        numRodadas = new javax.swing.JLabel();
+        spinnerRodadas = new javax.swing.JSpinner();
 
         botaoIniciar.setText("Iniciar");
         botaoIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -68,70 +52,92 @@ public class PainelInicial extends javax.swing.JPanel {
             }
         });
 
-        radioPCvsPC.setText("Computador versus Computador");
-        radioPCvsPC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioPCvsPCActionPerformed(evt);
-            }
-        });
+        painelJogadores.setBorder(javax.swing.BorderFactory.createTitledBorder("Jogadores"));
 
-        radioPvsPC.setText("Pessoa versus Computador");
-        radioPvsPC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioPvsPCActionPerformed(evt);
-            }
-        });
+        numPessoas.setText("Número de Pessoas:");
 
-        radioPvsP.setText("Pessoa versus Pessoa");
+        numIA.setText("Número de Inteligências Artificiais:");
+
+        javax.swing.GroupLayout painelJogadoresLayout = new javax.swing.GroupLayout(painelJogadores);
+        painelJogadores.setLayout(painelJogadoresLayout);
+        painelJogadoresLayout.setHorizontalGroup(
+            painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelJogadoresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(numIA)
+                    .addComponent(numPessoas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spinnerPessoas)
+                    .addComponent(spinnerIA))
+                .addContainerGap())
+        );
+        painelJogadoresLayout.setVerticalGroup(
+            painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelJogadoresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numPessoas)
+                    .addComponent(spinnerPessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numIA)
+                    .addComponent(spinnerIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        painelRodadas.setBorder(javax.swing.BorderFactory.createTitledBorder("Rodadas"));
+
+        numRodadas.setText("Número de Rodadas (em meses):");
+
+        javax.swing.GroupLayout painelRodadasLayout = new javax.swing.GroupLayout(painelRodadas);
+        painelRodadas.setLayout(painelRodadasLayout);
+        painelRodadasLayout.setHorizontalGroup(
+            painelRodadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelRodadasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(numRodadas)
+                .addGap(18, 18, 18)
+                .addComponent(spinnerRodadas, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        painelRodadasLayout.setVerticalGroup(
+            painelRodadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRodadasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelRodadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numRodadas)
+                    .addComponent(spinnerRodadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(painelRodadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelJogadores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelNumEmpresas)
-                        .addGap(18, 18, 18)
-                        .addComponent(spinnerNumEmpresas))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(radioPvsP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
-                        .addComponent(botaoIniciar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radioPvsPC)
-                            .addComponent(radioPCvsPC))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botaoIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNumEmpresas)
-                    .addComponent(spinnerNumEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(radioPCvsPC)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(radioPvsPC)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(radioPvsP)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(botaoIniciar)
-                .addContainerGap())
+                .addComponent(painelJogadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelRodadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void radioPCvsPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPCvsPCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioPCvsPCActionPerformed
-
-    private void radioPvsPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPvsPCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioPvsPCActionPerformed
 
     private void botaoIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIniciarActionPerformed
         // TODO add your handling code here:
@@ -140,10 +146,13 @@ public class PainelInicial extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoIniciar;
-    private javax.swing.JLabel labelNumEmpresas;
-    private javax.swing.JRadioButton radioPCvsPC;
-    private javax.swing.JRadioButton radioPvsP;
-    private javax.swing.JRadioButton radioPvsPC;
-    private javax.swing.JSpinner spinnerNumEmpresas;
+    private javax.swing.JLabel numIA;
+    private javax.swing.JLabel numPessoas;
+    private javax.swing.JLabel numRodadas;
+    private javax.swing.JPanel painelJogadores;
+    private javax.swing.JPanel painelRodadas;
+    private javax.swing.JSpinner spinnerIA;
+    private javax.swing.JSpinner spinnerPessoas;
+    private javax.swing.JSpinner spinnerRodadas;
     // End of variables declaration//GEN-END:variables
 }

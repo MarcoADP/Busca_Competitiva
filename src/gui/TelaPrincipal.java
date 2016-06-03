@@ -34,6 +34,7 @@ public class TelaPrincipal extends JFrame{
         iniciarPainelInicial();
         
         setVisible(true);
+        pack();
         setLocationRelativeTo(null);
         pack();
     }
