@@ -57,6 +57,7 @@ public class Empresa {
         this.probabilidade_venda = calcularProbabilidade(tipo_preco, tipo_investimento);
     }
 
+    
     private int calcularProbPreco(int opcao){
         int prob = 0;
         switch(opcao){
@@ -149,7 +150,10 @@ public class Empresa {
         this.gastoFuncionarios = this.salarioFuncionario * this.numeroFuncionarios;
     }
     
-    
+    public void venderCarro(){
+        this.capital += carro.getPreco_venda();
+        this.quantidadeCarro--;
+    }
     
             
     /*GET SET*/

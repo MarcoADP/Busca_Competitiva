@@ -21,9 +21,9 @@ public class Carro {
     public final static int CUSTO_MEDIO = 25000;
     public final static int CUSTO_LUXO = 35000;
     
-    public final static int TEMPO_POPULAR = 7;
-    public final static int TEMPO_MEDIO = 5;
-    public final static int TEMPO_LUXO = 3;
+    public final static int TEMPO_POPULAR = 2;
+    public final static int TEMPO_MEDIO = 3;
+    public final static int TEMPO_LUXO = 5;
     
     private int custo;
     private int tempo;
@@ -66,6 +66,10 @@ public class Carro {
         }
     }
 
+    
+    
+    
+    //GET e SET
     public int getTipo_preco() {
         return tipo_preco;
     }
