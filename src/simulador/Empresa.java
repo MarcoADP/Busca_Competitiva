@@ -2,6 +2,16 @@ package simulador;
 
 public class Empresa {
     
+    private final static int INVESTIMENTO_MARKETING_NORMAL = 1;
+    private final static int INVESTIMENTO_MARKETING_ALTO = 2;
+    
+    private final static int MARKETING_NORMAL = 1;
+    private final static int MARKETING_ALTO = 2;
+    
+    private final static int PRECO_NORMAL = 1;
+    private final static int PRECO_CARO = 2;
+    
+    
     //CONFIGURAÇÃO INICIAL
     private double capital; //Começa com um valor de investimento inicial e vai modificando com o decorre das jogadas
     private Carro carro; //Produto
@@ -61,13 +71,10 @@ public class Empresa {
     private int calcularProbPreco(int opcao){
         int prob = 0;
         switch(opcao){
-            case 1: //barato 
-                prob += 40;
-                break;
-            case 2: //normal
+            case PRECO_NORMAL: 
                 prob += 25;
                 break;
-            case 3:
+            case PRECO_CARO:
                 prob += 15;
         }
         return prob;
@@ -76,14 +83,11 @@ public class Empresa {
     private int calcularProbMarketing(int opcao){
         int prob = 0;
         switch(opcao){
-            case 1: //baixo
-                prob += 15;
+            case MARKETING_NORMAL: 
+                prob += 35;
                 break;
-            case 2: //normal
-                prob += 25;
-                break;
-            case 3: //alto
-                prob += 40;
+            case MARKETING_ALTO: 
+                prob += 55;
         }
         
         return prob;
@@ -111,15 +115,11 @@ public class Empresa {
     public void investir(int opcao){
         this.probabilidade_venda = this.calcularProbabilidade(this.carro.getTipo_preco(), opcao);
         switch(opcao){
-            case 1:
-                this.investimentoMarketing = this.capital * 0.1;
-                this.capital = this.capital * 0.9;
-                break;
-            case 2:
+            case INVESTIMENTO_MARKETING_NORMAL:
                 this.investimentoMarketing = this.capital * 0.25;
                 this.capital = this.capital * 0.75;
                 break;
-            case 3:
+            case INVESTIMENTO_MARKETING_ALTO:
                 this.investimentoMarketing = this.capital * 0.4;
                 this.capital = this.capital * 0.6;
                 break;

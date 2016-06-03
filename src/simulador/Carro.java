@@ -9,14 +9,10 @@ public class Carro {
     public final static int PRECO_MEDIO_NORMAL = 35000;
     public final static int PRECO_LUXO_NORMAL = 50000;
     
-    public final static int PRECO_POPULAR_BARATO = (int) (PRECO_POPULAR_NORMAL * 0.8);
-    public final static int PRECO_MEDIO_BARATO = (int) (PRECO_MEDIO_NORMAL * 0.8);
-    public final static int PRECO_LUXO_BARATO = (int) (PRECO_LUXO_NORMAL * 0.8);
-    
     public final static int PRECO_POPULAR_CARO = (int) (PRECO_POPULAR_NORMAL * 1.5);
     public final static int PRECO_MEDIO_CARO = (int) (PRECO_MEDIO_NORMAL * 1.5);
     public final static int PRECO_LUXO_CARO = (int) (PRECO_LUXO_NORMAL * 1.5);
-    
+        
     public final static int CUSTO_POPULAR = 15000;
     public final static int CUSTO_MEDIO = 25000;
     public final static int CUSTO_LUXO = 35000;
@@ -33,36 +29,33 @@ public class Carro {
     public Carro(int modelo, int tipo_preco){
         this.tipo_preco = tipo_preco;
         switch (modelo) {
-            case 1:
+            case MODELO_POPULAR:
                 this.custo = CUSTO_POPULAR;
                 this.tempo = TEMPO_POPULAR;
                 if(this.tipo_preco == 1){
-                    preco_venda = PRECO_POPULAR_BARATO;
-                } else if (tipo_preco == 2){
                     preco_venda = PRECO_POPULAR_NORMAL;
                 } else{
                     preco_venda = PRECO_POPULAR_CARO;
-                }   break;
-            case 2:
+                } 
+                break;
+            case MODELO_MEDIO:
                 this.custo = CUSTO_MEDIO;
                 this.tempo = TEMPO_MEDIO;
                 if(this.tipo_preco == 1){
-                    preco_venda = PRECO_MEDIO_BARATO;
-                } else if (tipo_preco == 2){
                     preco_venda = PRECO_MEDIO_NORMAL;
                 } else{
                     preco_venda = PRECO_MEDIO_CARO;
-                }   break;
-            default:
+                } 
+                break;
+            default: //MODELO_LUXO
                 this.custo = CUSTO_LUXO;
                 this.tempo = TEMPO_LUXO;
                 if(tipo_preco == 1){
-                    preco_venda = PRECO_LUXO_BARATO;
-                } else if (tipo_preco == 2){
                     preco_venda = PRECO_LUXO_NORMAL;
-                } else{
+                } else {
                     preco_venda = PRECO_LUXO_CARO;
-                }   break;
+                } 
+                break;
         }
     }
 
