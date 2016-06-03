@@ -8,10 +8,13 @@ public class Empresa {
     private int tamanhoFabrica;
     private int quantidadeCarro; //Depende do tamanho da fábrica
     private int tempoFabricacao; //Tempo de fabricação do carro de acordo com a fábrica
+    private int custoFabricacao;
     private int numeroFuncionarios;
     private double salarioFuncionario;
     private double gastoFuncionarios;
-    
+    private int limiteFuncionarios;
+    private double gastosTotais;
+            
     //PARÂMETROS VARIÁVEIS
     private double investimentoMarketing;   
     
@@ -22,38 +25,78 @@ public class Empresa {
     //2 -> Media (preço médio, produz mais)
     //3 -> Grande (mais cara, produz muito mais)
 
-    public Empresa(double investimentoInicial, int tamanhoFabrica, int numeroFuncionarios, double salarioFuncionario) {
+    public Empresa(double investimentoInicial, int tamanhoFabrica, int numeroFuncionarios, double salarioFuncionario, int modelo, int tipo_preco, int limiteFuncionarios) {
+        this.carro = new Carro(modelo, tipo_preco);
         this.capital = investimentoInicial;
         this.tamanhoFabrica = tamanhoFabrica;
         this.numeroFuncionarios = numeroFuncionarios;
+        this.limiteFuncionarios = limiteFuncionarios;
         this.salarioFuncionario = salarioFuncionario;
         
         this.gastoFuncionarios = this.salarioFuncionario * this.numeroFuncionarios;
         
-        if(this.tamanhoFabrica == FABRICA_PEQUENO){
-            this.quantidadeCarro = 500;
-        } else if(this.tamanhoFabrica == FABRICA_MEDIO){
-            this.quantidadeCarro = 800;
-        } else{
-            this.quantidadeCarro = 1000;
+        switch (this.tamanhoFabrica) {
+            case FABRICA_PEQUENO:
+                this.quantidadeCarro = 500;
+                this.custoFabricacao = (int) (this.carro.getCusto() * 0.9);
+                this.tempoFabricacao = (int) (this.carro.getTempo() * 1.5);
+                break;
+            case FABRICA_MEDIO:
+                this.quantidadeCarro = 800;
+                this.custoFabricacao = this.carro.getCusto();
+                this.tempoFabricacao = this.carro.getTempo();
+                break;
+            default:
+                this.quantidadeCarro = 1000;
+                this.custoFabricacao = (int) (this.carro.getCusto() * 1.2);
+                this.tempoFabricacao = (int) (this.carro.getTempo() * 0.8);
+                break;
         }
+        this.gastosTotais = calcularGasto();
     }
 
+    private double calcularGasto(){
+        double total;
+        int custoCarro = this.carro.getCusto() * this.quantidadeCarro;
+        
+        total = this.gastoFuncionarios + custoCarro + this.gastoFuncionarios + this.investimentoMarketing;
+        
+        return total;
+    }
+    
     public void investir(double valor){
         //Aqui deve retornar alguns compradores de carro que virão a propaganda
         //e decidiram comprar o carro
     }
     
-    public void fabricarCarro(){
+    public void fabricarCarro(int quantidade){
+        this.quantidadeCarro += quantidade;
         
     }
     
-    public void contratarFuncionarios(int contratados){
-        this.numeroFuncionarios += contratados;
-        this.gastoFuncionarios = this.numeroFuncionarios * this.salarioFuncionario;
+    public void atualizarFuncionarios(int opcao){
+        // 1 -> contrata 10
+        // CC -> demite 10 ou o restante
+        if(opcao == 1 && this.limiteFuncionarios >= 10){
+            this.numeroFuncionarios += 10;
+            this.limiteFuncionarios -= 10;
+        }
+        else{
+            if(this.numeroFuncionarios < 10){
+                this.limiteFuncionarios += this.numeroFuncionarios;
+                this.numeroFuncionarios = 0;
+            } else {
+                this.limiteFuncionarios += 10;
+                this.numeroFuncionarios -= 10;
+            }
+        }
+        this.gastoFuncionarios = this.salarioFuncionario * this.numeroFuncionarios;
     }
-            
     
+    
+    
+            
+    /*GET SET*/
     public double getCapital() {
         return capital;
     }
