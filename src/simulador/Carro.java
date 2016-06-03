@@ -28,13 +28,15 @@ public class Carro {
     private int custo;
     private int tempo;
     private int preco_venda;
+    private int tipo_preco;
     
     public Carro(int modelo, int tipo_preco){
+        this.tipo_preco = tipo_preco;
         switch (modelo) {
             case 1:
                 this.custo = CUSTO_POPULAR;
                 this.tempo = TEMPO_POPULAR;
-                if(tipo_preco == 1){
+                if(this.tipo_preco == 1){
                     preco_venda = PRECO_POPULAR_BARATO;
                 } else if (tipo_preco == 2){
                     preco_venda = PRECO_POPULAR_NORMAL;
@@ -44,7 +46,7 @@ public class Carro {
             case 2:
                 this.custo = CUSTO_MEDIO;
                 this.tempo = TEMPO_MEDIO;
-                if(tipo_preco == 1){
+                if(this.tipo_preco == 1){
                     preco_venda = PRECO_MEDIO_BARATO;
                 } else if (tipo_preco == 2){
                     preco_venda = PRECO_MEDIO_NORMAL;
@@ -62,6 +64,14 @@ public class Carro {
                     preco_venda = PRECO_LUXO_CARO;
                 }   break;
         }
+    }
+
+    public int getTipo_preco() {
+        return tipo_preco;
+    }
+
+    public void setTipo_preco(int tipo_preco) {
+        this.tipo_preco = tipo_preco;
     }
 
     public int getCusto() {

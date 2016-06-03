@@ -14,6 +14,7 @@ public class Empresa {
     private double gastoFuncionarios;
     private int limiteFuncionarios;
     private double gastosTotais;
+    private int probabilidade_venda;
             
     //PARÂMETROS VARIÁVEIS
     private double investimentoMarketing;   
@@ -25,7 +26,7 @@ public class Empresa {
     //2 -> Media (preço médio, produz mais)
     //3 -> Grande (mais cara, produz muito mais)
 
-    public Empresa(double investimentoInicial, int tamanhoFabrica, int numeroFuncionarios, double salarioFuncionario, int modelo, int tipo_preco, int limiteFuncionarios) {
+    public Empresa(double investimentoInicial, int tamanhoFabrica, int numeroFuncionarios, double salarioFuncionario, int modelo, int tipo_preco, int limiteFuncionarios, int tipo_investimento) {
         this.carro = new Carro(modelo, tipo_preco);
         this.capital = investimentoInicial;
         this.tamanhoFabrica = tamanhoFabrica;
@@ -53,8 +54,50 @@ public class Empresa {
                 break;
         }
         this.gastosTotais = calcularGasto();
+        this.probabilidade_venda = calcularProbabilidade(tipo_preco, tipo_investimento);
     }
 
+    private int calcularProbPreco(int opcao){
+        int prob = 0;
+        switch(opcao){
+            case 1: //barato 
+                prob += 40;
+                break;
+            case 2: //normal
+                prob += 25;
+                break;
+            case 3:
+                prob += 15;
+        }
+        return prob;
+    }
+    
+    private int calcularProbMarketing(int opcao){
+        int prob = 0;
+        switch(opcao){
+            case 1: //baixo
+                prob += 15;
+                break;
+            case 2: //normal
+                prob += 25;
+                break;
+            case 3: //alto
+                prob += 40;
+        }
+        
+        return prob;
+    }
+    
+    private int calcularProbabilidade(int preco, int marketing){
+        int prob = 0;
+        
+        prob += this.calcularProbPreco(preco);
+        
+        prob += this.calcularProbMarketing(marketing);
+        
+        return prob;
+    }
+    
     private double calcularGasto(){
         double total;
         int custoCarro = this.carro.getCusto() * this.quantidadeCarro;
@@ -64,9 +107,22 @@ public class Empresa {
         return total;
     }
     
-    public void investir(double valor){
-        //Aqui deve retornar alguns compradores de carro que virão a propaganda
-        //e decidiram comprar o carro
+    public void investir(int opcao){
+        this.probabilidade_venda = this.calcularProbabilidade(this.carro.getTipo_preco(), opcao);
+        switch(opcao){
+            case 1:
+                this.investimentoMarketing = this.capital * 0.1;
+                this.capital = this.capital * 0.9;
+                break;
+            case 2:
+                this.investimentoMarketing = this.capital * 0.25;
+                this.capital = this.capital * 0.75;
+                break;
+            case 3:
+                this.investimentoMarketing = this.capital * 0.4;
+                this.capital = this.capital * 0.6;
+                break;
+        }
     }
     
     public void fabricarCarro(int quantidade){
@@ -168,4 +224,38 @@ public class Empresa {
     public void setInvestimentoMarketing(double investimentoMarketing) {
         this.investimentoMarketing = investimentoMarketing;
     }    
+
+    public int getCustoFabricacao() {
+        return custoFabricacao;
+    }
+
+    public void setCustoFabricacao(int custoFabricacao) {
+        this.custoFabricacao = custoFabricacao;
+    }
+
+    public int getLimiteFuncionarios() {
+        return limiteFuncionarios;
+    }
+
+    public void setLimiteFuncionarios(int limiteFuncionarios) {
+        this.limiteFuncionarios = limiteFuncionarios;
+    }
+
+    public double getGastosTotais() {
+        return gastosTotais;
+    }
+
+    public void setGastosTotais(double gastosTotais) {
+        this.gastosTotais = gastosTotais;
+    }
+
+    public int getProbabilidade_venda() {
+        return probabilidade_venda;
+    }
+
+    public void setProbabilidade_venda(int probabilidade_venda) {
+        this.probabilidade_venda = probabilidade_venda;
+    }
+    
+    
 }
