@@ -1,21 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
-/**
- *
- * @author João Otávio
- */
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import simulador.Empresa;
+
 public class PainelJogadores extends javax.swing.JPanel {
 
+    private final int numJogadores;
+    private final ArrayList<Empresa> listaIA;
+    
     /**
      * Creates new form PainelJogadores
      */
-    public PainelJogadores() {
+    public PainelJogadores(int numJogadores, ArrayList<Empresa> listaIA) {
         initComponents();
+        this.numJogadores = numJogadores;
+        this.listaIA = listaIA;
+        configurarComponentes();
+    }
+    
+    private void configurarComponentes(){
+        JPanel painelCentro = new JPanel(new WrapLayout());
+        scrollPane.setViewportView(painelCentro);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        for (int i = 0; i < numJogadores; i++) {
+            painelCentro.add(new PainelEmpresa("Empresa "+(i+1)));
+        }
     }
 
     /**
@@ -27,19 +38,49 @@ public class PainelJogadores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        painelCentro = new javax.swing.JPanel();
+        scrollPane = new javax.swing.JScrollPane();
+        botaoSimular = new javax.swing.JButton();
+
+        javax.swing.GroupLayout painelCentroLayout = new javax.swing.GroupLayout(painelCentro);
+        painelCentro.setLayout(painelCentroLayout);
+        painelCentroLayout.setHorizontalGroup(
+            painelCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        painelCentroLayout.setVerticalGroup(
+            painelCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+
+        scrollPane.setBorder(null);
+
+        botaoSimular.setText("Simular");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(300, Short.MAX_VALUE)
+                .addComponent(botaoSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(scrollPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoSimular;
+    private javax.swing.JPanel painelCentro;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 }

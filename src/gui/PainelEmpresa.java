@@ -1,22 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
-import java.util.Hashtable;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import simulador.Carro;
 
-/**
- *
- * @author João Otávio
- */
 public class PainelEmpresa extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form PainelEmpresa
      */
@@ -27,18 +15,6 @@ public class PainelEmpresa extends javax.swing.JPanel {
     }
     
     private void configurarComponentes(){
-        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-        labelTable.put(1, new JLabel("<html><center>Baixo</center></br>R$ 1.000.000</html>"));
-        labelTable.put(2, new JLabel("<html><center>Médio</center></br>R$ 5.000.000</html>"));
-        labelTable.put(3, new JLabel("<html><center>Alto</center></br>R$ 10.000.000</html>"));
-        sliderInvestimento.setLabelTable(labelTable);
-        sliderInvestimento.setMaximum(3);
-        sliderInvestimento.setMinimum(1);
-        sliderInvestimento.setMajorTickSpacing(1);
-        sliderInvestimento.setSnapToTicks(true);
-        sliderInvestimento.setPaintLabels(true);
-        sliderInvestimento.setPaintTicks(true);
-        
         String[] tiposFabrica = {"Pequena", "Média", "Grande"};
         comboFabrica.setModel(new DefaultComboBoxModel(tiposFabrica));
         
@@ -58,8 +34,6 @@ public class PainelEmpresa extends javax.swing.JPanel {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         labelNomeEmpresa = new javax.swing.JLabel();
         campoNomeEmpresa = new javax.swing.JTextField();
-        labelInvestimento = new javax.swing.JLabel();
-        sliderInvestimento = new javax.swing.JSlider();
         labelFabrica = new javax.swing.JLabel();
         comboFabrica = new javax.swing.JComboBox<>();
         labelCarro = new javax.swing.JLabel();
@@ -67,13 +41,12 @@ public class PainelEmpresa extends javax.swing.JPanel {
         painelInfo = new javax.swing.JPanel();
         labelGasto = new javax.swing.JLabel();
         labelTempo = new javax.swing.JLabel();
-        labelVerba = new javax.swing.JLabel();
+        labelVerbaInicial = new javax.swing.JLabel();
+        labelVerbaRestante = new javax.swing.JLabel();
 
         labelNomeEmpresa.setText("Nome da Empresa:");
 
         campoNomeEmpresa.setText("Empresa 1");
-
-        labelInvestimento.setText("Investimento Inicial: ");
 
         labelFabrica.setText("Tipo de Fábrica:");
 
@@ -89,7 +62,9 @@ public class PainelEmpresa extends javax.swing.JPanel {
 
         labelTempo.setText("Tempo de fabricação do carro:");
 
-        labelVerba.setText("Verba restante:");
+        labelVerbaInicial.setText("Verba inicial:");
+
+        labelVerbaRestante.setText("Verba restante:");
 
         javax.swing.GroupLayout painelInfoLayout = new javax.swing.GroupLayout(painelInfo);
         painelInfo.setLayout(painelInfoLayout);
@@ -100,18 +75,21 @@ public class PainelEmpresa extends javax.swing.JPanel {
                 .addGroup(painelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelGasto)
                     .addComponent(labelTempo)
-                    .addComponent(labelVerba))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labelVerbaInicial)
+                    .addComponent(labelVerbaRestante))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         painelInfoLayout.setVerticalGroup(
             painelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelGasto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(labelTempo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelVerba)
+                .addGap(18, 18, 18)
+                .addComponent(labelVerbaInicial)
+                .addGap(18, 18, 18)
+                .addComponent(labelVerbaRestante)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -124,15 +102,9 @@ public class PainelEmpresa extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(painelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelNomeEmpresa)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(campoNomeEmpresa))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelInvestimento)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sliderInvestimento, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)))
+                        .addComponent(labelNomeEmpresa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(campoNomeEmpresa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -160,11 +132,7 @@ public class PainelEmpresa extends javax.swing.JPanel {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelNomeEmpresa)
-                            .addComponent(campoNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(sliderInvestimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelInvestimento, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(campoNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFabrica)
@@ -188,11 +156,10 @@ public class PainelEmpresa extends javax.swing.JPanel {
     private javax.swing.JLabel labelCarro;
     private javax.swing.JLabel labelFabrica;
     private javax.swing.JLabel labelGasto;
-    private javax.swing.JLabel labelInvestimento;
     private javax.swing.JLabel labelNomeEmpresa;
     private javax.swing.JLabel labelTempo;
-    private javax.swing.JLabel labelVerba;
+    private javax.swing.JLabel labelVerbaInicial;
+    private javax.swing.JLabel labelVerbaRestante;
     private javax.swing.JPanel painelInfo;
-    private javax.swing.JSlider sliderInvestimento;
     // End of variables declaration//GEN-END:variables
 }

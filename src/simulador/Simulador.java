@@ -6,9 +6,13 @@ import java.util.Random;
 
 public class Simulador {
     
+    public final static int INVESTIMENTO_INICIAL_BAIXO = 1000000;    // R$ 1.000.000
+    public final static int INVESTIMENTO_INICIAL_MEDIO = 3000000;    // R$ 3.000.000
+    public final static int INVESTIMENTO_INICIAL_ALTO = 5000000;     // R$ 5.000.000
+    
     private TelaPrincipal tela;
     private ArrayList<Empresa> listaEmpresa;
-    private int maximoRodadas;
+    private int numRodadas;
     private int maximoCarros;
     
     public Simulador(){

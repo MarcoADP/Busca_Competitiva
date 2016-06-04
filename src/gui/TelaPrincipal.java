@@ -1,6 +1,6 @@
 package gui;
 
-import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -13,7 +13,7 @@ import simulador.Simulador;
 public class TelaPrincipal extends JFrame{
     
     private PainelInicial painelInicial;
-    private PainelEmpresa painelEmpresa;
+    private PainelJogadores painelJogadores;
     
     private JMenuBar menuBar;
     private JMenu arquivo;
@@ -69,12 +69,16 @@ public class TelaPrincipal extends JFrame{
     }
     
     private void iniciarJogo(int numPessoas, int numIA, int numRodadas){
-        getContentPane().removeAll();
-        painelEmpresa = new PainelEmpresa("Empresa 1");
-        add(painelEmpresa);
-        pack();
+        setMinimumSize(new Dimension(500, 450));
+        setPreferredSize(new Dimension(800, 450));
         setResizable(true);
+        getContentPane().removeAll();
+        
         simulador.iniciarJogo(numPessoas, numIA, numRodadas);
+        
+        painelJogadores = new PainelJogadores(3, null);
+        add(painelJogadores);
+        pack();
     }
     
     private class AcaoBotaoIniciar implements ActionListener {
@@ -83,6 +87,8 @@ public class TelaPrincipal extends JFrame{
             int numPessoas = (int)painelInicial.getSpinnerPessoas().getValue();
             int numIA = (int)painelInicial.getSpinnerIA().getValue();
             int numRodadas = (int)painelInicial.getSpinnerRodadas().getValue();
+            int investimento = painelInicial.getSliderInvestimento().getValue();
+            System.out.println("INVESTIMENTO: "+investimento);
             
             if (numPessoas == 0 && numIA == 0){
                 JOptionPane.showMessageDialog(null, "Erro: Número de pessoas e de IA não podem ser 0.", "Erro", JOptionPane.ERROR_MESSAGE);

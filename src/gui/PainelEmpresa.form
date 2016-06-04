@@ -21,18 +21,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="painelInfo" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelNomeEmpresa" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="campoNomeEmpresa" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelInvestimento" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="sliderInvestimento" pref="284" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="labelNomeEmpresa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="campoNomeEmpresa" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="filler1" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -71,11 +62,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelNomeEmpresa" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="campoNomeEmpresa" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="sliderInvestimento" max="32767" attributes="0"/>
-                          <Component id="labelInvestimento" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -116,13 +102,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Empresa 1"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelInvestimento">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Investimento Inicial: "/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSlider" name="sliderInvestimento">
     </Component>
     <Component class="javax.swing.JLabel" name="labelFabrica">
       <Properties>
@@ -181,9 +160,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="labelGasto" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="labelTempo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelVerba" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelVerbaInicial" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelVerbaRestante" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="120" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -192,10 +172,12 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="labelGasto" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="labelTempo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelVerba" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="labelVerbaInicial" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="labelVerbaRestante" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -212,7 +194,12 @@
             <Property name="text" type="java.lang.String" value="Tempo de fabrica&#xe7;&#xe3;o do carro:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="labelVerba">
+        <Component class="javax.swing.JLabel" name="labelVerbaInicial">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Verba inicial:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelVerbaRestante">
           <Properties>
             <Property name="text" type="java.lang.String" value="Verba restante:"/>
           </Properties>
