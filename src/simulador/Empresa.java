@@ -17,7 +17,7 @@ public class Empresa {
     
     //CONFIGURAÇÃO INICIAL
     private double capital; //Começa com um valor de investimento inicial e vai modificando com o decorre das jogadas
-    private Carro carro; //Produto
+    Carro carro; //Produto
     private int tamanhoFabrica;
     private int quantidadeCarro; //Depende do tamanho da fábrica
     private int tempoFabricacao; //Tempo de fabricação do carro de acordo com a fábrica
@@ -128,19 +128,18 @@ public class Empresa {
     
     public void atualizarFuncionarios(int opcao){
         // 1 -> contrata 10
-        // CC -> demite 10 ou o restante
+        // 0 -> demite 10 ou o restante
         if(opcao == 1 && this.limiteFuncionarios >= 10){
             this.numeroFuncionarios += 10;
             this.limiteFuncionarios -= 10;
+            return;
         }
-        else{
-            if(this.numeroFuncionarios < 10){
+        if(opcao == 2 && this.numeroFuncionarios < 10){
                 this.limiteFuncionarios += this.numeroFuncionarios;
                 this.numeroFuncionarios = 0;
             } else {
                 this.limiteFuncionarios += 10;
                 this.numeroFuncionarios -= 10;
-            }
         }
         this.gastoFuncionarios = this.salarioFuncionario * this.numeroFuncionarios;
     }
@@ -150,6 +149,13 @@ public class Empresa {
         this.quantidadeCarro--;
     }
     
+    Empresa escolhaAcoes(int opMarketing, int opPreco, int opFuncionario) {
+        Empresa novaEmpresa = this;
+        novaEmpresa.investir(opMarketing);
+        novaEmpresa.carro.alterarPreco(opPreco);
+        novaEmpresa.atualizarFuncionarios(opFuncionario);
+        return novaEmpresa;
+    }
             
     /*GET SET*/
     public double getCapital() {
@@ -255,6 +261,5 @@ public class Empresa {
     public void setProbabilidadeVenda(int probabilidadeVenda) {
         this.probabilidadeVenda = probabilidadeVenda;
     }
-    
     
 }
