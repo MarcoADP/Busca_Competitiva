@@ -53,6 +53,29 @@ public class Carro {
         }
     }
     
+    public void alterarPreco(int opcao){
+        switch(opcao){
+            case 0:
+                if(this.nomeModelo.equals("Popular")){
+                    this.precoVenda = PRECO_POPULAR;
+                } else if(this.nomeModelo.equals("Médio")){
+                    this.precoVenda = PRECO_MEDIO;
+                } else {
+                    this.precoVenda = PRECO_LUXO;
+                }
+                break;
+            case 1:
+                if(this.nomeModelo.equals("Popular")){
+                    this.precoVenda = (int) (PRECO_POPULAR * 1.5);
+                } else if(this.nomeModelo.equals("Médio")){
+                    this.precoVenda = (int) (PRECO_MEDIO * 1.5);
+                } else {
+                    this.precoVenda = (int) (PRECO_LUXO * 1.5);
+                }
+                break;
+        }
+    }
+    
     //GET e SET
     public int getTipoPreco() {
         return tipoPreco;
@@ -67,15 +90,15 @@ public class Carro {
     }
 
     public int getPrecoVenda() {
-        int precoVenda = 0;
+        /*int preçoVenda = 0;
         switch(tipoPreco){
             case TIPO_PRECO_NORMAL:
-                precoVenda = this.precoVenda;
+                preçoVenda = this.precoVenda;
                 break;
             case TIPO_PRECO_CARO:
-                precoVenda = (int) (this.precoVenda * 1.5);
+                preçoVenda = (int) (this.precoVenda * 1.5);
                 break;
-        }
+        }*/
         return precoVenda;
     }
     

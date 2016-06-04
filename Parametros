@@ -22,15 +22,27 @@ Tempo de jogo
 
 
 Variáveis da rodada:
-Aumentar fábrica - nota-se não pode diminuir
+Marketing (normal, alto)
+Preco (normal, alto)
+Func (demite, mantem, contrata)
 
-Tempo de Fabricação
+MN PN FD
+MN PN FM
+MN PN FC
 
-Variar Dinheiro de Marketing
+MN PA FD //não
+MN PA FM
+MN PA FC
 
-Variar modelo do carro
+MA PN FD //não
+MA PN FM
+MA PN FC
 
-Variar preço do carro
+MA PC FD //não
+MA PA FM
+MA PA FC
 
-Número de trabalhadores
+
+
+
 
