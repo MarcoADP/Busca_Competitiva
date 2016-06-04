@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import simulador.Simulador;
 public class TelaPrincipal extends JFrame{
     
     private PainelInicial painelInicial;
+    private PainelEmpresa painelEmpresa;
     
     private JMenuBar menuBar;
     private JMenu arquivo;
@@ -62,15 +64,37 @@ public class TelaPrincipal extends JFrame{
     }
     
     private void iniciarPainelInicial(){
-        painelInicial = new PainelInicial();
+        painelInicial = new PainelInicial(new AcaoBotaoIniciar());
         add(painelInicial);
     }
     
-    private static void setSystemLookAndFeel(){
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void iniciarJogo(int numPessoas, int numIA, int numRodadas){
+        getContentPane().removeAll();
+        painelEmpresa = new PainelEmpresa("Empresa 1");
+        add(painelEmpresa);
+        pack();
+        setResizable(true);
+        simulador.iniciarJogo(numPessoas, numIA, numRodadas);
+    }
+    
+    private class AcaoBotaoIniciar implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int numPessoas = (int)painelInicial.getSpinnerPessoas().getValue();
+            int numIA = (int)painelInicial.getSpinnerIA().getValue();
+            int numRodadas = (int)painelInicial.getSpinnerRodadas().getValue();
+            
+            if (numPessoas == 0 && numIA == 0){
+                JOptionPane.showMessageDialog(null, "Erro: Número de pessoas e de IA não podem ser 0.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else if (numPessoas == 0 && numIA < 2){
+                JOptionPane.showMessageDialog(null, "Erro: É preciso pelo menos 2 jogadores.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else if (numPessoas < 2 && numIA == 0){
+                JOptionPane.showMessageDialog(null, "Erro: É preciso pelo menos 2 jogadores.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            iniciarJogo(numPessoas, numIA, numRodadas);
         }
     }
     
@@ -87,6 +111,14 @@ public class TelaPrincipal extends JFrame{
         public void actionPerformed(ActionEvent e) {
             dispose();
             System.exit(0);
+        }
+    }
+    
+    private static void setSystemLookAndFeel(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

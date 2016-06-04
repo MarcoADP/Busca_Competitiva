@@ -6,10 +6,10 @@ import java.util.Random;
 
 public class Simulador {
     
-    TelaPrincipal tela;
-    ArrayList<Empresa> listaEmpresa;
-    int maximoRodadas;
-    int maximoCarros;
+    private TelaPrincipal tela;
+    private ArrayList<Empresa> listaEmpresa;
+    private int maximoRodadas;
+    private int maximoCarros;
     
     public Simulador(){
         novoJogo();
@@ -20,12 +20,17 @@ public class Simulador {
         listaEmpresa = new ArrayList<>();
     }
     
-   public void atenderDemanda(){
+    public void iniciarJogo(int numPessoas, int numIA, int numRodadas){
+        
+    }
+    
+    
+    public void atenderDemanda(){
        ArrayList<Integer> listaProb = new ArrayList<>();
        int totalProb = 0;
        Empresa empresaCompradora = null;
        for(Empresa empresa : listaEmpresa){
-           totalProb += empresa.getProbabilidade_venda();
+           totalProb += empresa.getProbabilidadeVenda();
            listaProb.add(totalProb);
        }
        Random random = new Random();

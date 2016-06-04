@@ -2,15 +2,18 @@ package simulador;
 
 public class Empresa {
     
-    private final static int INVESTIMENTO_MARKETING_NORMAL = 1;
-    private final static int INVESTIMENTO_MARKETING_ALTO = 2;
+    public final static int INVESTIMENTO_MARKETING_NORMAL = 1;
+    public final static int INVESTIMENTO_MARKETING_ALTO = 2;
     
-    private final static int MARKETING_NORMAL = 1;
-    private final static int MARKETING_ALTO = 2;
-    
-    private final static int PRECO_NORMAL = 1;
-    private final static int PRECO_CARO = 2;
-    
+    public final static int MARKETING_NORMAL = 1;
+    public final static int MARKETING_ALTO = 2;
+   
+    public final static int FABRICA_PEQUENO = 1;
+    public final static int FABRICA_MEDIO = 2;
+    public final static int FABRICA_GRANDE = 3;
+    //1 -> Pequena (mais barata, produz menos)
+    //2 -> Media (preço médio, produz mais)
+    //3 -> Grande (mais cara, produz muito mais)
     
     //CONFIGURAÇÃO INICIAL
     private double capital; //Começa com um valor de investimento inicial e vai modificando com o decorre das jogadas
@@ -24,17 +27,10 @@ public class Empresa {
     private double gastoFuncionarios;
     private int limiteFuncionarios;
     private double gastosTotais;
-    private int probabilidade_venda;
+    private int probabilidadeVenda;
             
     //PARÂMETROS VARIÁVEIS
     private double investimentoMarketing;   
-    
-    public final static int FABRICA_PEQUENO = 1;
-    public final static int FABRICA_MEDIO = 2;
-    public final static int FABRICA_GRANDE = 3;
-    //1 -> Pequena (mais barata, produz menos)
-    //2 -> Media (preço médio, produz mais)
-    //3 -> Grande (mais cara, produz muito mais)
 
     public Empresa(double investimentoInicial, int tamanhoFabrica, int numeroFuncionarios, double salarioFuncionario, int modelo, int tipo_preco, int limiteFuncionarios, int tipo_investimento) {
         this.carro = new Carro(modelo, tipo_preco);
@@ -43,7 +39,6 @@ public class Empresa {
         this.numeroFuncionarios = numeroFuncionarios;
         this.limiteFuncionarios = limiteFuncionarios;
         this.salarioFuncionario = salarioFuncionario;
-        
         this.gastoFuncionarios = this.salarioFuncionario * this.numeroFuncionarios;
         
         switch (this.tamanhoFabrica) {
@@ -64,17 +59,17 @@ public class Empresa {
                 break;
         }
         this.gastosTotais = calcularGasto();
-        this.probabilidade_venda = calcularProbabilidade(tipo_preco, tipo_investimento);
+        this.probabilidadeVenda = calcularProbabilidade(tipo_preco, tipo_investimento);
     }
 
     
     private int calcularProbPreco(int opcao){
         int prob = 0;
         switch(opcao){
-            case PRECO_NORMAL: 
+            case Carro.TIPO_PRECO_NORMAL: 
                 prob += 25;
                 break;
-            case PRECO_CARO:
+            case Carro.TIPO_PRECO_CARO:
                 prob += 15;
         }
         return prob;
@@ -113,7 +108,7 @@ public class Empresa {
     }
     
     public void investir(int opcao){
-        this.probabilidade_venda = this.calcularProbabilidade(this.carro.getTipo_preco(), opcao);
+        this.probabilidadeVenda = this.calcularProbabilidade(this.carro.getTipoPreco(), opcao);
         switch(opcao){
             case INVESTIMENTO_MARKETING_NORMAL:
                 this.investimentoMarketing = this.capital * 0.25;
@@ -151,7 +146,7 @@ public class Empresa {
     }
     
     public void venderCarro(){
-        this.capital += carro.getPreco_venda();
+        this.capital += carro.getPrecoVenda();
         this.quantidadeCarro--;
     }
     
@@ -253,12 +248,12 @@ public class Empresa {
         this.gastosTotais = gastosTotais;
     }
 
-    public int getProbabilidade_venda() {
-        return probabilidade_venda;
+    public int getProbabilidadeVenda() {
+        return probabilidadeVenda;
     }
 
-    public void setProbabilidade_venda(int probabilidade_venda) {
-        this.probabilidade_venda = probabilidade_venda;
+    public void setProbabilidadeVenda(int probabilidadeVenda) {
+        this.probabilidadeVenda = probabilidadeVenda;
     }
     
     

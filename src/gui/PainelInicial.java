@@ -2,29 +2,36 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 public class PainelInicial extends javax.swing.JPanel {
     
-    public PainelInicial() {
+    public PainelInicial(ActionListener acaoBotaoIniciar) {
         initComponents();
-        configurarComponentes();
+        configurarComponentes(acaoBotaoIniciar);
     }
     
-    private void configurarComponentes(){
+    private void configurarComponentes(ActionListener acaoBotaoIniciar){
         spinnerPessoas.setModel(new SpinnerNumberModel(1, 0, 5, 1));
         spinnerIA.setModel(new SpinnerNumberModel(1, 0, 5, 1));
         spinnerRodadas.setModel(new SpinnerNumberModel(1, 1, 15, 1));
         
-        botaoIniciar.addActionListener(new AcaoBotaoIniciar());
+        botaoIniciar.addActionListener(acaoBotaoIniciar);
     }
-    
-    private class AcaoBotaoIniciar implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-        }
+
+    public JSpinner getSpinnerIA() {
+        return spinnerIA;
     }
+
+    public JSpinner getSpinnerPessoas() {
+        return spinnerPessoas;
+    }
+
+    public JSpinner getSpinnerRodadas() {
+        return spinnerRodadas;
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.

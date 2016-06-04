@@ -1,98 +1,85 @@
 package simulador;
 
 public class Carro {
+
     public final static int MODELO_POPULAR = 1;
     public final static int MODELO_MEDIO = 2;
     public final static int MODELO_LUXO = 3;
     
-    public final static int PRECO_POPULAR_NORMAL = 20000;
-    public final static int PRECO_MEDIO_NORMAL = 35000;
-    public final static int PRECO_LUXO_NORMAL = 50000;
+    public final static int TIPO_PRECO_NORMAL = 1;
+    public final static int TIPO_PRECO_CARO = 2;
     
-    public final static int PRECO_POPULAR_CARO = (int) (PRECO_POPULAR_NORMAL * 1.5);
-    public final static int PRECO_MEDIO_CARO = (int) (PRECO_MEDIO_NORMAL * 1.5);
-    public final static int PRECO_LUXO_CARO = (int) (PRECO_LUXO_NORMAL * 1.5);
-        
+    public final static int PRECO_POPULAR = 20000;
+    public final static int PRECO_MEDIO = 35000;
+    public final static int PRECO_LUXO = 50000;
+    
+    // Custo da produção
     public final static int CUSTO_POPULAR = 15000;
     public final static int CUSTO_MEDIO = 25000;
     public final static int CUSTO_LUXO = 35000;
     
+    // Tempo em dias
     public final static int TEMPO_POPULAR = 2;
     public final static int TEMPO_MEDIO = 3;
     public final static int TEMPO_LUXO = 5;
     
     private int custo;
     private int tempo;
-    private int preco_venda;
-    private int tipo_preco;
+    private int tipoPreco;
+    private int precoVenda;
+    private String nomeModelo;
     
     public Carro(int modelo, int tipo_preco){
-        this.tipo_preco = tipo_preco;
+        this.tipoPreco = tipo_preco;
         switch (modelo) {
             case MODELO_POPULAR:
                 this.custo = CUSTO_POPULAR;
                 this.tempo = TEMPO_POPULAR;
-                if(this.tipo_preco == 1){
-                    preco_venda = PRECO_POPULAR_NORMAL;
-                } else{
-                    preco_venda = PRECO_POPULAR_CARO;
-                } 
+                this.nomeModelo = "Popular";
+                this.precoVenda = PRECO_POPULAR;
                 break;
             case MODELO_MEDIO:
                 this.custo = CUSTO_MEDIO;
                 this.tempo = TEMPO_MEDIO;
-                if(this.tipo_preco == 1){
-                    preco_venda = PRECO_MEDIO_NORMAL;
-                } else{
-                    preco_venda = PRECO_MEDIO_CARO;
-                } 
+                this.nomeModelo = "Médio";
+                this.precoVenda = PRECO_MEDIO; 
                 break;
             default: //MODELO_LUXO
                 this.custo = CUSTO_LUXO;
                 this.tempo = TEMPO_LUXO;
-                if(tipo_preco == 1){
-                    preco_venda = PRECO_LUXO_NORMAL;
-                } else {
-                    preco_venda = PRECO_LUXO_CARO;
-                } 
+                this.nomeModelo = "Luxo";
+                this.precoVenda = PRECO_LUXO; 
                 break;
         }
     }
-
-    
-    
     
     //GET e SET
-    public int getTipo_preco() {
-        return tipo_preco;
-    }
-
-    public void setTipo_preco(int tipo_preco) {
-        this.tipo_preco = tipo_preco;
+    public int getTipoPreco() {
+        return tipoPreco;
     }
 
     public int getCusto() {
         return custo;
     }
 
-    public void setCusto(int custo) {
-        this.custo = custo;
-    }
-
     public int getTempo() {
         return tempo;
     }
 
-    public void setTempo(int tempo) {
-        this.tempo = tempo;
-    }
-
-    public int getPreco_venda() {
-        return preco_venda;
-    }
-
-    public void setPreco_venda(int preco_venda) {
-        this.preco_venda = preco_venda;
+    public int getPrecoVenda() {
+        int precoVenda = 0;
+        switch(tipoPreco){
+            case TIPO_PRECO_NORMAL:
+                precoVenda = this.precoVenda;
+                break;
+            case TIPO_PRECO_CARO:
+                precoVenda = (int) (this.precoVenda * 1.5);
+                break;
+        }
+        return precoVenda;
     }
     
+    public String getStringModelo(){
+        return nomeModelo;
+    }
 }
