@@ -1,25 +1,124 @@
 package gui;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import modelos.Carro;
+import modelos.Empresa;
+import modelos.Fabrica;
+import utilitarios.Util;
 
 public class PainelEmpresa extends javax.swing.JPanel {
     
-    /**
-     * Creates new form PainelEmpresa
-     */
-    public PainelEmpresa(String titulo) {
+    private final Empresa empresa;
+    
+    public PainelEmpresa(Empresa empresa) {
         initComponents();
-        setBorder(BorderFactory.createTitledBorder(titulo));
+        this.empresa = empresa;
         configurarComponentes();
     }
     
     private void configurarComponentes(){
+        setBorder(BorderFactory.createTitledBorder(empresa.getNome()));
+        
         String[] tiposFabrica = {"Pequena", "Média", "Grande"};
         comboFabrica.setModel(new DefaultComboBoxModel(tiposFabrica));
+        comboFabrica.addItemListener(new ListenerFabrica());
         
         String[] tiposCarros = {"Popular", "Médio", "Luxo"};
         comboCarro.setModel(new DefaultComboBoxModel(tiposCarros));
+        comboCarro.addItemListener(new ListenerCarro());
+        
+        campoNomeEmpresa.setText(empresa.getNome());
+        
+        mudarLabelVerbaInicial((int)empresa.getCapital());
+        mudarLabelGasto();
+        mudarLabelTempo();
+        mudarLabelVerbaRestante();
+        atualizarPainelInfoFabrica();
+        atualizarPainelInfoCarro();
+                
+        
+        if (empresa.isIsBot()){
+            campoNomeEmpresa.setEnabled(false);
+            comboFabrica.setEnabled(false);
+            comboCarro.setEnabled(false);
+        }
+    }
+    
+    private void mudarLabelGasto(){
+        double gasto = empresa.gastoFixo();
+        String str = Util.formatarDinheiro(gasto);
+        labelGasto.setText("Gastos fixos: "+str);
+    }
+    
+    private void mudarLabelTempo(){
+        String str = String.format("%.2f dias", empresa.carrosPorDia());
+        labelTempo.setText("Tempo de fabricação de um carro: "+str);
+    }
+    
+    private void mudarLabelVerbaInicial(int valor){
+        String str = Util.formatarDinheiro(valor);
+        labelVerbaInicial.setText("Verba inicial: "+str);
+    }
+    
+    private void mudarLabelVerbaRestante(){
+        double valor = empresa.getCapital() - empresa.getFabrica().getPreco();
+        String str = Util.formatarDinheiro(valor);
+        labelVerbaRestante.setText("Verba restante: "+str);
+    }
+    
+    private void atualizarPainelInfoFabrica(){
+        labelFabricaPreco.setText("Preço: "+Util.formatarDinheiro(empresa.getFabrica().getPreco()));
+        labelFabricaGasto.setText("Gasto por mês: "+Util.formatarDinheiro(empresa.getFabrica().getGastoPorMes()));
+        labelFabricaCapacidade.setText("Capacidade: "+empresa.getFabrica().getCapacidade()+" carros");
+        labelFabricaProducao.setText("Produz  "+empresa.getFabrica().getFatorProducao()+" carro(s) por vez");
+    }
+    
+    private void atualizarPainelInfoCarro(){
+        labelCarroPreco.setText("Preço de venda: "+Util.formatarDinheiro(empresa.getCarro().getPrecoVenda()));
+        labelCarroCusto.setText("Custo de produção: "+Util.formatarDinheiro(empresa.getCarro().getCusto()));
+    }
+    
+    class ListenerFabrica implements ItemListener{
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                String str = (String) event.getItem();
+                if (str.equals("Pequena")){
+                    empresa.setFabrica(Fabrica.PEQUENA);
+                } else if (str.equals("Média")){
+                    empresa.setFabrica(Fabrica.MEDIA);
+                } else if (str.equals("Grande")){
+                    empresa.setFabrica(Fabrica.GRANDE);
+                }
+                mudarLabelGasto();
+                mudarLabelTempo();
+                mudarLabelVerbaRestante();
+                atualizarPainelInfoFabrica();
+            }
+        }       
+    }
+    
+    class ListenerCarro implements ItemListener{
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                String str = (String) event.getItem();
+                if (str.equals("Popular")){
+                    empresa.setCarro(Carro.MODELO_POPULAR);
+                } else if (str.equals("Médio")){
+                    empresa.setCarro(Carro.MODELO_MEDIO);
+                } else if (str.equals("Luxo")){
+                    empresa.setCarro(Carro.MODELO_LUXO);
+                }
+                mudarLabelGasto();
+                mudarLabelTempo();
+                mudarLabelVerbaRestante();
+                atualizarPainelInfoCarro();
+            }
+        }       
     }
 
     /**
@@ -39,10 +138,18 @@ public class PainelEmpresa extends javax.swing.JPanel {
         labelCarro = new javax.swing.JLabel();
         comboCarro = new javax.swing.JComboBox<>();
         painelInfo = new javax.swing.JPanel();
-        labelGasto = new javax.swing.JLabel();
-        labelTempo = new javax.swing.JLabel();
         labelVerbaInicial = new javax.swing.JLabel();
+        labelTempo = new javax.swing.JLabel();
+        labelGasto = new javax.swing.JLabel();
         labelVerbaRestante = new javax.swing.JLabel();
+        painelInfoFabrica = new javax.swing.JPanel();
+        labelFabricaPreco = new javax.swing.JLabel();
+        labelFabricaProducao = new javax.swing.JLabel();
+        labelFabricaGasto = new javax.swing.JLabel();
+        labelFabricaCapacidade = new javax.swing.JLabel();
+        painelInfoCarro = new javax.swing.JPanel();
+        labelCarroPreco = new javax.swing.JLabel();
+        labelCarroCusto = new javax.swing.JLabel();
 
         labelNomeEmpresa.setText("Nome da Empresa:");
 
@@ -58,11 +165,11 @@ public class PainelEmpresa extends javax.swing.JPanel {
 
         painelInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Informações"));
 
-        labelGasto.setText("Gastos fixos:");
+        labelVerbaInicial.setText("Verba inicial:");
 
         labelTempo.setText("Tempo de fabricação do carro:");
 
-        labelVerbaInicial.setText("Verba inicial:");
+        labelGasto.setText("Gastos fixos:");
 
         labelVerbaRestante.setText("Verba restante:");
 
@@ -73,9 +180,9 @@ public class PainelEmpresa extends javax.swing.JPanel {
             .addGroup(painelInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelGasto)
-                    .addComponent(labelTempo)
                     .addComponent(labelVerbaInicial)
+                    .addComponent(labelTempo)
+                    .addComponent(labelGasto)
                     .addComponent(labelVerbaRestante))
                 .addContainerGap(120, Short.MAX_VALUE))
         );
@@ -83,14 +190,77 @@ public class PainelEmpresa extends javax.swing.JPanel {
             painelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelGasto)
+                .addComponent(labelVerbaInicial)
                 .addGap(18, 18, 18)
                 .addComponent(labelTempo)
                 .addGap(18, 18, 18)
-                .addComponent(labelVerbaInicial)
+                .addComponent(labelGasto)
                 .addGap(18, 18, 18)
                 .addComponent(labelVerbaRestante)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        painelInfoFabrica.setBorder(javax.swing.BorderFactory.createTitledBorder("Info Fábrica"));
+
+        labelFabricaPreco.setText("Preço:");
+
+        labelFabricaProducao.setText("Produz 1 carro por vez");
+
+        labelFabricaGasto.setText("Gasto por mês:");
+
+        labelFabricaCapacidade.setText("Capacidade: ");
+
+        javax.swing.GroupLayout painelInfoFabricaLayout = new javax.swing.GroupLayout(painelInfoFabrica);
+        painelInfoFabrica.setLayout(painelInfoFabricaLayout);
+        painelInfoFabricaLayout.setHorizontalGroup(
+            painelInfoFabricaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelInfoFabricaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelInfoFabricaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelFabricaPreco)
+                    .addComponent(labelFabricaGasto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelInfoFabricaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelFabricaProducao)
+                    .addComponent(labelFabricaCapacidade))
+                .addContainerGap())
+        );
+        painelInfoFabricaLayout.setVerticalGroup(
+            painelInfoFabricaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelInfoFabricaLayout.createSequentialGroup()
+                .addGroup(painelInfoFabricaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFabricaPreco)
+                    .addComponent(labelFabricaProducao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelInfoFabricaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelFabricaCapacidade)
+                    .addComponent(labelFabricaGasto)))
+        );
+
+        painelInfoCarro.setBorder(javax.swing.BorderFactory.createTitledBorder("Info Carro"));
+
+        labelCarroPreco.setText("Preço de venda:");
+
+        labelCarroCusto.setText("Custo de produção:");
+
+        javax.swing.GroupLayout painelInfoCarroLayout = new javax.swing.GroupLayout(painelInfoCarro);
+        painelInfoCarro.setLayout(painelInfoCarroLayout);
+        painelInfoCarroLayout.setHorizontalGroup(
+            painelInfoCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelInfoCarroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelInfoCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelCarroPreco)
+                    .addComponent(labelCarroCusto))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelInfoCarroLayout.setVerticalGroup(
+            painelInfoCarroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelInfoCarroLayout.createSequentialGroup()
+                .addComponent(labelCarroPreco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCarroCusto)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -100,26 +270,29 @@ public class PainelEmpresa extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelNomeEmpresa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(campoNomeEmpresa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(painelInfoFabrica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(painelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelNomeEmpresa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(campoNomeEmpresa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addComponent(painelInfoCarro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelFabrica)
-                                .addGap(18, 18, 18))
+                                .addGap(18, 18, 18)
+                                .addComponent(comboFabrica, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelCarro)
-                                .addGap(12, 12, 12)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(comboCarro, 0, 80, Short.MAX_VALUE)
-                            .addComponent(comboFabrica, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,11 +310,15 @@ public class PainelEmpresa extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFabrica)
                     .addComponent(comboFabrica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelInfoFabrica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCarro)
                     .addComponent(comboCarro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelInfoCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(painelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -154,12 +331,20 @@ public class PainelEmpresa extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> comboFabrica;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel labelCarro;
+    private javax.swing.JLabel labelCarroCusto;
+    private javax.swing.JLabel labelCarroPreco;
     private javax.swing.JLabel labelFabrica;
+    private javax.swing.JLabel labelFabricaCapacidade;
+    private javax.swing.JLabel labelFabricaGasto;
+    private javax.swing.JLabel labelFabricaPreco;
+    private javax.swing.JLabel labelFabricaProducao;
     private javax.swing.JLabel labelGasto;
     private javax.swing.JLabel labelNomeEmpresa;
     private javax.swing.JLabel labelTempo;
     private javax.swing.JLabel labelVerbaInicial;
     private javax.swing.JLabel labelVerbaRestante;
     private javax.swing.JPanel painelInfo;
+    private javax.swing.JPanel painelInfoCarro;
+    private javax.swing.JPanel painelInfoFabrica;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,29 +3,31 @@ package gui;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import simulador.Empresa;
+import modelos.Empresa;
 
 public class PainelJogadores extends javax.swing.JPanel {
 
-    private final int numJogadores;
+    private final ArrayList<Empresa> listaJogadores;
     private final ArrayList<Empresa> listaIA;
     
-    /**
-     * Creates new form PainelJogadores
-     */
-    public PainelJogadores(int numJogadores, ArrayList<Empresa> listaIA) {
+    public PainelJogadores(ArrayList<Empresa> listaJogadores, ArrayList<Empresa> listaIA) {
         initComponents();
-        this.numJogadores = numJogadores;
+        this.listaJogadores = listaJogadores;
         this.listaIA = listaIA;
         configurarComponentes();
     }
     
     private void configurarComponentes(){
         JPanel painelCentro = new JPanel(new WrapLayout());
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setViewportView(painelCentro);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        for (int i = 0; i < numJogadores; i++) {
-            painelCentro.add(new PainelEmpresa("Empresa "+(i+1)));
+        for (Empresa empresa : listaJogadores) {
+            painelCentro.add(new PainelEmpresa(empresa));
+        }
+        
+        for (Empresa empresa : listaIA) {
+            painelCentro.add(new PainelEmpresa(empresa));
         }
     }
 
@@ -38,20 +40,8 @@ public class PainelJogadores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelCentro = new javax.swing.JPanel();
         scrollPane = new javax.swing.JScrollPane();
         botaoSimular = new javax.swing.JButton();
-
-        javax.swing.GroupLayout painelCentroLayout = new javax.swing.GroupLayout(painelCentro);
-        painelCentro.setLayout(painelCentroLayout);
-        painelCentroLayout.setHorizontalGroup(
-            painelCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        painelCentroLayout.setVerticalGroup(
-            painelCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 19, Short.MAX_VALUE)
-        );
 
         scrollPane.setBorder(null);
 
@@ -80,7 +70,6 @@ public class PainelJogadores extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoSimular;
-    private javax.swing.JPanel painelCentro;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 }

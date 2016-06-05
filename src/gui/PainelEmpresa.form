@@ -16,36 +16,40 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="painelInfo" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="labelNomeEmpresa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="campoNomeEmpresa" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="filler1" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Component id="painelInfoFabrica" max="32767" attributes="0"/>
+                          <Component id="painelInfo" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="labelNomeEmpresa" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="campoNomeEmpresa" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="filler1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="painelInfoCarro" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="labelFabrica" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="comboFabrica" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labelCarro" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="comboCarro" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="comboCarro" pref="80" max="32767" attributes="0"/>
-                          <Component id="comboFabrica" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -70,12 +74,16 @@
                   <Component id="labelFabrica" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="comboFabrica" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="painelInfoFabrica" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelCarro" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="comboCarro" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="painelInfoCarro" min="-2" pref="60" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="painelInfo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -158,9 +166,9 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="labelGasto" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelTempo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="labelVerbaInicial" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelTempo" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelGasto" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="labelVerbaRestante" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="120" max="32767" attributes="0"/>
@@ -171,11 +179,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelGasto" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelVerbaInicial" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="labelTempo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="labelVerbaInicial" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelGasto" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="labelVerbaRestante" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -184,9 +192,9 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="labelGasto">
+        <Component class="javax.swing.JLabel" name="labelVerbaInicial">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gastos fixos:"/>
+            <Property name="text" type="java.lang.String" value="Verba inicial:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelTempo">
@@ -194,14 +202,126 @@
             <Property name="text" type="java.lang.String" value="Tempo de fabrica&#xe7;&#xe3;o do carro:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="labelVerbaInicial">
+        <Component class="javax.swing.JLabel" name="labelGasto">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Verba inicial:"/>
+            <Property name="text" type="java.lang.String" value="Gastos fixos:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelVerbaRestante">
           <Properties>
             <Property name="text" type="java.lang.String" value="Verba restante:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="painelInfoFabrica">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Info F&#xe1;brica"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelFabricaPreco" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelFabricaGasto" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelFabricaProducao" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelFabricaCapacidade" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelFabricaPreco" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelFabricaProducao" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelFabricaCapacidade" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelFabricaGasto" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="labelFabricaPreco">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pre&#xe7;o:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelFabricaProducao">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Produz 1 carro por vez"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelFabricaGasto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gasto por m&#xea;s:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelFabricaCapacidade">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Capacidade: "/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="painelInfoCarro">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Info Carro"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelCarroPreco" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelCarroCusto" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="labelCarroPreco" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelCarroCusto" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="labelCarroPreco">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pre&#xe7;o de venda:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelCarroCusto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Custo de produ&#xe7;&#xe3;o:"/>
           </Properties>
         </Component>
       </SubComponents>

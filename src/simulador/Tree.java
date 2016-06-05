@@ -1,5 +1,6 @@
 package simulador;
 
+import modelos.Empresa;
 import java.util.ArrayList;
 
 public class Tree<T> {

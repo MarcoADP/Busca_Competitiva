@@ -60,6 +60,7 @@ public class TelaPrincipal extends JFrame{
         setJMenuBar(menuBar);
         
         novoJogo.addActionListener(new AcaoMenuNovoJogo());
+        sobre.addActionListener(new TelaSobre(this));
         sair.addActionListener(new AcaoMenuSair());
     }
     
@@ -68,15 +69,15 @@ public class TelaPrincipal extends JFrame{
         add(painelInicial);
     }
     
-    private void iniciarJogo(int numPessoas, int numIA, int numRodadas){
+    private void iniciarJogo(int numPessoas, int numIA, int numRodadas, int investimento){
         setMinimumSize(new Dimension(500, 450));
-        setPreferredSize(new Dimension(800, 450));
+        setPreferredSize(new Dimension(850, 500));
         setResizable(true);
         getContentPane().removeAll();
         
-        simulador.iniciarJogo(numPessoas, numIA, numRodadas);
+        simulador.iniciarJogo(numPessoas, numIA, numRodadas, investimento);
         
-        painelJogadores = new PainelJogadores(3, null);
+        painelJogadores = new PainelJogadores(simulador.getListaJogador(), simulador.getListaIA());
         add(painelJogadores);
         pack();
     }
@@ -88,7 +89,6 @@ public class TelaPrincipal extends JFrame{
             int numIA = (int)painelInicial.getSpinnerIA().getValue();
             int numRodadas = (int)painelInicial.getSpinnerRodadas().getValue();
             int investimento = painelInicial.getSliderInvestimento().getValue();
-            System.out.println("INVESTIMENTO: "+investimento);
             
             if (numPessoas == 0 && numIA == 0){
                 JOptionPane.showMessageDialog(null, "Erro: Número de pessoas e de IA não podem ser 0.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -100,7 +100,7 @@ public class TelaPrincipal extends JFrame{
                 JOptionPane.showMessageDialog(null, "Erro: É preciso pelo menos 2 jogadores.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            iniciarJogo(numPessoas, numIA, numRodadas);
+            iniciarJogo(numPessoas, numIA, numRodadas, investimento);
         }
     }
     

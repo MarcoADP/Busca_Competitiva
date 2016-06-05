@@ -5,9 +5,6 @@ import java.util.logging.Logger;
 
 public class PainelLoading extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PainelLoading
-     */
     public PainelLoading() {
         initComponents();
         configurarComponentes();

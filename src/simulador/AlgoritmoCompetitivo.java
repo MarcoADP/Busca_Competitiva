@@ -1,5 +1,7 @@
 package simulador;
 
+import modelos.Empresa;
+
 public class AlgoritmoCompetitivo {
     Tree arvore;
     int maxProfundidade;

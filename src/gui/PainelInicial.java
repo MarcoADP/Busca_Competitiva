@@ -1,13 +1,13 @@
 package gui;
 
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import simulador.Simulador;
+import utilitarios.Util;
 
 public class PainelInicial extends javax.swing.JPanel {
     
@@ -24,10 +24,9 @@ public class PainelInicial extends javax.swing.JPanel {
         botaoIniciar.addActionListener(acaoBotaoIniciar);
         
         Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-        DecimalFormat df = new DecimalFormat("R$ #,000,000");
-        String strBaixo = df.format(Simulador.INVESTIMENTO_INICIAL_BAIXO);
-        String strMedio = df.format(Simulador.INVESTIMENTO_INICIAL_MEDIO);
-        String strAlto = df.format(Simulador.INVESTIMENTO_INICIAL_ALTO);
+        String strBaixo = Util.formatarDinheiro(Simulador.INVESTIMENTO_INICIAL_BAIXO);
+        String strMedio = Util.formatarDinheiro(Simulador.INVESTIMENTO_INICIAL_MEDIO);
+        String strAlto = Util.formatarDinheiro(Simulador.INVESTIMENTO_INICIAL_ALTO);
         labelTable.put(Simulador.INVESTIMENTO_INICIAL_BAIXO, new JLabel("<html><center>Baixo</center></br>"+strBaixo+"</html>"));
         labelTable.put(Simulador.INVESTIMENTO_INICIAL_MEDIO, new JLabel("<html><center>Médio</center></br>"+strMedio+"</html>"));
         labelTable.put(Simulador.INVESTIMENTO_INICIAL_ALTO, new JLabel("<html><center>Alto</center></br>"+strAlto+"</html>"));
