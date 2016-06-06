@@ -70,6 +70,15 @@ public class Empresa {
         this.probabilidadeVenda = calcularProbabilidade(tipo_preco, tipo_investimento);
     }*/
 
+    public boolean atualizaEstoque(){
+        if(this.estoqueCarro > 0){
+            this.estoqueCarro = this.estoqueCarro - 1;
+            this.capital = this.capital + this.carro.getPrecoVenda();
+            return true;
+        }
+        return false;
+    }
+    
     public double carrosPorDia(){
         return carro.getTempo() / fabrica.getFatorProducao();
     }
