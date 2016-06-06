@@ -56,27 +56,46 @@ public class Simulador {
         return lista;
     }
     
-    public void atenderDemanda(){
-       ArrayList<Integer> listaProb = new ArrayList<>();
-       int totalProb = 0;
-       Empresa empresaCompradora = null;
-       for(Empresa empresa : listaJogador){
-           totalProb += empresa.getProbabilidadeVenda();
-           listaProb.add(totalProb);
-       }
-       Random random = new Random();
-       int i, j;
-       int totalEmpresas = this.listaJogador.size();
-       for(i = 0; i < DEMANDA_POR_RODADA; i++){
-           int num = random.nextInt(totalProb);
-           for(j = 0; j < totalEmpresas; j++){
-               if(listaProb.get(j) < num){
-                   empresaCompradora = listaJogador.get(j);
-                   break;
-               }
-           }
-           empresaCompradora.venderCarro();
-       }   
+    public void atenderDemanda(){  
+        Integer totalProb = 0;
+        //normalizar as probabilidades
+        for(Empresa empresa : listaJogador){
+            totalProb += empresa.getProbabilidadeVenda();
+        }
+        
+        //calcular a prob de cada
+        ArrayList<Integer> listaProb = new ArrayList<>();
+        for(Empresa empresa : listaJogador){
+            /*totalProb - 100
+              empresa.Prob - x
+               x - 100*Empresa.Prob/totalProb
+            */
+            Integer prob = (int) (100 * empresa.getProbabilidadeVenda() / totalProb);
+            listaProb.add(prob);    
+        }
+        
+        //vender cada carro
+        int i, j, limite, maximo, numeroSorteado, indEmpresa = -1;
+        Empresa empresaVendedora;
+        Random random = new Random();
+        for(i = 0; i < DEMANDA_POR_RODADA; i++){
+            maximo = Integer.MIN_VALUE;
+            int numeroEmpresa = listaJogador.size();
+            for(j = 0; j < numeroEmpresa; j++){
+                limite = listaProb.get(i);
+                numeroSorteado = random.nextInt(limite);
+                if(numeroSorteado > maximo){
+                    indEmpresa = j;
+                    maximo = numeroSorteado;
+                }
+            }
+            empresaVendedora = listaJogador.get(indEmpresa);
+            if(!empresaVendedora.atualizaEstoque()){    //se a empresa esta com estoque zerado
+                i = i - 1;  //volta o carro para a demanda
+                //o numero sorteado para empresa com estoque vazio sera entre [0 e 1[
+                listaProb.set(indEmpresa, 1);
+            }
+        }
    }
 
     public ArrayList<Empresa> getListaJogador() {
