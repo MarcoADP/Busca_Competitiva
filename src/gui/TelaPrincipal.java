@@ -14,6 +14,7 @@ public class TelaPrincipal extends JFrame{
     
     private PainelInicial painelInicial;
     private PainelJogadores painelJogadores;
+    private PainelRodada painelRodada;
     
     private JMenuBar menuBar;
     private JMenu arquivo;
@@ -77,7 +78,7 @@ public class TelaPrincipal extends JFrame{
         
         simulador.iniciarJogo(numPessoas, numIA, numRodadas, investimento);
         
-        painelJogadores = new PainelJogadores(simulador.getListaJogador(), simulador.getListaIA());
+        painelJogadores = new PainelJogadores(simulador.getListaJogador(), simulador.getListaIA(), new AcaoBotaoComecar());
         add(painelJogadores);
         pack();
     }
@@ -101,6 +102,23 @@ public class TelaPrincipal extends JFrame{
                 return;
             }
             iniciarJogo(numPessoas, numIA, numRodadas, investimento);
+        }
+    }
+    
+    private class AcaoBotaoComecar implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            getContentPane().removeAll();
+            painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
+            add(painelRodada);
+            pack();
+        }
+    }
+    
+    private class AcaoBotaoSimular implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //simulador.proximaRodada();
         }
     }
     

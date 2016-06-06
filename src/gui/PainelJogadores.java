@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,14 +11,14 @@ public class PainelJogadores extends javax.swing.JPanel {
     private final ArrayList<Empresa> listaJogadores;
     private final ArrayList<Empresa> listaIA;
     
-    public PainelJogadores(ArrayList<Empresa> listaJogadores, ArrayList<Empresa> listaIA) {
+    public PainelJogadores(ArrayList<Empresa> listaJogadores, ArrayList<Empresa> listaIA, ActionListener acaoComecar) {
         initComponents();
         this.listaJogadores = listaJogadores;
         this.listaIA = listaIA;
-        configurarComponentes();
+        configurarComponentes(acaoComecar);
     }
     
-    private void configurarComponentes(){
+    private void configurarComponentes(ActionListener acaoComecar){
         JPanel painelCentro = new JPanel(new WrapLayout());
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setViewportView(painelCentro);
@@ -29,6 +30,8 @@ public class PainelJogadores extends javax.swing.JPanel {
         for (Empresa empresa : listaIA) {
             painelCentro.add(new PainelEmpresa(empresa));
         }
+        
+        botaoComecar.addActionListener(acaoComecar);
     }
 
     /**
@@ -41,11 +44,12 @@ public class PainelJogadores extends javax.swing.JPanel {
     private void initComponents() {
 
         scrollPane = new javax.swing.JScrollPane();
-        botaoSimular = new javax.swing.JButton();
+        botaoComecar = new javax.swing.JButton();
 
         scrollPane.setBorder(null);
 
-        botaoSimular.setText("Simular");
+        botaoComecar.setText("Começar");
+        botaoComecar.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -53,7 +57,7 @@ public class PainelJogadores extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(300, Short.MAX_VALUE)
-                .addComponent(botaoSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoComecar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(scrollPane)
         );
@@ -62,14 +66,14 @@ public class PainelJogadores extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoComecar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoSimular;
+    private javax.swing.JButton botaoComecar;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 }

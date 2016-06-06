@@ -18,6 +18,7 @@ public class Simulador {
     private ArrayList<Empresa> listaJogador;    // mudar para lista jogadores
     private ArrayList<Empresa> listaIA;
     private int numRodadas;
+    private int rodada;
     private int investimento;
     
     public Simulador(){
@@ -28,6 +29,7 @@ public class Simulador {
         tela = new TelaPrincipal(this);
         investimento = 0;
         numRodadas = 0;
+        rodada = 1;
         listaIA = null;
         listaJogador = null;
     }
@@ -106,4 +108,8 @@ public class Simulador {
         return listaIA;
     }
 
+    public int getRodada() {
+        return rodada;
+    }
+    
 }
