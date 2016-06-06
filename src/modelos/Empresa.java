@@ -79,21 +79,32 @@ public class Empresa {
     }
     
     public double gastoFixo(){
-        double gasto = carrosPorMes() * carro.getCusto();
+        //double gasto = carrosPorMes() * carro.getCusto();
+        double gasto = fabricarCarro();
         gasto += this.fabrica.getGastoPorMes();
         return gasto;
     }
     
-    public double calcularGastoPorMes(){
-        double total;
-        
-        total = this.gastoFuncionarios  + this.investimentoMarketing + gastoFixo();
-        
-        return total;
+    public double calcularGastoPorMes(){        
+        return (this.gastoFuncionarios  + this.investimentoMarketing + gastoFixo());
     }
     
-    public void fabricarCarro(int quantidade){
-        this.estoqueCarro += Math.min(carrosPorMes(), fabrica.getCapacidade());
+    public double fabricarCarro(){
+        double gasto;
+        int auxiliar = this.estoqueCarro + carrosPorMes();
+        if (auxiliar <= fabrica.getCapacidade()){ //NÃO POSSO PRODUZIR MAIS CARROS, ENTÃO RETORNO O CAPITAL INVESTIDO
+            this.estoqueCarro += auxiliar;
+            gasto = (carrosPorMes()*this.carro.getCusto());
+            this.capital -= gasto;
+            return gasto;
+            
+        } else {
+            auxiliar = fabrica.getCapacidade() - this.estoqueCarro; //QTD MÁXIMA DE CARROS QUE POSSO PRODUZIR
+            this.estoqueCarro = fabrica.getCapacidade();
+            gasto = (auxiliar*this.carro.getCusto());
+            this.capital -= gasto;
+            return gasto;
+        }        
     }
     
     public void fecharMes(){
