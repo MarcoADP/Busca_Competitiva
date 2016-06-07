@@ -88,36 +88,27 @@ public class Empresa {
     }
     
     public double gastoFixo(){
-        //double gasto = carrosPorMes() * carro.getCusto();
         double gasto = fabricarCarro();
         gasto += this.fabrica.getGastoPorMes();
         return gasto;
     }
     
-    public double calcularGastoPorMes(){        
-        return (this.gastoFuncionarios  + this.investimentoMarketing + gastoFixo());
-    }
-    
     public double fabricarCarro(){
-        double gasto;
         int auxiliar = this.estoqueCarro + carrosPorMes();
         if (auxiliar <= fabrica.getCapacidade()){ //NÃO POSSO PRODUZIR MAIS CARROS, ENTÃO RETORNO O CAPITAL INVESTIDO
-            this.estoqueCarro += auxiliar;
-            gasto = (carrosPorMes()*this.carro.getCusto());
-            this.capital -= gasto;
-            return gasto;
+            this.estoqueCarro += auxiliar;            
+            return (carrosPorMes()*this.carro.getCusto());
             
         } else {
             auxiliar = fabrica.getCapacidade() - this.estoqueCarro; //QTD MÁXIMA DE CARROS QUE POSSO PRODUZIR
             this.estoqueCarro = fabrica.getCapacidade();
-            gasto = (auxiliar*this.carro.getCusto());
-            this.capital -= gasto;
-            return gasto;
+            return (auxiliar*this.carro.getCusto());
         }        
     }
     
-    public void fecharMes(){
-        // FAZER TODAS AS ATUALIZAÇÕES PARA O FINAL DO MÊS
+    public void fecharMes(){ //BASTA CHAMAR ESSA FUNÇÃO PRA RETORNAR O GASTO MENSAL E ATUALIZAR O CAPITAL
+        double gastoMensal = this.gastoFuncionarios  + this.investimentoMarketing + gastoFixo();
+        this.capital -= gastoMensal; 
     }
     
     private int calcularProbPreco(int opcao){
@@ -146,13 +137,8 @@ public class Empresa {
     }
     
     private int calcularProbabilidade(int preco, int marketing){
-        int prob = 0;
-        
-        prob += this.calcularProbPreco(preco);
-        
-        prob += this.calcularProbMarketing(marketing);
-        
-        return prob;
+        int probabilidade = this.calcularProbPreco(preco) + this.calcularProbMarketing(marketing);        
+        return probabilidade;
     }
     
     public void investir(int opcao){
