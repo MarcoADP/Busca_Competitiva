@@ -39,12 +39,21 @@ public class Simulador {
         this.investimento = investimento;
         listaJogador = criarListaJogadores(numJogadores);
         listaIA = criarListaIA(numIA);
+        
+        //Empresa emp = listaJogador.get(0);
+        //Tree TreeEmpresa = new Tree(emp);
+        //emp.mostraEmpresa();
+        //TreeEmpresa.gerarFilhos(TreeEmpresa.getRoot());
+        //TreeEmpresa.root.children.get(0);
+        
+        
     }
     
     private ArrayList<Empresa> criarListaJogadores(int numJogadores){
         ArrayList<Empresa> lista = new ArrayList<>(numJogadores);
         for (int i = 0; i < numJogadores; i++) {
             lista.add(new Empresa("Empresa "+(i+1), investimento, false));
+            //lista.get(i).mostraEmpresa();
         }
         return lista;
     }
@@ -111,5 +120,7 @@ public class Simulador {
     public int getRodada() {
         return rodada;
     }
+    
+   
     
 }

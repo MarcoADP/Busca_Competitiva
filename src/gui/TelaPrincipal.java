@@ -8,7 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.*;
-import simulador.Simulador;
+import simulador.*;
 
 public class TelaPrincipal extends JFrame{
     
@@ -112,6 +112,8 @@ public class TelaPrincipal extends JFrame{
             painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
             add(painelRodada);
             pack();
+            
+            //simulador.teste();
         }
     }
     

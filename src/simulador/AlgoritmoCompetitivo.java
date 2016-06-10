@@ -3,7 +3,7 @@ package simulador;
 import modelos.Empresa;
 
 public class AlgoritmoCompetitivo {
-    Tree arvore;
+    TreeElement root;
     int maxProfundidade;
     public AlgoritmoCompetitivo(int max){
         //this.arvore = new Tree(empresa);
@@ -11,7 +11,7 @@ public class AlgoritmoCompetitivo {
     }
     
     public void criarArvore(Empresa empresa){
-        this.arvore = new Tree(empresa);
+        this.root = new TreeElement(0, null, empresa);
     }
     
     

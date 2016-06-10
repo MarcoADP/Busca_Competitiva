@@ -1,20 +1,31 @@
 package simulador;
 
-import modelos.Empresa;
 import java.util.ArrayList;
+import modelos.*;
 
-public class Tree {
+public class TreeElement {
+    TreeElement pai;
+    int profundidade;
+    Empresa empresa;
+    ArrayList<TreeElement> filhos;
     
+    public TreeElement(int profundidade, TreeElement pai, Empresa empresa){
+        this.profundidade = profundidade;
+        this.pai = pai;
+        this.empresa = empresa;
+        this.filhos = new ArrayList<>();
+    }
     
-    
-    /*public void gerarFilhos(Node pai){
+    public void gerarFilhos(TreeElement pai){
         int i;
+        int novaProfundidade = pai.profundidade + 1;
         for(i = 0; i < 9; i++){
-            Node filho;
+            TreeElement filho;
             switch(i){    
                 case 0: //MN PN FD
-                    filho = gerarNo(pai, 0, 0, 0);
-                    pai.children.add(filho);
+                    Empresa novaEmpresa = new Empresa(pai.empresa, 0, 0, 0);
+                    new TreeElement(novaProfundidade, pai, novaEmpresa);
+                    //pai.children.add(filho);
                     break;
                 /*case 1: //MN PN FM
                     filho = gerarNo(pai, 0, 0, 100);
@@ -53,28 +64,26 @@ public class Tree {
                 case 8: //MA PA FC
                     filho = gerarNo(pai, 1, 1, 1);
                     pai.children.add(filho);
-                    break;
+                    break;*/
             }
         }
+    }
+    
+    /*public TreeElement criarFilho(TreeElement pai, int opInv, int opPreco, int opFunc){
+        //int profundidade = pai.profundidade + 1;
+        //TreeElement filho = new TreeElement(profundidade, );
+        //filho.empresa.
+        return filho;
     }*/
-    /*
-    public Node gerarNo(Node pai, int opInv, int opPreco, int opFunc){
-        Node filho = new Node<>();
+                    
+    /*public TreeElement gerarNo(Node pai, int opInv, int opPreco, int opFunc){
+        TreeElement filho = new T<>();
         
         filho.parent = pai;
         filho.data = pai.data.escolhaAcoes(opInv, opPreco, opFunc);
         filho.children = new ArrayList<>();
         
         return filho;
-    }
-    
-    public Node<Empresa> getRoot() {
-        return root;
-    }
-
-    public void setRoot(Node<Empresa> root) {
-        this.root = root;
-    }
-    */
-    
+    }*/
+                    
 }
