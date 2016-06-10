@@ -30,13 +30,24 @@ public class Empresa {
     //PARÂMETROS VARIÁVEIS
     private double investimentoMarketing;
 
-    public Empresa(String nome, int investimento, boolean isBot){
+    public Empresa(String nome, int investimento, boolean isBot, Fabrica fabrica){
         this.nome = nome;
         this.capital = investimento;
-        this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);
-        this.fabrica = Fabrica.PEQUENA;
+        this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);        
         this.isBot = isBot;
         this.estoqueCarro = 0;
+        this.limiteFuncionarios = 100; //Número máximo de funcionários por empresa
+        if(fabrica == Fabrica.PEQUENA){
+            this.fabrica = Fabrica.PEQUENA;
+            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
+        } else if(fabrica == Fabrica.MEDIA){
+            this.fabrica = Fabrica.MEDIA;
+            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
+        } else{
+            this.fabrica = Fabrica.GRANDE;
+            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
+        }
+        this.numeroFuncionarios = 0;
         // atributos padrões
     }
     

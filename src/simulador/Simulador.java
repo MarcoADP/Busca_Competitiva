@@ -4,6 +4,7 @@ import modelos.Empresa;
 import gui.TelaPrincipal;
 import java.util.ArrayList;
 import java.util.Random;
+import modelos.Fabrica;
 
 public class Simulador {
     
@@ -44,7 +45,7 @@ public class Simulador {
     private ArrayList<Empresa> criarListaJogadores(int numJogadores){
         ArrayList<Empresa> lista = new ArrayList<>(numJogadores);
         for (int i = 0; i < numJogadores; i++) {
-            lista.add(new Empresa("Empresa "+(i+1), investimento, false));
+            lista.add(new Empresa("Empresa "+(i+1), investimento, false, Fabrica.PEQUENA));
         }
         return lista;
     }
@@ -53,7 +54,7 @@ public class Simulador {
         //completar atributos usando random
         ArrayList<Empresa> lista = new ArrayList<>(numIA);
         for (int i = 0; i < numIA; i++) {
-            lista.add(new Empresa("IA "+(i+1), investimento, true));
+            lista.add(new Empresa("IA "+(i+1), investimento, true, Fabrica.PEQUENA));
         }
         return lista;
     }
