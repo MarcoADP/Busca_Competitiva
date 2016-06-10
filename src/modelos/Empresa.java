@@ -30,43 +30,56 @@ public class Empresa {
     //PARÂMETROS VARIÁVEIS
     private double investimentoMarketing;
 
-    public Empresa(String nome, int investimento, boolean isBot){
+    public Empresa(String nome, int investimento, boolean isBot, Fabrica fabrica){
         this.nome = nome;
         this.capital = investimento;
-        this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);
-        this.fabrica = Fabrica.PEQUENA;
+        this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);        
         this.isBot = isBot;
         this.estoqueCarro = 0;
-        this.investimentoMarketing = 0;
+        this.limiteFuncionarios = 100; //Número máximo de funcionários por empresa
+        if(fabrica == Fabrica.PEQUENA){
+            this.fabrica = Fabrica.PEQUENA;
+            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
+        } else if(fabrica == Fabrica.MEDIA){
+            this.fabrica = Fabrica.MEDIA;
+            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
+        } else{
+            this.fabrica = Fabrica.GRANDE;
+            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
+        }
+        this.numeroFuncionarios = 0;
         // atributos padrões
     }
-
-    public Empresa(Empresa empresa, int opInv, int opPreco, int opFunc) {
-        this.nome = empresa.nome;
-        
-        //recebe atributos pai
-        this.capital = empresa.capital;
-        this.carro = empresa.carro;
-        this.fabrica = empresa.fabrica;
-        this.isBot = empresa.isBot;
-        this.estoqueCarro = empresa.estoqueCarro;
-        
-        //alterar Atributos Variáveis
-        this.carro.alterarPreco(opPreco);
-        this.investir(opInv);
-        this.calcularProbabilidade(opPreco, opInv);
-        
-        //atualizar
-        int vendaEstimada = this.estoqueCarro * this.probabilidadeVenda;
-        int ganhoVenda = vendaEstimada * this.carro.getPrecoVenda();
-        this.capital += ganhoVenda;
-        this.estoqueCarro -= vendaEstimada;
-        double custo = this.fabricarCarro();
-        this.estoqueCarro += this.carrosPorMes();
-        this.atualizarFuncionarios(opFunc);  
-        //Acho que tudo foi atualizado. Agora falta a logica do jogo.
-    }
     
+    /*public Empresa(double investimentoInicial, int tamanhoFabrica, int numeroFuncionarios, double salarioFuncionario, int modelo, int tipo_preco, int limiteFuncionarios, int tipo_investimento) {
+        this.carro = new Carro(modelo, tipo_preco);
+        this.capital = investimentoInicial;
+        this.tamanhoFabrica = tamanhoFabrica;
+        this.numeroFuncionarios = numeroFuncionarios;
+        this.limiteFuncionarios = limiteFuncionarios;
+        this.salarioFuncionario = salarioFuncionario;
+        this.gastoFuncionarios = this.salarioFuncionario * this.numeroFuncionarios;
+        
+        switch (this.tamanhoFabrica) {
+            case FABRICA_PEQUENA:
+                this.quantidadeCarro = 500;
+                this.custoFabricacao = (int) (this.carro.getCusto() * 0.9);
+                this.tempoFabricacao = (int) (this.carro.getTempo() * 1.5);
+                break;
+            case FABRICA_MEDIA:
+                this.quantidadeCarro = 800;
+                this.custoFabricacao = this.carro.getCusto();
+                this.tempoFabricacao = this.carro.getTempo();
+                break;
+            default:
+                this.quantidadeCarro = 1000;
+                this.custoFabricacao = (int) (this.carro.getCusto() * 1.2);
+                this.tempoFabricacao = (int) (this.carro.getTempo() * 0.8);
+                break;
+        }
+        this.gastosTotais = calcularGasto();
+        this.probabilidadeVenda = calcularProbabilidade(tipo_preco, tipo_investimento);
+    }*/
 
     public boolean atualizaEstoque(){
         if(this.estoqueCarro > 0){
@@ -140,7 +153,7 @@ public class Empresa {
     }
     
     public void investir(int opcao){
-        //this.probabilidadeVenda = this.calcularProbabilidade(this.carro.getTipoPreco(), opcao);
+        this.probabilidadeVenda = this.calcularProbabilidade(this.carro.getTipoPreco(), opcao);
         switch(opcao){
             case INVESTIMENTO_MARKETING_NORMAL:
                 this.investimentoMarketing = this.capital * 0.25;
@@ -184,15 +197,6 @@ public class Empresa {
         return novaEmpresa;
     }
             
-    public void mostraEmpresa(){
-        System.out.println("Nome => " + this.nome);
-        System.out.println("Capital => " + this.capital);
-        System.out.println("Gastos Funcionários =>" + this.gastoFuncionarios);
-        System.out.println("Investimento => " + this.investimentoMarketing);
-        System.out.println("Gastos Totais => " + this.gastosTotais);
-        System.out.println("");
-    }
-    
     /*GET SET*/
 
     public String getNome() {
@@ -286,7 +290,5 @@ public class Empresa {
     public void setProbabilidadeVenda(int probabilidadeVenda) {
         this.probabilidadeVenda = probabilidadeVenda;
     }
-    
-    
     
 }
