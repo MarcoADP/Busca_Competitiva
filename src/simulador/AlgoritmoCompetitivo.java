@@ -10,9 +10,9 @@ public class AlgoritmoCompetitivo {
         this.maxProfundidade = max;
     }
     
-    public void criarArvore(Empresa empresa){
+    /*public void criarArvore(Empresa empresa){
         this.root = new TreeElement(0, null, empresa);
-    }
+    }*/
     
     
     public double minimax(Empresa no, int profundidade, boolean max){

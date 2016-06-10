@@ -36,9 +36,7 @@ public class Empresa {
         this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);        
         this.isBot = isBot;
         this.estoqueCarro = 0;
-<<<<<<< HEAD
         this.investimentoMarketing = 0;
-=======
         this.limiteFuncionarios = 100; //Número máximo de funcionários por empresa
         if(fabrica == Fabrica.PEQUENA){
             this.fabrica = Fabrica.PEQUENA;
@@ -51,7 +49,6 @@ public class Empresa {
             this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
         }
         this.numeroFuncionarios = 0;
->>>>>>> 7542c8546181e6933108f2bd7615bbec627499de
         // atributos padrões
     }
 

@@ -24,7 +24,7 @@ public class TreeElement {
             switch(i){    
                 case 0: //MN PN FD
                     Empresa novaEmpresa = new Empresa(pai.empresa, 0, 0, 0);
-                    new TreeElement(novaProfundidade, pai, novaEmpresa);
+                    //new TreeElement(novaProfundidade, pai, novaEmpresa);
                     //pai.children.add(filho);
                     break;
                 /*case 1: //MN PN FM
