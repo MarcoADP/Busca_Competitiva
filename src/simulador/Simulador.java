@@ -18,6 +18,7 @@ public class Simulador {
     
     private ArrayList<Empresa> listaJogador;    // mudar para lista jogadores
     private ArrayList<Empresa> listaIA;
+    private ArrayList<TreeElement> arvore;
     private int numRodadas;
     private int rodada;
     private int investimento;
@@ -33,6 +34,7 @@ public class Simulador {
         rodada = 1;
         listaIA = null;
         listaJogador = null;
+        arvore = null;
     }
     
     public void iniciarJogo(int numJogadores, int numIA, int numRodadas, int investimento){
@@ -40,10 +42,14 @@ public class Simulador {
         this.investimento = investimento;
         listaJogador = criarListaJogadores(numJogadores);
         listaIA = criarListaIA(numIA);
+        arvore = criarArvore(numIA, listaIA);
         
         //TreeElement arvore = new TreeElement(0, null, listaJogador.get(0));
         //arvore.empresa.mostraEmpresa();
         //arvore.gerarFilhos(5);
+        //arvore.melhorFolha(0);
+        //System.out.println("sdfs => " + arvore.melhorFilho.id);
+        //System.out.println("aa => " + arvore.melhorFilho.melhorFilho.empresa.getCapital());
         //arvore.mostraArvore(0);
         /*int tam = arvore.filhos.size();
         for(int i = 0; i < tam; i++){
@@ -51,6 +57,14 @@ public class Simulador {
         }*/
         //arvore.filhos.get(0).empresa.mostraEmpresa();
         
+    }
+    
+    private ArrayList<TreeElement> criarArvore(int numIa, ArrayList<Empresa> listaIA){
+        ArrayList<TreeElement> lista = new ArrayList<>(numIa);
+        for(int i = 0; i < numIa; i++){
+            lista.add(new TreeElement(0, null, listaIA.get(i)));
+        }
+        return lista;
     }
     
     private ArrayList<Empresa> criarListaJogadores(int numJogadores){
