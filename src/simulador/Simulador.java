@@ -4,6 +4,7 @@ import modelos.Empresa;
 import gui.TelaPrincipal;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import modelos.Fabrica;
 
 public class Simulador {
@@ -22,6 +23,7 @@ public class Simulador {
     private int numRodadas;
     private int rodada;
     private int investimento;
+    private boolean acabou;
     
     public Simulador(){
         novoJogo();
@@ -35,6 +37,7 @@ public class Simulador {
         listaIA = null;
         listaJogador = null;
         arvore = null;
+        acabou = false;
     }
     
     public void iniciarJogo(int numJogadores, int numIA, int numRodadas, int investimento){
@@ -57,6 +60,82 @@ public class Simulador {
         }*/
         //arvore.filhos.get(0).empresa.mostraEmpresa();
         
+    }
+    
+    public void proximaRodada(){
+        rodada++;
+        
+        fecharMesEmpresas(listaJogador);
+        fecharMesEmpresas(listaIA);
+        
+        //atenderDemanda();
+        
+        verificaCapitalNegativo(listaJogador);
+        verificaCapitalNegativo(listaIA);
+        
+        if (rodada >= numRodadas && !acabou) {
+            mostraVencedor();
+        }
+        
+        tela.getPainelRodada().atualizar();
+    }
+    
+    private void fecharMesEmpresas(ArrayList<Empresa> lista){
+        for (Empresa empresa : lista) {
+           empresa.fecharMes();
+        }
+    }
+    
+    private void verificaCapitalNegativo(ArrayList<Empresa> lista){
+        for (int i = lista.size()-1; i >= 0; i--) {
+            Empresa empresa = lista.get(i);
+            
+            if (empresa.getCapital() < 0){
+                Empresa removido = lista.remove(i);
+                mostraCapitalNegativo(removido);
+            }
+            
+            if (acabou){
+                return;
+            }
+        }
+    }
+    
+    private void mostraCapitalNegativo(Empresa empresa){
+        JOptionPane.showMessageDialog(null, empresa.getNome() + " perdeu, pois o capital ficou negativo!");
+        int num = listaJogador.size() + listaIA.size();
+        if (num == 2) {
+            mostraVencedor();
+        }
+    }
+    
+    private void mostraVencedor() {
+        Empresa vencedor = verificaVencedor();
+        tela.mostrarVencedor(vencedor);
+    }
+    
+    private Empresa verificaVencedor(){
+        double maior = -1;
+        Empresa vencedora = null;
+        for (Empresa empresa : listaJogador) {
+            if (empresa.getCapital() > maior){
+                maior = empresa.getCapital();
+                vencedora = empresa;
+            }
+        }
+        
+        for (Empresa empresa : listaIA) {
+            if (empresa.getCapital() > maior){
+                maior = empresa.getCapital();
+                vencedora = empresa;
+            }
+        }
+        
+        if (vencedora != null){
+            acabou = true;
+        }
+        
+        return vencedora;
     }
     
     private ArrayList<TreeElement> criarArvore(int numIa, ArrayList<Empresa> listaIA){
@@ -90,6 +169,7 @@ public class Simulador {
         for(Empresa empresa : listaJogador){
             totalProb += empresa.getProbabilidadeVenda();
         }
+        System.out.println(totalProb);
         
         //calcular a prob de cada
         ArrayList<Integer> listaProb = new ArrayList<>();

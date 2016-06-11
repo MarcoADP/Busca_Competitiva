@@ -50,7 +50,6 @@ public class Empresa {
         this.salarioFuncionario = SALARIO_FUNCIONARIO;
         this.fabrica = fabrica;
         this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
-        this.numeroFuncionarios = 0;
         //atualizarGastosFuncionarios();
         // atributos padrões
     }
@@ -156,6 +155,7 @@ public class Empresa {
     public void fecharMes(){ //BASTA CHAMAR ESSA FUNÇÃO PRA RETORNAR O GASTO MENSAL E ATUALIZAR O CAPITAL
         double gastoMensal = calcularGastoMensal();//getGastoFuncionarios()  + this.investimentoMarketing + gastoFixo();
         this.capital -= gastoMensal; 
+        this.probabilidadeVenda = calcularProbabilidade();
     }
     
     public double fabricarCarro(){
@@ -199,6 +199,10 @@ public class Empresa {
     private int calcularProbabilidade(int preco, int marketing){
         int probabilidade = this.calcularProbPreco(preco) + this.calcularProbMarketing(marketing);        
         return probabilidade;
+    }
+    
+    public int calcularProbabilidade(){
+        return calcularProbabilidade(this.carro.getTipoPreco(), this.tipoMarketing);
     }
     
     public Double atualizarCapitalMarketing(int opcao){

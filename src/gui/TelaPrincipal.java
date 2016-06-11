@@ -1,6 +1,6 @@
 package gui;
 
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.*;
+import modelos.Empresa;
 import simulador.*;
 
 public class TelaPrincipal extends JFrame{
@@ -60,7 +61,7 @@ public class TelaPrincipal extends JFrame{
         menuBar.add(ajuda);
         setJMenuBar(menuBar);
         
-        novoJogo.addActionListener(new AcaoMenuNovoJogo());
+        novoJogo.addActionListener(new AcaoNovoJogo());
         sobre.addActionListener(new TelaSobre(this));
         sair.addActionListener(new AcaoMenuSair());
     }
@@ -79,6 +80,23 @@ public class TelaPrincipal extends JFrame{
         add(painelJogadores);
         pack();
         setLocationRelativeTo(null);
+    }
+    
+    public void mostrarVencedor(Empresa empresa){
+        painelRodada.venceu(new AcaoNovoJogo());
+        JLabel label;
+        if (empresa == null){
+            label = new JLabel("Todos perderam!");
+        } else {
+            label = new JLabel(empresa.getNome()+" Venceu!");
+        }
+        
+        label.setFont(new Font("Arial", Font.BOLD, 36));
+        JOptionPane.showMessageDialog(null, label, "Vencedor", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public PainelRodada getPainelRodada() {
+        return painelRodada;
     }
     
     private class AcaoBotaoIniciar implements ActionListener {
@@ -111,19 +129,17 @@ public class TelaPrincipal extends JFrame{
             add(painelRodada);
             pack();
             setLocationRelativeTo(null);
-            
-            //simulador.teste();
         }
     }
     
     private class AcaoBotaoSimular implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //simulador.proximaRodada();
+            simulador.proximaRodada();
         }
     }
     
-    private class AcaoMenuNovoJogo implements ActionListener{
+    private class AcaoNovoJogo implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();

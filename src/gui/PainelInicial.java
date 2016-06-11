@@ -19,7 +19,7 @@ public class PainelInicial extends javax.swing.JPanel {
     private void configurarComponentes(ActionListener acaoBotaoIniciar){
         spinnerPessoas.setModel(new SpinnerNumberModel(1, 0, 5, 1));
         spinnerIA.setModel(new SpinnerNumberModel(1, 0, 5, 1));
-        spinnerRodadas.setModel(new SpinnerNumberModel(1, 1, 15, 1));
+        spinnerRodadas.setModel(new SpinnerNumberModel(5, 1, 15, 1));
         
         botaoIniciar.addActionListener(acaoBotaoIniciar);
         
