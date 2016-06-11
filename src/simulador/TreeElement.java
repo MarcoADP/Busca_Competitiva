@@ -16,56 +16,100 @@ public class TreeElement {
         this.filhos = new ArrayList<>();
     }
     
-    public void gerarFilhos(TreeElement pai){
+    public void gerarFilhos(int limite){
         int i;
-        int novaProfundidade = pai.profundidade + 1;
+        if(this.profundidade == limite){
+            return;
+        }
+        int novaProfundidade = this.profundidade + 1;
         for(i = 0; i < 9; i++){
             TreeElement filho;
+            Empresa novaEmpresa;
             switch(i){    
-                case 0: //MN PN FD
-                    Empresa novaEmpresa = new Empresa(pai.empresa, 0, 0, 0);
-                    //new TreeElement(novaProfundidade, pai, novaEmpresa);
-                    //pai.children.add(filho);
+                case 0: //Marketing Normal Preço Normal Funcionario Demitido
+                    novaEmpresa = new Empresa(this.empresa, 0, 0, 1);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;
-                /*case 1: //MN PN FM
-                    filho = gerarNo(pai, 0, 0, 100);
-                    pai.children.add(filho);
+                case 1: //MN PN FM
+                    novaEmpresa = new Empresa(this.empresa, 0, 0, 100);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;
                 case 2: //MN PN FC
-                    filho = gerarNo(pai, 0, 0, 1);
-                    pai.children.add(filho);
+                    novaEmpresa = new Empresa(this.empresa, 0, 0, 1);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;
                     
                     
                 case 3: //MN PA FM
-                    filho = gerarNo(pai, 0, 1, 100);
-                    pai.children.add(filho);
+                    novaEmpresa = new Empresa(this.empresa, 0, 1, 100);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;
                 case 4: //MN PA FC
-                    filho = gerarNo(pai, 0, 0, 1);
-                    pai.children.add(filho);
+                    novaEmpresa = new Empresa(this.empresa, 0, 1, 1);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;
                     
                     
                 case 5: //MA PN FM
-                    filho = gerarNo(pai, 1, 0, 100);
-                    pai.children.add(filho);
+                    novaEmpresa = new Empresa(this.empresa, 1, 0, 100);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;
                 case 6: //MA PN FC
-                    filho = gerarNo(pai, 1, 0, 1);
-                    pai.children.add(filho);
+                    novaEmpresa = new Empresa(this.empresa, 1, 0, 1);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;
                 
                     
                 case 7: //MA PA FM
-                    filho = gerarNo(pai, 1, 1, 100);
-                    pai.children.add(filho);
+                    novaEmpresa = new Empresa(this.empresa, 1, 1, 100);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
                     break;    
                 case 8: //MA PA FC
-                    filho = gerarNo(pai, 1, 1, 1);
-                    pai.children.add(filho);
-                    break;*/
+                    novaEmpresa = new Empresa(this.empresa, 1, 1, 1);
+                    filho = new TreeElement(novaProfundidade, this, novaEmpresa);
+                    //filho.empresa.mostraEmpresa();
+                    this.filhos.add(filho);
+                    filho.gerarFilhos(limite);
+                    break;
             }
+        }
+    }
+    
+    public void mostraArvore(int profundidade){
+        if(profundidade > 4){
+            return;
+        }
+        System.out.println("PROFUNDIDADE => " + profundidade);
+        this.empresa.mostraEmpresa();
+        int tamanho = this.filhos.size();
+        for(int i = 0; i < tamanho; i++){
+            this.filhos.get(i).mostraArvore(profundidade + 1);
+            //System.out.println("PROFUNDIDADE => " + profundidade);
+            //this.filhos.get(i).empresa.mostraEmpresa();
         }
     }
     

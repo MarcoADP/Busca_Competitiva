@@ -6,8 +6,8 @@ public class Carro {
     public final static int MODELO_MEDIO = 2;
     public final static int MODELO_LUXO = 3;
     
-    public final static int TIPO_PRECO_NORMAL = 1;
-    public final static int TIPO_PRECO_CARO = 2;
+    public final static int TIPO_PRECO_NORMAL = 0;
+    public final static int TIPO_PRECO_CARO = 1;
     
     public final static int PRECO_POPULAR = 20000;
     public final static int PRECO_MEDIO = 35000;
