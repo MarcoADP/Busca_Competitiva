@@ -44,6 +44,8 @@ public class PainelEmpresa extends javax.swing.JPanel {
         }
     }
     
+    
+    
     private void mudarLabelGasto(){
         double gasto = empresa.calcularGastoFixo();
         String str = Util.formatarDinheiro(gasto);
