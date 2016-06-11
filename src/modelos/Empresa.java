@@ -67,8 +67,7 @@ public class Empresa {
         
         //alterar Atributos Variáveis
         this.carro.alterarPreco(opPreco);
-        this.calcularProbabilidade(opPreco, opInv);
-        
+                
         //atualizar Marketing
         this.tipoMarketing = opInv;
         this.investimentoMarketing = this.investir(opInv);
@@ -243,13 +242,29 @@ public class Empresa {
         this.estoqueCarro--;
     }
     
-    /*public Empresa escolhaAcoes(int opMarketing, int opPreco, int opFuncionario) {
-        Empresa novaEmpresa = this;
-        novaEmpresa.investir(opMarketing);
-        novaEmpresa.carro.alterarPreco(opPreco);
-        novaEmpresa.atualizarNumeroFuncionarios(opFuncionario);
-        return novaEmpresa;
-    }*/
+    public void realizarAcoes(int opMarketing, int opPreco, int opFunc) {
+        //Atualizar Preço Carro
+        this.carro.alterarPreco(opPreco);
+        
+        //Atualizar Marketing
+        this.tipoMarketing = opMarketing;
+        this.investimentoMarketing = this.investir(opMarketing);
+        this.capital = this.atualizarCapitalMarketing(opMarketing);
+        
+        //Atualizar Probabilidade
+        this.probabilidadeVenda = this.calcularProbabilidade(opPreco, opMarketing);
+        
+        //Fabricar Carros
+        double custo = this.fabricarCarro();
+        this.capital -= custo;
+        
+        //Atualizar Funcionários
+        this.numeroFuncionarios = this.atualizarNumeroFuncionarios(opFunc);
+        this.limiteFuncionarios = this.atualizarLimiteFuncionarios(opFunc);
+        this.gastoFuncionarios = this.atualizarGastosFuncionarios();
+        
+        
+    }
             
     public void mostraEmpresa(){
         System.out.println("====================================");
