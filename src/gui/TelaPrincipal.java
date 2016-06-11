@@ -72,7 +72,7 @@ public class TelaPrincipal extends JFrame{
     
     private void iniciarJogo(int numPessoas, int numIA, int numRodadas, int investimento){
         setMinimumSize(new Dimension(500, 450));
-        setPreferredSize(new Dimension(850, 500));
+        setPreferredSize(new Dimension(850, 600));
         setResizable(true);
         getContentPane().removeAll();
         
@@ -81,6 +81,7 @@ public class TelaPrincipal extends JFrame{
         painelJogadores = new PainelJogadores(simulador.getListaJogador(), simulador.getListaIA(), new AcaoBotaoComecar());
         add(painelJogadores);
         pack();
+        setLocationRelativeTo(null);
     }
     
     private class AcaoBotaoIniciar implements ActionListener {
@@ -112,6 +113,7 @@ public class TelaPrincipal extends JFrame{
             painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
             add(painelRodada);
             pack();
+            setLocationRelativeTo(null);
             
             //simulador.teste();
         }

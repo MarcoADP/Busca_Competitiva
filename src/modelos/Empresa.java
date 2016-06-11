@@ -2,11 +2,18 @@ package modelos;
 
 public class Empresa {
     
-    public final static int INVESTIMENTO_MARKETING_NORMAL = 0;
-    public final static int INVESTIMENTO_MARKETING_ALTO = 1;
+    public final static double INVESTIMENTO_MARKETING_NORMAL = 0.25; // 25% de investimento do capital
+    public final static double INVESTIMENTO_MARKETING_ALTO = 0.40;   // 40% de investimento do capital
     
     public final static int MARKETING_NORMAL = 0;
     public final static int MARKETING_ALTO = 1;
+    
+    public final static int FATOR_FUNCIONARIO_CONTRATAR = 10;
+    public final static int FATOR_FUNCIONARIO_DEMITIR = 10;
+    
+    public final static int SALARIO_FUNCIONARIO = 1000;
+    
+    public final static int LIMITE_FUNCIONARIO = 100;
     
     //CONFIGURAÇÃO INICIAL
     private String nome;
@@ -29,6 +36,7 @@ public class Empresa {
             
     //PARÂMETROS VARIÁVEIS
     private double investimentoMarketing;
+    private int tipoMarketing;
 
     public Empresa(String nome, int investimento, boolean isBot, Fabrica fabrica){
         this.nome = nome;
@@ -37,18 +45,11 @@ public class Empresa {
         this.isBot = isBot;
         this.estoqueCarro = 0;
         this.investimentoMarketing = 0;
-        this.limiteFuncionarios = 100; //Número máximo de funcionários por empresa
-        this.salarioFuncionario = 1000;
-        if(fabrica == Fabrica.PEQUENA){
-            this.fabrica = Fabrica.PEQUENA;
-            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
-        } else if(fabrica == Fabrica.MEDIA){
-            this.fabrica = Fabrica.MEDIA;
-            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
-        } else{
-            this.fabrica = Fabrica.GRANDE;
-            this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
-        }
+        this.tipoMarketing = MARKETING_NORMAL;
+        this.limiteFuncionarios = LIMITE_FUNCIONARIO;      //Número máximo de funcionários por empresa
+        this.salarioFuncionario = SALARIO_FUNCIONARIO;
+        this.fabrica = fabrica;
+        this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
         this.numeroFuncionarios = 0;
         //atualizarGastosFuncionarios();
         // atributos padrões
@@ -69,6 +70,7 @@ public class Empresa {
         this.calcularProbabilidade(opPreco, opInv);
         
         //atualizar Marketing
+        this.tipoMarketing = opInv;
         this.investimentoMarketing = this.investir(opInv);
         this.capital = this.atualizarCapitalMarketing(opInv);
         
@@ -181,10 +183,10 @@ public class Empresa {
     public Double atualizarCapitalMarketing(int opcao){
         //this.probabilidadeVenda = this.calcularProbabilidade(this.carro.getTipoPreco(), opcao);
         switch(opcao){
-            case INVESTIMENTO_MARKETING_NORMAL:
-                return this.capital * 0.75;
-            case INVESTIMENTO_MARKETING_ALTO:
-                return this.capital * 0.6;
+            case MARKETING_NORMAL:
+                return this.capital * (1 - INVESTIMENTO_MARKETING_NORMAL);
+            case MARKETING_ALTO:
+                return this.capital * (1 - INVESTIMENTO_MARKETING_ALTO);
         }
         return -1.0;
     }
@@ -192,11 +194,11 @@ public class Empresa {
     public Double investir(int opcao){
         //this.probabilidadeVenda = this.calcularProbabilidade(this.carro.getTipoPreco(), opcao);
         switch(opcao){
-            case INVESTIMENTO_MARKETING_NORMAL:
-                return this.capital * 0.25;
+            case MARKETING_NORMAL:
+                return this.capital * INVESTIMENTO_MARKETING_NORMAL;
                 //this.capital = this.capital * 0.75;
-            case INVESTIMENTO_MARKETING_ALTO:
-                return this.capital * 0.4;
+            case MARKETING_ALTO:
+                return this.capital * INVESTIMENTO_MARKETING_ALTO;
                 //this.capital = this.capital * 0.6;
         }
         return -1.0;
@@ -369,7 +371,13 @@ public class Empresa {
     public void setProbabilidadeVenda(int probabilidadeVenda) {
         this.probabilidadeVenda = probabilidadeVenda;
     }
-    
-    
+
+    public int getTipoMarketing() {
+        return tipoMarketing;
+    }
+
+    public void setTipoMarketing(int tipoMarketing) {
+        this.tipoMarketing = tipoMarketing;
+    }
     
 }

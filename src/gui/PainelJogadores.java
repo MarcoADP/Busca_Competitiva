@@ -46,7 +46,7 @@ public class PainelJogadores extends javax.swing.JPanel {
         scrollPane = new javax.swing.JScrollPane();
         botaoComecar = new javax.swing.JButton();
 
-        scrollPane.setBorder(null);
+        scrollPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         botaoComecar.setText("Começar");
         botaoComecar.setToolTipText("");

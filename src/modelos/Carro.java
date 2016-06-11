@@ -9,6 +9,9 @@ public class Carro {
     public final static int TIPO_PRECO_NORMAL = 0;
     public final static int TIPO_PRECO_CARO = 1;
     
+    public final static double FATOR_PRECO_NORMAL = 1.0;
+    public final static double FATOR_PRECO_CARO = 1.5;
+    
     public final static int PRECO_POPULAR = 20000;
     public final static int PRECO_MEDIO = 35000;
     public final static int PRECO_LUXO = 50000;
@@ -23,6 +26,7 @@ public class Carro {
     public final static int TEMPO_MEDIO = 3;
     public final static int TEMPO_LUXO = 5;
     
+    private int modelo;
     private int custo;
     private int tempo;
     private int tipoPreco;
@@ -31,6 +35,7 @@ public class Carro {
     
     public Carro(int modelo, int tipo_preco){
         this.tipoPreco = tipo_preco;
+        this.modelo = modelo;
         switch (modelo) {
             case MODELO_POPULAR:
                 this.custo = CUSTO_POPULAR;
@@ -54,26 +59,28 @@ public class Carro {
     }
     
     public void alterarPreco(int opcao){
+        double fator = 0;
+        int preco = 0;
         switch(opcao){
-            case 0:
-                if(this.nomeModelo.equals("Popular")){
-                    this.precoVenda = PRECO_POPULAR;
-                } else if(this.nomeModelo.equals("Médio")){
-                    this.precoVenda = PRECO_MEDIO;
-                } else {
-                    this.precoVenda = PRECO_LUXO;
-                }
+            case TIPO_PRECO_NORMAL:
+                fator = FATOR_PRECO_NORMAL;
                 break;
-            case 1:
-                if(this.nomeModelo.equals("Popular")){
-                    this.precoVenda = (int) (PRECO_POPULAR * 1.5);
-                } else if(this.nomeModelo.equals("Médio")){
-                    this.precoVenda = (int) (PRECO_MEDIO * 1.5);
-                } else {
-                    this.precoVenda = (int) (PRECO_LUXO * 1.5);
-                }
+            case TIPO_PRECO_CARO:
+                fator = FATOR_PRECO_CARO;
                 break;
         }
+        
+        switch (modelo) {
+            case MODELO_POPULAR:
+                preco = PRECO_POPULAR;
+                break;
+            case MODELO_MEDIO:
+                preco = PRECO_MEDIO;
+                break;
+            case MODELO_LUXO:
+                preco = PRECO_LUXO;
+        }
+        this.precoVenda = (int) (preco * fator);
     }
     
     //GET e SET
@@ -105,4 +112,9 @@ public class Carro {
     public String getStringModelo(){
         return nomeModelo;
     }
+
+    public void setTipoPreco(int tipoPreco) {
+        this.tipoPreco = tipoPreco;
+    }
+    
 }

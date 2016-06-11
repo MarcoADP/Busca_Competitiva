@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import modelos.Empresa;
@@ -32,6 +31,8 @@ public class PainelRodada extends javax.swing.JPanel {
         
         botaoSimular.addActionListener(acaoSimular);
         setRodada(simulador.getRodada());
+        
+        labelDemanda.setText("Demanda: "+Simulador.DEMANDA_POR_RODADA+" carros");
     }
     
     public void setRodada(int rodada){
@@ -50,8 +51,9 @@ public class PainelRodada extends javax.swing.JPanel {
         scrollPane = new javax.swing.JScrollPane();
         botaoSimular = new javax.swing.JButton();
         labelRodada = new javax.swing.JLabel();
+        labelDemanda = new javax.swing.JLabel();
 
-        scrollPane.setBorder(null);
+        scrollPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         botaoSimular.setText("Simular Rodada");
         botaoSimular.setActionCommand("SimularRodada");
@@ -64,6 +66,9 @@ public class PainelRodada extends javax.swing.JPanel {
         labelRodada.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelRodada.setText("Rodada");
 
+        labelDemanda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelDemanda.setText("Demanda:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,6 +77,8 @@ public class PainelRodada extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelRodada)
+                .addGap(34, 34, 34)
+                .addComponent(labelDemanda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botaoSimular)
                 .addContainerGap())
@@ -83,6 +90,7 @@ public class PainelRodada extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(botaoSimular, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(labelDemanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelRodada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -95,6 +103,7 @@ public class PainelRodada extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoSimular;
+    private javax.swing.JLabel labelDemanda;
     private javax.swing.JLabel labelRodada;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables

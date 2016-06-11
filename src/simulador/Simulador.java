@@ -41,10 +41,10 @@ public class Simulador {
         listaJogador = criarListaJogadores(numJogadores);
         listaIA = criarListaIA(numIA);
         
-        TreeElement arvore = new TreeElement(0, null, listaJogador.get(0));
+        //TreeElement arvore = new TreeElement(0, null, listaJogador.get(0));
         //arvore.empresa.mostraEmpresa();
-        arvore.gerarFilhos(5);
-        arvore.mostraArvore(0);
+        //arvore.gerarFilhos(5);
+        //arvore.mostraArvore(0);
         /*int tam = arvore.filhos.size();
         for(int i = 0; i < tam; i++){
             arvore.filhos.get(i).empresa.mostraEmpresa();
