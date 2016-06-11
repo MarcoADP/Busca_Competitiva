@@ -58,10 +58,11 @@ public class Carro {
         }
     }
     
-    public void alterarPreco(int opcao){
+    public void alterarPreco(int tipo){
+        this.tipoPreco = tipo;
         double fator = 0;
         int preco = 0;
-        switch(opcao){
+        switch(tipo){
             case TIPO_PRECO_NORMAL:
                 fator = FATOR_PRECO_NORMAL;
                 break;

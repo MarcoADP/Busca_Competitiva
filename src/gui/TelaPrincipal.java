@@ -71,9 +71,6 @@ public class TelaPrincipal extends JFrame{
     }
     
     private void iniciarJogo(int numPessoas, int numIA, int numRodadas, int investimento){
-        setMinimumSize(new Dimension(500, 450));
-        setPreferredSize(new Dimension(850, 600));
-        setResizable(true);
         getContentPane().removeAll();
         
         simulador.iniciarJogo(numPessoas, numIA, numRodadas, investimento);

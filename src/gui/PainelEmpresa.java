@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import modelos.Carro;
 import modelos.Empresa;
@@ -20,8 +19,6 @@ public class PainelEmpresa extends javax.swing.JPanel {
     }
     
     private void configurarComponentes(){
-        setBorder(BorderFactory.createTitledBorder(empresa.getNome()));
-        
         String[] tiposFabrica = {"Pequena", "Média", "Grande"};
         comboFabrica.setModel(new DefaultComboBoxModel(tiposFabrica));
         comboFabrica.addItemListener(new ListenerFabrica());
@@ -48,7 +45,7 @@ public class PainelEmpresa extends javax.swing.JPanel {
     }
     
     private void mudarLabelGasto(){
-        double gasto = empresa.gastoFixo();
+        double gasto = empresa.calcularGastoFixo();
         String str = Util.formatarDinheiro(gasto);
         labelGasto.setText("Gastos fixos: "+str);
     }

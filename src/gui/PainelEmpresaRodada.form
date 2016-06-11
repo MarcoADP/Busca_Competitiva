@@ -20,9 +20,23 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="painelMarketing" alignment="1" max="32767" attributes="0"/>
-                  <Component id="painelInfo" alignment="0" max="32767" attributes="0"/>
-                  <Component id="painelFuncionarios" max="32767" attributes="0"/>
-                  <Component id="painelPrecoCarro" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="painelInfoFuncionario" min="-2" max="-2" attributes="0"/>
+                          <Component id="painelInfoGastos" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="painelInfoCarro" max="32767" attributes="0"/>
+                          <Component id="painelInfo" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="painelPrecoCarro" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="painelFuncionarios" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -34,11 +48,23 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="painelMarketing" min="-2" pref="87" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="painelPrecoCarro" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="painelFuncionarios" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="painelInfo" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="painelFuncionarios" max="32767" attributes="0"/>
+                  <Component id="painelPrecoCarro" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="painelInfoCarro" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="painelInfo" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="painelInfoGastos" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="painelInfoFuncionario" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -109,7 +135,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Info"/>
+            <TitledBorder title="Geral"/>
           </Border>
         </Property>
       </Properties>
@@ -120,15 +146,8 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="labelFuncionario" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelCapital" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelGasto" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelEstoque" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelFuncionarioMax" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelCarroModelo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelCarroPreco" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelEstoqueCapacidade" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelFuncionarioSalario" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelCapital" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelFabrica" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -140,21 +159,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="labelCapital" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelGasto" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelEstoque" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelEstoqueCapacidade" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelCarroModelo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelCarroPreco" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelFuncionario" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelFuncionarioSalario" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelFuncionarioMax" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelFabrica" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -166,44 +171,9 @@
             <Property name="text" type="java.lang.String" value="Capital:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="labelGasto">
+        <Component class="javax.swing.JLabel" name="labelFabrica">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gasto mensal:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelEstoque">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Estoque:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelFuncionario">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios: "/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelFuncionarioMax">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xe1;ximo de funcion&#xe1;rios:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelCarroModelo">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Modelo do carro:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelCarroPreco">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Pre&#xe7;o de venda do carro:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelEstoqueCapacidade">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Capacidade do estoque:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelFuncionarioSalario">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Sal&#xe1;rio de um funcion&#xe1;rio:"/>
+            <Property name="text" type="java.lang.String" value="Tipo de f&#xe1;brica:"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -250,8 +220,11 @@
       <SubComponents>
         <Component class="javax.swing.JRadioButton" name="radioPrecoNormal">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Normal"/>
+            <Property name="text" type="java.lang.String" value="Normal - Valor do carro normal"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPrecoNormalActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelPrecoCarro">
           <Properties>
@@ -289,7 +262,7 @@
                       <Component id="radioFuncionarioManter" min="-2" max="-2" attributes="0"/>
                       <Component id="radioFuncionarioDemitir" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="139" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -329,6 +302,203 @@
         <Component class="javax.swing.JRadioButton" name="radioFuncionarioContratar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Contratar 10"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="painelInfoCarro">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Informa&#xe7;&#xf5;es do Carro"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelEstoque" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelEstoqueCapacidade" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelCarroModelo" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelCarroPreco" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelCarroGasto" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelCarroProduzidos" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelEstoque" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelEstoqueCapacidade" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelCarroModelo" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelCarroPreco" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelCarroGasto" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelCarroProduzidos" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="labelEstoque">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Estoque:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelEstoqueCapacidade">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Capacidade do estoque:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelCarroModelo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Modelo do carro:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelCarroPreco">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pre&#xe7;o de venda do carro:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelCarroGasto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Custo de produ&#xe7;&#xe3;o do carro:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelCarroProduzidos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Total a ser produzido:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="painelInfoFuncionario">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Informa&#xe7;&#xf5;es dos Funcion&#xe1;rios"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelFuncionario" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelFuncionarioMax" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelFuncionarioSalario" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="44" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelFuncionario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelFuncionarioSalario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelFuncionarioMax" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="labelFuncionario">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelFuncionarioSalario">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sal&#xe1;rio de um funcion&#xe1;rio:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelFuncionarioMax">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="M&#xe1;ximo de funcion&#xe1;rios:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="painelInfoGastos">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Gastos"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelGastoFabrica" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelGastoProducao" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelGastoFuncionario" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelGastoMarketing" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelGastoFabrica" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelGastoProducao" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelGastoFuncionario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelGastoMarketing" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="labelGastoFabrica">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gasto mensal da f&#xe1;brica:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelGastoProducao">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gasto mensal de produ&#xe7;&#xe3;o:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelGastoFuncionario">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gasto mensal com funcion&#xe1;rios:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelGastoMarketing">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gasto com o marketing:"/>
           </Properties>
         </Component>
       </SubComponents>

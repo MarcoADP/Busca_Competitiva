@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import modelos.Empresa;
 
 public class PainelJogadores extends javax.swing.JPanel {
@@ -19,16 +17,12 @@ public class PainelJogadores extends javax.swing.JPanel {
     }
     
     private void configurarComponentes(ActionListener acaoComecar){
-        JPanel painelCentro = new JPanel(new WrapLayout());
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        scrollPane.setViewportView(painelCentro);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         for (Empresa empresa : listaJogadores) {
-            painelCentro.add(new PainelEmpresa(empresa));
+            painelTab.add(empresa.getNome(), new PainelEmpresa(empresa));
         }
         
         for (Empresa empresa : listaIA) {
-            painelCentro.add(new PainelEmpresa(empresa));
+            painelTab.add(empresa.getNome(), new PainelEmpresa(empresa));
         }
         
         botaoComecar.addActionListener(acaoComecar);
@@ -43,10 +37,8 @@ public class PainelJogadores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        scrollPane = new javax.swing.JScrollPane();
         botaoComecar = new javax.swing.JButton();
-
-        scrollPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        painelTab = new javax.swing.JTabbedPane();
 
         botaoComecar.setText("Começar");
         botaoComecar.setToolTipText("");
@@ -59,12 +51,12 @@ public class PainelJogadores extends javax.swing.JPanel {
                 .addContainerGap(300, Short.MAX_VALUE)
                 .addComponent(botaoComecar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(scrollPane)
+            .addComponent(painelTab)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addComponent(painelTab, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoComecar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -74,6 +66,6 @@ public class PainelJogadores extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoComecar;
-    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTabbedPane painelTab;
     // End of variables declaration//GEN-END:variables
 }
