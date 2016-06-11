@@ -265,7 +265,43 @@ public class Empresa {
         
         
     }
-            
+    
+    public void escolherAcoes(int id){
+        switch(id){
+            case 0: //MN PN FD
+                this.realizarAcoes(0, 0, 0);
+                break;
+            case 1: //MN PN FM
+                this.realizarAcoes(0, 0, 100);
+                break;
+            case 2: //MN PN FC
+                this.realizarAcoes(0, 0, 1);
+                break;
+                
+                
+            case 3: //MN PA FM
+                this.realizarAcoes(0, 1, 100);
+                break;
+            case 4: //MN PA FC
+                this.realizarAcoes(0, 1, 1);
+                break;
+                
+            case 5: //MA PN FM
+                this.realizarAcoes(1, 0, 100);
+                break;
+            case 6: //MA PN FC
+                this.realizarAcoes(1, 0, 1);
+                break;
+                
+            case 7: //MA PA FM
+                this.realizarAcoes(1, 1, 100);
+                break;
+            case 8: //MA PA FC
+                this.realizarAcoes(1, 1, 1);
+                break;
+        }
+    }
+    
     public void mostraEmpresa(){
         System.out.println("====================================");
         System.out.println("Nome => " + this.nome);
