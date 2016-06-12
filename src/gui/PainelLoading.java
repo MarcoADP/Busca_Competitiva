@@ -1,40 +1,83 @@
 package gui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.SwingWorker;
+import simulador.Simulador;
 
-public class PainelLoading extends javax.swing.JPanel {
+public class PainelLoading extends javax.swing.JPanel implements PropertyChangeListener {
 
-    public PainelLoading() {
+    private final TelaPrincipal tela;
+    private final Simulador simulador;
+    
+    public PainelLoading(TelaPrincipal tela, Simulador simulador) {
         initComponents();
+        this.tela = tela;
+        this.simulador = simulador;
         configurarComponentes();
     }
-    
-    private Thread thread;
-    
+
     private void configurarComponentes(){
         barLoading.setMinimum(0);
         barLoading.setMaximum(100);
-        thread = new Thread(new Loading());
+        textArea.setLineWrap(true);
+        textArea.setEditable(false);
+        botaoContinuar.setEnabled(false);
+        //scrollPane.setVisible(false);
+        //botaoContinuar.setVisible(false);
     }
     
     public void executar(){
-        thread.start();
+        Task task = new Task();
+        task.addPropertyChangeListener(this);
+        task.execute();
     }
     
-    private class Loading implements Runnable {
+    public void mostrarVendidos(){
+        
+    }
+    
+    /**
+     * Invoked when task's progress property changes.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("progress".equals(evt.getPropertyName())) {
+            int progress = (Integer) evt.getNewValue();
+            barLoading.setValue(progress);
+        } 
+    }
+
+    class Task extends SwingWorker<Void, Void> {
+        /*
+         * Main task. Executed in background thread.
+         */
         @Override
-        public void run() {
-            for (int i = 0; i < 100; i++) {
-                barLoading.setValue(i);
+        public Void doInBackground() {
+            int progress = 0;
+            setProgress(0);
+            while (progress < 102) {
                 try {
-                    Thread.sleep(20);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PainelLoading.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    Thread.sleep(10);
+                } catch (InterruptedException ignore) {}
+                progress++;
+                setProgress(progress);
             }
+            return null;
+        }
+ 
+        /*
+         * Executed in event dispatching thread
+         */
+        @Override
+        public void done() {
+            botaoContinuar.setEnabled(true);
+            labelSimulando.setText("Simulação terminada.");
+            
+            textArea.append(simulador.getInfoRodada());
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,9 +90,23 @@ public class PainelLoading extends javax.swing.JPanel {
 
         barLoading = new javax.swing.JProgressBar();
         labelSimulando = new javax.swing.JLabel();
+        scrollPane = new javax.swing.JScrollPane();
+        textArea = new javax.swing.JTextArea();
+        botaoContinuar = new javax.swing.JButton();
 
         labelSimulando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelSimulando.setText("Simulando...");
+
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        scrollPane.setViewportView(textArea);
+
+        botaoContinuar.setText("Continuar");
+        botaoContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoContinuarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,7 +116,11 @@ public class PainelLoading extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(barLoading, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addComponent(labelSimulando, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labelSimulando, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scrollPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -69,13 +130,25 @@ public class PainelLoading extends javax.swing.JPanel {
                 .addComponent(barLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelSimulando)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botaoContinuar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoContinuarActionPerformed
+        tela.setPainelRodada();
+    }//GEN-LAST:event_botaoContinuarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barLoading;
+    private javax.swing.JButton botaoContinuar;
     private javax.swing.JLabel labelSimulando;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
+
 }

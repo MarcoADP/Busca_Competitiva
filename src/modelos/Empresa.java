@@ -152,8 +152,8 @@ public class Empresa {
         return calcularGastoFixo() + calcularGastoFuncionario(numeroFuncionarios);
     }
     
-    public void fecharMes(){ //BASTA CHAMAR ESSA FUNÇÃO PRA RETORNAR O GASTO MENSAL E ATUALIZAR O CAPITAL
-        double gastoMensal = calcularGastoMensal();//getGastoFuncionarios()  + this.investimentoMarketing + gastoFixo();
+    public void fecharMes(){
+        double gastoMensal = calcularGastoMensal(); //getGastoFuncionarios()  + this.investimentoMarketing + gastoFixo();
         this.capital -= gastoMensal; 
         this.probabilidadeVenda = calcularProbabilidade();
     }

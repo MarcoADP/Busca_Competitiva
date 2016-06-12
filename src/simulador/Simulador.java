@@ -25,6 +25,8 @@ public class Simulador {
     private int investimento;
     private boolean acabou;
     
+    private String strInfoRodada;
+    
     public Simulador(){
         novoJogo();
     }
@@ -38,6 +40,7 @@ public class Simulador {
         listaJogador = null;
         arvore = null;
         acabou = false;
+        strInfoRodada = "";
     }
     
     public void iniciarJogo(int numJogadores, int numIA, int numRodadas, int investimento){
@@ -99,6 +102,14 @@ public class Simulador {
                 return;
             }
         }
+    }
+    
+    private void appendInfoRodada(String str){
+        strInfoRodada += str;
+    }
+    
+    public String getInfoRodada(){
+        return strInfoRodada;
     }
     
     private void mostraCapitalNegativo(Empresa empresa){

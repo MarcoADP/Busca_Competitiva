@@ -3,6 +3,10 @@ package gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,6 +20,7 @@ public class TelaPrincipal extends JFrame{
     private PainelInicial painelInicial;
     private PainelJogadores painelJogadores;
     private PainelRodada painelRodada;
+    private PainelLoading painelLoading;
     
     private JMenuBar menuBar;
     private JMenu arquivo;
@@ -124,17 +129,28 @@ public class TelaPrincipal extends JFrame{
     private class AcaoBotaoComecar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            getContentPane().removeAll();
-            painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
-            add(painelRodada);
-            pack();
-            setLocationRelativeTo(null);
+            setPainelRodada();
         }
+    }
+    
+    public void setPainelRodada(){
+        getContentPane().removeAll();
+        painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
+        add(painelRodada);
+        pack();
+        setLocationRelativeTo(null);
     }
     
     private class AcaoBotaoSimular implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            getContentPane().removeAll();
+            painelLoading = new PainelLoading(TelaPrincipal.this, simulador);
+            add(painelLoading);
+            pack();
+            setLocationRelativeTo(null);
+            painelLoading.executar();
+            
             simulador.proximaRodada();
         }
     }
