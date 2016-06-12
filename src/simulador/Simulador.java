@@ -68,7 +68,7 @@ public class Simulador {
         fecharMesEmpresas(listaJogador);
         fecharMesEmpresas(listaIA);
         
-        //atenderDemanda();
+        atenderDemanda();
         
         verificaCapitalNegativo(listaJogador);
         verificaCapitalNegativo(listaIA);
@@ -169,9 +169,14 @@ public class Simulador {
         for(Empresa empresa : listaJogador){
             totalProb += empresa.getProbabilidadeVenda();
         }
+        for(Empresa empresa : listaIA){
+            totalProb += empresa.getProbabilidadeVenda();
+        }
         System.out.println(totalProb);
         
+        
         //calcular a prob de cada
+        //0 a listaJogador.size-1 -> jogadores reais
         ArrayList<Integer> listaProb = new ArrayList<>();
         for(Empresa empresa : listaJogador){
             /*totalProb - 100
@@ -180,6 +185,12 @@ public class Simulador {
             */
             Integer prob = (int) (100 * empresa.getProbabilidadeVenda() / totalProb);
             listaProb.add(prob);    
+        }
+        
+        //listaJogador.size a listaIA.size-1 -> IA
+        for(Empresa empresa : listaIA){
+            Integer prob = (int) (100 * empresa.getProbabilidadeVenda() / totalProb);
+            listaProb.add(prob);
         }
         
         //vender cada carro
@@ -197,15 +208,38 @@ public class Simulador {
                     maximo = numeroSorteado;
                 }
             }
-            empresaVendedora = listaJogador.get(indEmpresa);
+            if(indEmpresa < listaJogador.size()){
+                empresaVendedora = listaJogador.get(indEmpresa);
+            } else {
+                int ind = indEmpresa - listaJogador.size();
+                empresaVendedora = listaIA.get(ind);
+            }
             if(!empresaVendedora.atualizaEstoque()){    //se a empresa esta com estoque zerado
                 i = i - 1;  //volta o carro para a demanda
                 //o numero sorteado para empresa com estoque vazio sera entre [0 e 1[
                 listaProb.set(indEmpresa, 1);
             }
+            if(this.confereEstoque()){
+                return;
+            }
         }
    }
-
+    
+    public boolean confereEstoque(){
+        for(Empresa empresa : listaJogador){
+            if(empresa.getEstoqueCarro() > 0){
+                return false;
+            }
+        }
+        for(Empresa empresa : listaIA){
+            if(empresa.getEstoqueCarro() > 0){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     public ArrayList<Empresa> getListaJogador() {
         return listaJogador;
     }
