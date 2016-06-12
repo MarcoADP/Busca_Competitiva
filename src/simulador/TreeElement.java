@@ -10,12 +10,15 @@ import modelos.*;
 //cada elemento tem um id, a partir desse id voce chama empresa.escolherAcoes(id);
 
 public class TreeElement {
-    int id;
-    TreeElement pai;
-    int profundidade;
-    Empresa empresa;
-    ArrayList<TreeElement> filhos;
-    TreeElement melhorFilho;
+    
+    private int id;
+    private final TreeElement pai;
+    private final int profundidade;
+    private final Empresa empresa;
+    private final ArrayList<TreeElement> filhos;
+    private final ArrayList<Integer> caminho;
+    private TreeElement melhorFilho;
+    
     
     public TreeElement(int profundidade, TreeElement pai, Empresa empresa){
         this.id = 0;
@@ -23,7 +26,12 @@ public class TreeElement {
         this.pai = pai;
         this.empresa = empresa;
         this.filhos = new ArrayList<>();
+        this.caminho = new ArrayList<>();
         this.melhorFilho = null;
+    }
+    
+    public TreeElement(Empresa empresa){
+        this(0, null, empresa);
     }
     
     public void gerarFilhos(int limite){
@@ -31,6 +39,7 @@ public class TreeElement {
         if(this.profundidade == limite){
             return;
         }
+        
         int novaProfundidade = this.profundidade + 1;
         for(i = 0; i < 9; i++){
             TreeElement filho;
@@ -118,45 +127,56 @@ public class TreeElement {
         }
     }
     
-    public void mostraArvore(int profundidade){
-        if(profundidade > 4){
+    public void mostraArvore(){
+        if(filhos.isEmpty()){
+            System.out.println("\nFOLHA:");
+            empresa.mostraEmpresa();
             return;
         }
-        System.out.println("PROFUNDIDADE => " + profundidade);
         this.empresa.mostraEmpresa();
-        int tamanho = this.filhos.size();
-        for(int i = 0; i < tamanho; i++){
-            this.filhos.get(i).mostraArvore(profundidade + 1);
-            //System.out.println("PROFUNDIDADE => " + profundidade);
-            //this.filhos.get(i).empresa.mostraEmpresa();
+        for (TreeElement filho : filhos) {
+            filho.mostraArvore();
         }
     }
     
-    public void melhorFolha(int profundidade){
+    public void calcularMelhorFolha(){
         int tamanho = this.filhos.size();
-        int i, a = 0;
+        int i;
         
-        if(profundidade == 4){
-            this.melhorFilho = this.filhos.get(0);
-            for(i = 1; i < tamanho;i++){
-                if(this.filhos.get(i).empresa.getCapital() > this.melhorFilho.empresa.getCapital()){
-                    //System.out.println(this.filhos.get(i).empresa.getCapital());
-                    this.melhorFilho = this.filhos.get(i);
-                }
-            }
-            //System.out.println("aa => " + this.melhorFilho.empresa.getCapital());
+        if (filhos.isEmpty()){
+            this.melhorFilho = this;
+            this.caminho.add(this.id);
             return;
         }
+        
         for(i = 0; i < tamanho; i++){
-            this.filhos.get(i).melhorFolha(profundidade+1);
+            this.filhos.get(i).calcularMelhorFolha();
         }
+        
         this.melhorFilho = this.filhos.get(0);
         for(i = 1; i < tamanho; i++){
             if(this.filhos.get(i).melhorFilho.empresa.getCapital() > this.melhorFilho.empresa.getCapital()){
                 this.melhorFilho = this.filhos.get(i);
             }
-            //System.out.println("bb => " + this.filhos.get(i).melhorFilho.empresa.getCapital());
         }
+        this.caminho.add(this.id);
+        this.caminho.addAll(this.melhorFilho.caminho);
+    }
+
+    public ArrayList<Integer> getCaminho() {
+        return caminho;
+    }
+    
+    public Empresa getMelhorEmpresa(){
+        return melhorFilho.empresa;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public TreeElement getMelhorFilho() {
+        return melhorFilho;
     }
                     
 }

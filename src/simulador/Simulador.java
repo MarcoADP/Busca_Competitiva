@@ -15,13 +15,15 @@ public class Simulador {
     public final static double FATOR_DEMANDA_MIN_RANDOM = 0.8;
     public final static double FATOR_DEMANDA_MAX_RANDOM = 1.2;
     
+    public final static int LIMITE_PROFUNDIDADE = 6;
+    
     private int somaProducaoPorMes;
     
     private TelaPrincipal tela;
     
     private ArrayList<Empresa> listaJogador;
     private ArrayList<Empresa> listaIA;
-    private ArrayList<TreeElement> arvore;
+    private ArrayList<TreeElement> arvoreIA;
     private int numRodadas;
     private int rodada;
     private int investimento;
@@ -41,7 +43,7 @@ public class Simulador {
         rodada = 1;
         listaIA = null;
         listaJogador = null;
-        arvore = null;
+        arvoreIA = null;
         acabou = false;
         strInfoRodada = "";
         demandaPorRodada = 0;
@@ -54,7 +56,22 @@ public class Simulador {
         this.investimento = investimento;
         listaJogador = criarListaJogadores(numJogadores);
         listaIA = criarListaIA(numIA);
-        arvore = criarArvore(numIA, listaIA);
+        arvoreIA = criarArvore(numIA, listaIA);
+        minimax();
+    }
+    
+    private void minimax(){
+        int limite;
+        if (numRodadas > LIMITE_PROFUNDIDADE){
+            limite = LIMITE_PROFUNDIDADE;
+        } else {
+            limite = numRodadas;
+        }
+        
+        for (TreeElement raiz : arvoreIA) {
+            raiz.gerarFilhos(limite);
+            raiz.calcularMelhorFolha();
+        }   
     }
     
     public void calcularSomaProducao(){
@@ -77,10 +94,8 @@ public class Simulador {
     }
     
     public void proximaRodada(){
-        rodada++;
-        
         fecharMesEmpresas(listaJogador);
-        fecharMesEmpresas(listaIA);
+        tomarDecisaoIA();
         
         atenderDemanda();
         atualizarInfoRodada();
@@ -88,11 +103,21 @@ public class Simulador {
         verificaCapitalNegativo(listaJogador);
         verificaCapitalNegativo(listaIA);
         
+        rodada++;
         if (rodada > numRodadas && !acabou) {
             mostraVencedor();
         }
         
         calcularDemanda();
+    }
+    
+        
+    private void tomarDecisaoIA(){
+        for (int i = 0; i < listaIA.size(); i++) {
+            Empresa empresa = listaIA.get(i);
+            int caminho = arvoreIA.get(i).getCaminho().get(rodada);
+            empresa.escolherAcoes(caminho);
+        }
     }
     
     private void atualizarInfoRodada(){
@@ -178,8 +203,8 @@ public class Simulador {
     
     private ArrayList<TreeElement> criarArvore(int numIa, ArrayList<Empresa> listaIA){
         ArrayList<TreeElement> lista = new ArrayList<>(numIa);
-        for(int i = 0; i < numIa; i++){
-            lista.add(new TreeElement(0, null, listaIA.get(i)));
+        for (Empresa empresa : listaIA) {
+            lista.add(new TreeElement(empresa));
         }
         return lista;
     }
