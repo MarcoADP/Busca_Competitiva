@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Component;
 import java.awt.event.ActionListener;
 import modelos.Empresa;
 import simulador.Simulador;
@@ -19,14 +18,7 @@ public class PainelRodada extends javax.swing.JPanel {
     
     private void configurarComponentes(){
         atualizar();
-        
         botaoSimular.addActionListener(acaoSimular);
-        
-        labelDemanda.setText("Demanda: "+Simulador.DEMANDA_POR_RODADA+" carros");
-    }
-    
-    public void setRodada(int rodada){
-        labelRodada.setText("Rodada "+rodada);
     }
     
     public void atualizar(){
@@ -40,15 +32,18 @@ public class PainelRodada extends javax.swing.JPanel {
             painelTab.add(empresa.getNome(), new PainelEmpresaRodada(empresa));
         }
         
-        setRodada(simulador.getRodada());
+        if (!simulador.acabou()){
+            labelRodada.setText("Rodada " + simulador.getRodada()+"/"+simulador.getNumRodadas());
+            labelDemanda.setText("Demanda: " + simulador.getDemandaPorRodada() + " carros");
+        }
     }
     
-    
-    
-    public void venceu(ActionListener novaAcao){
+    public void venceu(ActionListener novaAcao, Empresa empresa){
         botaoSimular.setText("Novo Jogo");
         botaoSimular.removeActionListener(acaoSimular);
         botaoSimular.addActionListener(novaAcao);
+        labelRodada.setText(empresa.getNome()+" venceu!");
+        labelDemanda.setText("");
     }
 
     /**

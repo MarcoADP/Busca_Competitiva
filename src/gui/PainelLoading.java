@@ -33,10 +33,6 @@ public class PainelLoading extends javax.swing.JPanel implements PropertyChangeL
         task.execute();
     }
     
-    public void mostrarVendidos(){
-        
-    }
-    
     /**
      * Invoked when task's progress property changes.
      */
@@ -58,7 +54,7 @@ public class PainelLoading extends javax.swing.JPanel implements PropertyChangeL
             setProgress(0);
             while (progress < 102) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(5);
                 } catch (InterruptedException ignore) {}
                 progress++;
                 setProgress(progress);
@@ -98,6 +94,7 @@ public class PainelLoading extends javax.swing.JPanel implements PropertyChangeL
         labelSimulando.setText("Simulando...");
 
         textArea.setColumns(20);
+        textArea.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         textArea.setRows(5);
         scrollPane.setViewportView(textArea);
 
@@ -131,9 +128,9 @@ public class PainelLoading extends javax.swing.JPanel implements PropertyChangeL
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelSimulando)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botaoContinuar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

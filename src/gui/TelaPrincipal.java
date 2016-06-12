@@ -81,14 +81,14 @@ public class TelaPrincipal extends JFrame{
         
         simulador.iniciarJogo(numPessoas, numIA, numRodadas, investimento);
         
-        painelJogadores = new PainelJogadores(simulador.getListaJogador(), simulador.getListaIA(), new AcaoBotaoComecar());
+        painelJogadores = new PainelJogadores(simulador, new AcaoBotaoComecar());
         add(painelJogadores);
         pack();
         setLocationRelativeTo(null);
     }
     
     public void mostrarVencedor(Empresa empresa){
-        painelRodada.venceu(new AcaoNovoJogo());
+        painelRodada.venceu(new AcaoNovoJogo(), empresa);
         JLabel label;
         if (empresa == null){
             label = new JLabel("Todos perderam!");
@@ -98,6 +98,14 @@ public class TelaPrincipal extends JFrame{
         
         label.setFont(new Font("Arial", Font.BOLD, 36));
         JOptionPane.showMessageDialog(null, label, "Vencedor", JOptionPane.PLAIN_MESSAGE);
+    }
+      
+    public void setPainelRodada(){
+        painelRodada.atualizar();
+        getContentPane().removeAll();
+        add(painelRodada);
+        pack();
+        setLocationRelativeTo(null);
     }
 
     public PainelRodada getPainelRodada() {
@@ -129,16 +137,10 @@ public class TelaPrincipal extends JFrame{
     private class AcaoBotaoComecar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            simulador.calcularSomaProducao();
+            painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
             setPainelRodada();
         }
-    }
-    
-    public void setPainelRodada(){
-        getContentPane().removeAll();
-        painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
-        add(painelRodada);
-        pack();
-        setLocationRelativeTo(null);
     }
     
     private class AcaoBotaoSimular implements ActionListener {

@@ -11,10 +11,12 @@ import utilitarios.Util;
 public class PainelEmpresa extends javax.swing.JPanel {
     
     private final Empresa empresa;
+    private final int investimento;
     
-    public PainelEmpresa(Empresa empresa) {
+    public PainelEmpresa(Empresa empresa, int investimento) {
         initComponents();
         this.empresa = empresa;
+        this.investimento = investimento;
         configurarComponentes();
     }
     
@@ -29,22 +31,19 @@ public class PainelEmpresa extends javax.swing.JPanel {
         
         campoNomeEmpresa.setText(empresa.getNome());
         
-        mudarLabelVerbaInicial((int)empresa.getCapital());
+        mudarLabelVerbaInicial(investimento);
         mudarLabelGasto();
         mudarLabelTempo();
         mudarLabelVerbaRestante();
         atualizarPainelInfoFabrica();
         atualizarPainelInfoCarro();
                 
-        
         if (empresa.isIsBot()){
             campoNomeEmpresa.setEnabled(false);
             comboFabrica.setEnabled(false);
             comboCarro.setEnabled(false);
         }
     }
-    
-    
     
     private void mudarLabelGasto(){
         double gasto = empresa.calcularGastoFixo();
@@ -63,7 +62,7 @@ public class PainelEmpresa extends javax.swing.JPanel {
     }
     
     private void mudarLabelVerbaRestante(){
-        double valor = empresa.getCapital() - empresa.getFabrica().getPreco();
+        double valor = empresa.getCapital();
         String str = Util.formatarDinheiro(valor);
         labelVerbaRestante.setText("Verba restante: "+str);
     }

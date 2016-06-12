@@ -3,9 +3,9 @@ package simulador;
 import modelos.Empresa;
 import gui.TelaPrincipal;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.JOptionPane;
 import modelos.Fabrica;
+import utilitarios.Util;
 
 public class Simulador {
     
@@ -13,19 +13,23 @@ public class Simulador {
     public final static int INVESTIMENTO_INICIAL_MEDIO = 3000000;    // R$ 3.000.000
     public final static int INVESTIMENTO_INICIAL_ALTO = 5000000;     // R$ 5.000.000
     
-    public final static int DEMANDA_POR_RODADA = 1000;
+    public final static double FATOR_DEMANDA_MIN_RANDOM = 0.8;
+    public final static double FATOR_DEMANDA_MAX_RANDOM = 1.2;
+    
+    private int somaProducaoPorMes;
     
     private TelaPrincipal tela;
     
-    private ArrayList<Empresa> listaJogador;    // mudar para lista jogadores
+    private ArrayList<Empresa> listaJogador;
     private ArrayList<Empresa> listaIA;
     private ArrayList<TreeElement> arvore;
     private int numRodadas;
     private int rodada;
     private int investimento;
     private boolean acabou;
-    
+    private int demandaPorRodada;
     private String strInfoRodada;
+    private int carrosVendidos;
     
     public Simulador(){
         novoJogo();
@@ -41,6 +45,9 @@ public class Simulador {
         arvore = null;
         acabou = false;
         strInfoRodada = "";
+        demandaPorRodada = 0;
+        carrosVendidos = 0;
+        somaProducaoPorMes = 0;
     }
     
     public void iniciarJogo(int numJogadores, int numIA, int numRodadas, int investimento){
@@ -49,20 +56,25 @@ public class Simulador {
         listaJogador = criarListaJogadores(numJogadores);
         listaIA = criarListaIA(numIA);
         arvore = criarArvore(numIA, listaIA);
-        
-        //TreeElement arvore = new TreeElement(0, null, listaJogador.get(0));
-        //arvore.empresa.mostraEmpresa();
-        //arvore.gerarFilhos(5);
-        //arvore.melhorFolha(0);
-        //System.out.println("sdfs => " + arvore.melhorFilho.id);
-        //System.out.println("aa => " + arvore.melhorFilho.melhorFilho.empresa.getCapital());
-        //arvore.mostraArvore(0);
-        /*int tam = arvore.filhos.size();
-        for(int i = 0; i < tam; i++){
-            arvore.filhos.get(i).empresa.mostraEmpresa();
-        }*/
-        //arvore.filhos.get(0).empresa.mostraEmpresa();
-        
+    }
+    
+    public void calcularSomaProducao(){
+        int soma = 0;
+        for (Empresa empresa : listaJogador) {
+            soma += empresa.carrosPorMes();
+        }
+        for (Empresa empresa : listaIA) {
+            soma += empresa.carrosPorMes();
+        }
+        somaProducaoPorMes = soma;
+        calcularDemanda();
+    }
+    
+    private void calcularDemanda(){
+        demandaPorRodada = somaProducaoPorMes;
+        // Demanda tem fator aleatório, para evetualmente beneficiar quem tem mais estoque;
+        double rand = Util.getRandomDouble(FATOR_DEMANDA_MIN_RANDOM, FATOR_DEMANDA_MAX_RANDOM);
+        demandaPorRodada = (int)(demandaPorRodada * rand);
     }
     
     public void proximaRodada(){
@@ -72,15 +84,31 @@ public class Simulador {
         fecharMesEmpresas(listaIA);
         
         atenderDemanda();
+        atualizarInfoRodada();
         
         verificaCapitalNegativo(listaJogador);
         verificaCapitalNegativo(listaIA);
         
-        if (rodada >= numRodadas && !acabou) {
+        if (rodada > numRodadas && !acabou) {
             mostraVencedor();
         }
         
-        tela.getPainelRodada().atualizar();
+        calcularDemanda();
+    }
+    
+    private void atualizarInfoRodada(){
+        strInfoRodada = "";
+        for (Empresa empresa : listaJogador) {
+            appendInfoRodada(empresa.getNome()+" vendeu "+empresa.getCarrosVendidosNoMes()+" carros");
+            appendInfoRodada(" e lucrou "+Util.formatarDinheiro(empresa.getLucrouNoMes()));
+            appendInfoRodada("\n---------------------------------\n");
+        }
+        for (Empresa empresa : listaIA) {
+            appendInfoRodada(empresa.getNome()+" vendeu "+empresa.getCarrosVendidosNoMes()+" carros");
+            appendInfoRodada(" e lucrou "+Util.formatarDinheiro(empresa.getLucrouNoMes()));
+            appendInfoRodada("\n---------------------------------\n");
+        }
+        appendInfoRodada("Total de carros vendidos: "+carrosVendidos);
     }
     
     private void fecharMesEmpresas(ArrayList<Empresa> lista){
@@ -175,6 +203,8 @@ public class Simulador {
     }
     
     public void atenderDemanda(){  
+        carrosVendidos = 0;
+        
         Integer totalProb = 0;
         //normalizar as probabilidades
         for(Empresa empresa : listaJogador){
@@ -183,8 +213,6 @@ public class Simulador {
         for(Empresa empresa : listaIA){
             totalProb += empresa.getProbabilidadeVenda();
         }
-        System.out.println(totalProb);
-        
         
         //calcular a prob de cada
         //0 a listaJogador.size-1 -> jogadores reais
@@ -195,7 +223,7 @@ public class Simulador {
                x - 100*Empresa.Prob/totalProb
             */
             Integer prob = (int) (100 * empresa.getProbabilidadeVenda() / totalProb);
-            listaProb.add(prob);    
+            listaProb.add(prob);
         }
         
         //listaJogador.size a listaIA.size-1 -> IA
@@ -207,13 +235,12 @@ public class Simulador {
         //vender cada carro
         int i, j, limite, maximo, numeroSorteado, indEmpresa = -1;
         Empresa empresaVendedora;
-        Random random = new Random();
-        for(i = 0; i < DEMANDA_POR_RODADA; i++){
+        for(i = 0; i < demandaPorRodada; i++){
             maximo = Integer.MIN_VALUE;
-            int numeroEmpresa = listaJogador.size();
+            int numeroEmpresa = listaJogador.size()+listaIA.size();
             for(j = 0; j < numeroEmpresa; j++){
-                limite = listaProb.get(i);
-                numeroSorteado = random.nextInt(limite);
+                limite = listaProb.get(j);
+                numeroSorteado = Util.getRandomInt(limite);
                 if(numeroSorteado > maximo){
                     indEmpresa = j;
                     maximo = numeroSorteado;
@@ -225,11 +252,17 @@ public class Simulador {
                 int ind = indEmpresa - listaJogador.size();
                 empresaVendedora = listaIA.get(ind);
             }
-            if(!empresaVendedora.atualizaEstoque()){    //se a empresa esta com estoque zerado
+            
+            if(empresaVendedora.temEstoque()){    //vender carro
+                empresaVendedora.venderCarro();
+                carrosVendidos++;
+                
+            } else {    //se a empresa esta com estoque zerado
                 i = i - 1;  //volta o carro para a demanda
                 //o numero sorteado para empresa com estoque vazio sera entre [0 e 1[
                 listaProb.set(indEmpresa, 1);
             }
+            
             if(this.confereEstoque()){
                 return;
             }
@@ -238,12 +271,12 @@ public class Simulador {
     
     public boolean confereEstoque(){
         for(Empresa empresa : listaJogador){
-            if(empresa.getEstoqueCarro() > 0){
+            if(empresa.temEstoque()){
                 return false;
             }
         }
         for(Empresa empresa : listaIA){
-            if(empresa.getEstoqueCarro() > 0){
+            if(empresa.temEstoque()){
                 return false;
             }
         }
@@ -261,6 +294,22 @@ public class Simulador {
 
     public int getRodada() {
         return rodada;
+    }
+
+    public int getDemandaPorRodada() {
+        return demandaPorRodada;
+    }
+
+    public boolean acabou() {
+        return acabou;
+    }
+
+    public int getInvestimento() {
+        return investimento;
+    }
+
+    public int getNumRodadas() {
+        return numRodadas;
     }
     
 }

@@ -17,14 +17,14 @@ public class Carro {
     public final static int PRECO_LUXO = 50000;
     
     // Custo da produção
-    public final static int CUSTO_POPULAR = 15000;
-    public final static int CUSTO_MEDIO = 25000;
-    public final static int CUSTO_LUXO = 35000;
+    public final static int CUSTO_POPULAR = 10000;
+    public final static int CUSTO_MEDIO = 20000;
+    public final static int CUSTO_LUXO = 30000;
     
     // Tempo em dias
     public final static int TEMPO_POPULAR = 2;
     public final static int TEMPO_MEDIO = 3;
-    public final static int TEMPO_LUXO = 5;
+    public final static int TEMPO_LUXO = 4;
     
     private int modelo;
     private int custo;

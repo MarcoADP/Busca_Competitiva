@@ -5,14 +5,18 @@ import java.util.Random;
 
 
 public class Util {
-    private final static Random random = new Random();
-    private final static DecimalFormat df = new DecimalFormat("R$ #,###,###.##");
+    private final static Random RANDOM = new Random();
+    private final static DecimalFormat DF = new DecimalFormat("R$ #,###,###.##");
     
     public static int getRandomInt(int limite){
-        return random.nextInt(limite);
+        return RANDOM.nextInt(limite);
+    }
+    
+    public static double getRandomDouble(double min, double max){
+        return RANDOM.nextDouble()*(max - min) + min;
     }
     
     public static String formatarDinheiro(double valor){
-        return df.format(valor);
+        return DF.format(valor);
     }
 }

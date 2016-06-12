@@ -125,7 +125,7 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
         labelFabrica.setText("Tipo de fábrica: "+empresa.getFabrica().getNome());
         labelGastoFabrica.setText("Gasto mensal da fábrica: "+Util.formatarDinheiro(empresa.getFabrica().getGastoPorMes()));
         labelGastoProducao.setText("Gasto mensal de produção: "+Util.formatarDinheiro(empresa.calcularGastoProducaoCarros()));
-        labelGastoFuncionario.setText("Gasto total com funcionários: "+Util.formatarDinheiro(empresa.getGastoFuncionarios()));
+        labelGastoFuncionario.setText("Gasto total com funcionários: "+Util.formatarDinheiro(empresa.calcularGastoFuncionarios()));
         labelGastoMarketing.setText("Gasto com marketing: "+grupoMarketing.getSelection().getActionCommand());
         labelEstoque.setText("Estoque: "+empresa.getEstoqueCarro()+" carros");
         labelEstoqueCapacidade.setText("Capacidade do estoque: "+empresa.getFabrica().getCapacidade()+" carros");

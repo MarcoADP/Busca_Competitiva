@@ -1,28 +1,26 @@
 package gui;
 
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import modelos.Empresa;
+import simulador.Simulador;
 
 public class PainelJogadores extends javax.swing.JPanel {
 
-    private final ArrayList<Empresa> listaJogadores;
-    private final ArrayList<Empresa> listaIA;
+    private final Simulador simulador;
     
-    public PainelJogadores(ArrayList<Empresa> listaJogadores, ArrayList<Empresa> listaIA, ActionListener acaoComecar) {
+    public PainelJogadores(Simulador simulador, ActionListener acaoComecar) {
         initComponents();
-        this.listaJogadores = listaJogadores;
-        this.listaIA = listaIA;
+        this.simulador = simulador;
         configurarComponentes(acaoComecar);
     }
     
     private void configurarComponentes(ActionListener acaoComecar){
-        for (Empresa empresa : listaJogadores) {
-            painelTab.add(empresa.getNome(), new PainelEmpresa(empresa));
+        for (Empresa empresa : simulador.getListaJogador()) {
+            painelTab.add(empresa.getNome(), new PainelEmpresa(empresa, simulador.getInvestimento()));
         }
         
-        for (Empresa empresa : listaIA) {
-            painelTab.add(empresa.getNome(), new PainelEmpresa(empresa));
+        for (Empresa empresa : simulador.getListaIA()) {
+            painelTab.add(empresa.getNome(), new PainelEmpresa(empresa, simulador.getInvestimento()));
         }
         
         botaoComecar.addActionListener(acaoComecar);

@@ -12,7 +12,6 @@ public class Empresa {
     public final static int FATOR_FUNCIONARIO_DEMITIR = 10;
     
     public final static int SALARIO_FUNCIONARIO = 1000;
-    
     public final static int LIMITE_FUNCIONARIO = 100;
     
     //CONFIGURAÇÃO INICIAL
@@ -25,8 +24,6 @@ public class Empresa {
     private int estoqueCarro;
     
     private int numeroFuncionarios;
-    private double salarioFuncionario;
-    private double gastoFuncionarios;
     private int limiteFuncionarios;
     
     private double gastosTotais;
@@ -37,6 +34,9 @@ public class Empresa {
     //PARÂMETROS VARIÁVEIS
     private double investimentoMarketing;
     private int tipoMarketing;
+    
+    private double lucrouNoMes;
+    private int carrosVendidosNoMes;
 
     public Empresa(String nome, int investimento, boolean isBot, Fabrica fabrica){
         this.nome = nome;
@@ -47,11 +47,8 @@ public class Empresa {
         this.investimentoMarketing = 0;
         this.tipoMarketing = MARKETING_NORMAL;
         this.limiteFuncionarios = LIMITE_FUNCIONARIO;      //Número máximo de funcionários por empresa
-        this.salarioFuncionario = SALARIO_FUNCIONARIO;
-        this.fabrica = fabrica;
+        setFabrica(fabrica);
         this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
-        //atualizarGastosFuncionarios();
-        // atributos padrões
     }
 
     public Empresa(Empresa empresa, int opInv, int opPreco, int opFunc) {
@@ -78,7 +75,7 @@ public class Empresa {
         //System.out.println("CARRROS => " + this.carrosPorMes());
         //this.estoqueCarro += this.carrosPorMes();
         //System.out.println("Estoque => " + this.estoqueCarro);
-        double custo = this.fabricarCarro();
+        double custo = this.fabricarCarros();
         //System.out.println("Capital => " + this.capital);
         //System.out.println("Custo => " + custo);
         this.capital -= custo;
@@ -97,16 +94,17 @@ public class Empresa {
         
         //atualizar funcionarios
         this.limiteFuncionarios = empresa.limiteFuncionarios;
-        this.salarioFuncionario = empresa.salarioFuncionario;
         this.numeroFuncionarios = this.atualizarNumeroFuncionarios(opFunc); 
         this.limiteFuncionarios = this.atualizarLimiteFuncionarios(opFunc);
-        this.gastoFuncionarios = this.atualizarGastosFuncionarios();
         //System.out.println("sadaa =>" + this.numeroFuncionarios);
         //this.mostraEmpresa();
         //Acho que tudo foi atualizado. Agora falta a logica do jogo.
     }
     
-
+    public boolean temEstoque(){
+        return estoqueCarro > 0;
+    }
+    
     public boolean atualizaEstoque(){
         if(this.estoqueCarro > 0){
             this.estoqueCarro = this.estoqueCarro - 1;
@@ -148,27 +146,35 @@ public class Empresa {
         return numFuncionario * SALARIO_FUNCIONARIO;
     }
     
+    public int calcularGastoFuncionarios(){
+        return calcularGastoFuncionario(numeroFuncionarios);
+    }
+    
     public double calcularGastoMensal(){
+        // falta investimento em marketing
         return calcularGastoFixo() + calcularGastoFuncionario(numeroFuncionarios);
     }
     
     public void fecharMes(){
-        double gastoMensal = calcularGastoMensal(); //getGastoFuncionarios()  + this.investimentoMarketing + gastoFixo();
+        lucrouNoMes = 0;
+        carrosVendidosNoMes = 0;
+        
+        double gastoMensal = calcularGastoMensal();
         this.capital -= gastoMensal; 
         this.probabilidadeVenda = calcularProbabilidade();
+        this.fabricarCarros();
     }
     
-    public double fabricarCarro(){
-        int auxiliar = this.estoqueCarro + carrosPorMes();
-        if (auxiliar <= fabrica.getCapacidade()){ //NÃO POSSO PRODUZIR MAIS CARROS, ENTÃO RETORNO O CAPITAL INVESTIDO
-            this.estoqueCarro += auxiliar;            
-            return (carrosPorMes()*this.carro.getCusto());
-            
-        } else {
-            auxiliar = fabrica.getCapacidade() - this.estoqueCarro; //QTD MÁXIMA DE CARROS QUE POSSO PRODUZIR
-            this.estoqueCarro = fabrica.getCapacidade();
-            return (auxiliar*this.carro.getCusto());
-        }        
+    public void venderCarro() {
+        carrosVendidosNoMes++;
+        lucrouNoMes += carro.getPrecoVenda();
+        this.capital += carro.getPrecoVenda();
+        this.estoqueCarro--;
+    }
+    
+    public double fabricarCarros(){
+        this.estoqueCarro += calcularCarrosProduzidos();
+        return calcularGastoProducaoCarros();
     }
     
     private int calcularProbPreco(int opcao){
@@ -229,10 +235,6 @@ public class Empresa {
         return -1.0;
     }
     
-    public Double atualizarGastosFuncionarios(){
-        return this.salarioFuncionario * this.numeroFuncionarios;
-    }
-    
     public int atualizarNumeroFuncionarios(int opcao){
         // 1 -> contrata 10
         // 0 -> demite 10 ou o restante
@@ -263,11 +265,6 @@ public class Empresa {
         return this.limiteFuncionarios;
     }
     
-    public void venderCarro(){
-        this.capital += carro.getPrecoVenda();
-        this.estoqueCarro--;
-    }
-    
     public void realizarAcoes(int opMarketing, int opPreco, int opFunc) {
         //Atualizar Preço Carro
         this.carro.alterarPreco(opPreco);
@@ -281,15 +278,12 @@ public class Empresa {
         this.probabilidadeVenda = this.calcularProbabilidade(opPreco, opMarketing);
         
         //Fabricar Carros
-        double custo = this.fabricarCarro();
+        double custo = this.fabricarCarros();
         this.capital -= custo;
         
         //Atualizar Funcionários
         this.numeroFuncionarios = this.atualizarNumeroFuncionarios(opFunc);
         this.limiteFuncionarios = this.atualizarLimiteFuncionarios(opFunc);
-        this.gastoFuncionarios = this.atualizarGastosFuncionarios();
-        
-        
     }
     
     public void escolherAcoes(int id){
@@ -345,8 +339,8 @@ public class Empresa {
         System.out.println("Fabrica");
         System.out.println("Nome => " + this.fabrica.getNome());
         System.out.println("Numero Funcionarios => " + this.numeroFuncionarios);
-        System.out.println("Salario Funcionarios => " + this.salarioFuncionario);
-        System.out.println("Gastos Funcionarios => " + this.gastoFuncionarios);
+        System.out.println("Salario Funcionarios => " + SALARIO_FUNCIONARIO);
+        System.out.println("Gastos Funcionarios => " + this.calcularGastoFuncionarios());
         System.out.println("");
         
         System.out.println("Investimento => " + this.investimentoMarketing);
@@ -386,7 +380,10 @@ public class Empresa {
     }
     
     public void setFabrica(Fabrica fabrica){
+        if (this.fabrica != null)
+            this.capital += this.fabrica.getPreco();    // devolve dinheiro de compra da fábrica
         this.fabrica = fabrica;
+        this.capital -= this.fabrica.getPreco();    // desconta dinheiro de compra da nova fabrica
     }
 
     public int getEstoqueCarro() {
@@ -399,22 +396,6 @@ public class Empresa {
 
     public void setNumeroFuncionarios(int numeroFuncionarios) {
         this.numeroFuncionarios = numeroFuncionarios;
-    }
-
-    public double getSalarioFuncionario() {
-        return salarioFuncionario;
-    }
-
-    public void setSalarioFuncionario(double salarioFuncionario) {
-        this.salarioFuncionario = salarioFuncionario;
-    }
-
-    public double getGastoFuncionarios() {
-        return gastoFuncionarios;
-    }
-
-    public void setGastoFuncionarios(double gastoFuncionarios) {
-        this.gastoFuncionarios = gastoFuncionarios;
     }
 
     public double getInvestimentoMarketing() {
@@ -455,6 +436,14 @@ public class Empresa {
 
     public void setTipoMarketing(int tipoMarketing) {
         this.tipoMarketing = tipoMarketing;
+    }
+
+    public double getLucrouNoMes() {
+        return lucrouNoMes;
+    }
+
+    public int getCarrosVendidosNoMes() {
+        return carrosVendidosNoMes;
     }
     
 }
