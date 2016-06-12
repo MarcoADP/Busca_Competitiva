@@ -37,6 +37,7 @@ public class Empresa {
     
     private double lucrouNoMes;
     private int carrosVendidosNoMes;
+    private int funcionariosAContratar;
 
     public Empresa(String nome, int investimento, boolean isBot){
         this.nome = nome;
@@ -49,6 +50,7 @@ public class Empresa {
             this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);
             setFabrica(Fabrica.PEQUENA);
         }
+        this.funcionariosAContratar = 0;
         this.estoqueCarro = 0;
         this.investimentoMarketing = 0;
         this.tipoMarketing = MARKETING_NORMAL;
@@ -120,7 +122,13 @@ public class Empresa {
     }
     
     public double carrosPorDia(){
-        return carro.getTempo() / fabrica.getFatorProducao();
+        double fatorFuncionario;
+        if (numeroFuncionarios <= 0){
+            fatorFuncionario = 1;
+        } else {
+            fatorFuncionario = 1 - ((double)numeroFuncionarios) / (2*(double)LIMITE_FUNCIONARIO);
+        }
+        return (carro.getTempo() / fabrica.getFatorProducao()) * (fatorFuncionario);
     }
     
     public int carrosPorMes(){
@@ -166,11 +174,15 @@ public class Empresa {
     public void fecharMes(){
         lucrouNoMes = 0;
         carrosVendidosNoMes = 0;
-        
+        this.contratarFuncionarios();
         double gastoMensal = calcularGastoMensal();
         this.capital -= gastoMensal; 
         this.probabilidadeVenda = calcularProbabilidade();
         this.fabricarCarros();
+    }
+    
+    private void contratarFuncionarios(){
+        numeroFuncionarios += funcionariosAContratar;
     }
     
     public void venderCarro() {
@@ -183,6 +195,10 @@ public class Empresa {
     public double fabricarCarros(){
         this.estoqueCarro += calcularCarrosProduzidos();
         return calcularGastoProducaoCarros();
+    }
+    
+    public void setFuncionariosAContratar(int numFuncionarios){
+        funcionariosAContratar = numFuncionarios;
     }
     
     private int calcularProbPreco(int opcao){

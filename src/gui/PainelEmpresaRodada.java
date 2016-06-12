@@ -181,6 +181,7 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
                 case "Manter":
                     numFuncionarios = 0;
             }
+            empresa.setFuncionariosAContratar(numFuncionarios);
             atualizarInfo();
         }
     }
