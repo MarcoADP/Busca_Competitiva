@@ -37,7 +37,7 @@ public class TreeElement {
             Empresa novaEmpresa;
             switch(i){    
                 case 0: //Marketing Normal Preço Normal Funcionario Demitido
-                    novaEmpresa = new Empresa(this.empresa, 0, 0, 0);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, -Empresa.FATOR_FUNCIONARIO_DEMITIR);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 0;
                     //filho.empresa.mostraEmpresa();
@@ -45,7 +45,7 @@ public class TreeElement {
                     filho.gerarFilhos(limite);
                     break;
                 case 1: //MN PN FM
-                    novaEmpresa = new Empresa(this.empresa, 0, 0, 100);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, 0);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 1;
                     //filho.empresa.mostraEmpresa();
@@ -53,7 +53,7 @@ public class TreeElement {
                     filho.gerarFilhos(limite);
                     break;
                 case 2: //MN PN FC
-                    novaEmpresa = new Empresa(this.empresa, 0, 0, 1);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 2;
                     //filho.empresa.mostraEmpresa();
@@ -63,7 +63,7 @@ public class TreeElement {
                     
                     
                 case 3: //MN PA FM
-                    novaEmpresa = new Empresa(this.empresa, 0, 1, 100);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_CARO, 0);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 3;
                     //filho.empresa.mostraEmpresa();
@@ -71,7 +71,7 @@ public class TreeElement {
                     filho.gerarFilhos(limite);
                     break;
                 case 4: //MN PA FC
-                    novaEmpresa = new Empresa(this.empresa, 0, 1, 1);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_CARO, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 4;
                     //filho.empresa.mostraEmpresa();
@@ -81,7 +81,7 @@ public class TreeElement {
                     
                     
                 case 5: //MA PN FM
-                    novaEmpresa = new Empresa(this.empresa, 1, 0, 100);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_NORMAL, 0);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 5;
                     //filho.empresa.mostraEmpresa();
@@ -89,7 +89,7 @@ public class TreeElement {
                     filho.gerarFilhos(limite);
                     break;
                 case 6: //MA PN FC
-                    novaEmpresa = new Empresa(this.empresa, 1, 0, 1);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_NORMAL, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 6;
                     //filho.empresa.mostraEmpresa();
@@ -99,7 +99,7 @@ public class TreeElement {
                 
                     
                 case 7: //MA PA FM
-                    novaEmpresa = new Empresa(this.empresa, 1, 1, 100);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_CARO, 0);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 7;
                     //filho.empresa.mostraEmpresa();
@@ -107,7 +107,7 @@ public class TreeElement {
                     filho.gerarFilhos(limite);
                     break;    
                 case 8: //MA PA FC
-                    novaEmpresa = new Empresa(this.empresa, 1, 1, 1);
+                    novaEmpresa = new Empresa(this.empresa, Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_CARO, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                     filho = new TreeElement(novaProfundidade, this, novaEmpresa);
                     filho.id = 8;
                     //filho.empresa.mostraEmpresa();
@@ -157,8 +157,6 @@ public class TreeElement {
             }
             //System.out.println("bb => " + this.filhos.get(i).melhorFilho.empresa.getCapital());
         }
-        
-
     }
                     
 }

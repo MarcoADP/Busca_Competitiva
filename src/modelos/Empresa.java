@@ -24,9 +24,7 @@ public class Empresa {
     private int estoqueCarro;
     
     private int numeroFuncionarios;
-    private int limiteFuncionarios;
     
-    private double gastosTotais;
     private int probabilidadeVenda;
     
     private final boolean isBot;          // true se for IA, false se for jogador
@@ -35,6 +33,7 @@ public class Empresa {
     private double investimentoMarketing;
     private int tipoMarketing;
     
+    // VARIAVEIS QUE MUDAM NO MÊS
     private double lucrouNoMes;
     private int carrosVendidosNoMes;
     private int funcionariosAContratar;
@@ -54,40 +53,24 @@ public class Empresa {
         this.estoqueCarro = 0;
         this.investimentoMarketing = 0;
         this.tipoMarketing = MARKETING_NORMAL;
-        this.limiteFuncionarios = LIMITE_FUNCIONARIO;
         this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
     }
 
     public Empresa(Empresa empresa, int opInv, int opPreco, int opFunc) {
-        this.nome = empresa.nome;
-        
         //recebe atributos pai
+        this.nome = empresa.nome;
         this.capital = empresa.capital;
         this.carro = empresa.carro;
         this.fabrica = empresa.fabrica;
         this.isBot = empresa.isBot;
         this.estoqueCarro = empresa.estoqueCarro;
+        this.numeroFuncionarios = empresa.numeroFuncionarios;
         
-        //alterar Atributos Variáveis
-        this.carro.alterarPreco(opPreco);
-                
-        //atualizar Marketing
-        this.tipoMarketing = opInv;
-        this.investimentoMarketing = this.investir(opInv);
-        this.capital = this.atualizarCapitalMarketing(opInv);
-        
-        this.probabilidadeVenda = this.calcularProbabilidade(opPreco, opInv);
-        
-        //Fabricar carros
-        //System.out.println("CARRROS => " + this.carrosPorMes());
-        //this.estoqueCarro += this.carrosPorMes();
-        //System.out.println("Estoque => " + this.estoqueCarro);
-        double custo = this.fabricarCarros();
-        //System.out.println("Capital => " + this.capital);
-        //System.out.println("Custo => " + custo);
-        this.capital -= custo;
-        //System.out.println("Capital => " + this.capital);
-        
+        realizarAcoes(opInv, opPreco, opFunc);
+        estimarVenda();
+    }
+    
+    private void estimarVenda(){
         //Vender Carros
         //System.out.println("Prob => " + this.probabilidadeVenda + "Estoque => " + this.estoqueCarro);
         int vendaEstimada = this.estoqueCarro * this.probabilidadeVenda/100;
@@ -97,28 +80,10 @@ public class Empresa {
         this.capital += ganhoVenda;
         //System.out.println("Capital => " + this.capital);
         this.estoqueCarro -= vendaEstimada;
-        
-        
-        //atualizar funcionarios
-        this.limiteFuncionarios = empresa.limiteFuncionarios;
-        this.numeroFuncionarios = this.atualizarNumeroFuncionarios(opFunc); 
-        this.limiteFuncionarios = this.atualizarLimiteFuncionarios(opFunc);
-        //System.out.println("sadaa =>" + this.numeroFuncionarios);
-        //this.mostraEmpresa();
-        //Acho que tudo foi atualizado. Agora falta a logica do jogo.
     }
     
     public boolean temEstoque(){
         return estoqueCarro > 0;
-    }
-    
-    public boolean atualizaEstoque(){
-        if(this.estoqueCarro > 0){
-            this.estoqueCarro = this.estoqueCarro - 1;
-            this.capital = this.capital + this.carro.getPrecoVenda();
-            return true;
-        }
-        return false;
     }
     
     public double carrosPorDia(){
@@ -182,7 +147,14 @@ public class Empresa {
     }
     
     private void contratarFuncionarios(){
-        numeroFuncionarios += funcionariosAContratar;
+        int num = numeroFuncionarios + funcionariosAContratar;
+        if (num > LIMITE_FUNCIONARIO){
+            numeroFuncionarios = LIMITE_FUNCIONARIO;
+        } else if (num < 0){
+            numeroFuncionarios = 0;
+        } else {
+            numeroFuncionarios = num;
+        }
     }
     
     public void venderCarro() {
@@ -235,16 +207,6 @@ public class Empresa {
         return calcularProbabilidade(this.carro.getTipoPreco(), this.tipoMarketing);
     }
     
-    public Double atualizarCapitalMarketing(int opcao){
-        switch(opcao){
-            case MARKETING_NORMAL:
-                return this.capital * (1 - INVESTIMENTO_MARKETING_NORMAL);
-            case MARKETING_ALTO:
-                return this.capital * (1 - INVESTIMENTO_MARKETING_ALTO);
-        }
-        return -1.0;
-    }
-    
     public Double investir(int opcao){
         switch(opcao){
             case MARKETING_NORMAL:
@@ -255,89 +217,52 @@ public class Empresa {
         return -1.0;
     }
     
-    public int atualizarNumeroFuncionarios(int opcao){
-        // 1 -> contrata 10
-        // 0 -> demite 10 ou o restante
-        if(opcao == 1 && this.limiteFuncionarios >= 10){
-            return this.numeroFuncionarios + 10;
-        }
-        if(opcao == 0 && this.numeroFuncionarios < 10){
-            return this.numeroFuncionarios = 0;
-        } 
-        if(opcao == 0 && this.numeroFuncionarios >= 10){
-            return this.numeroFuncionarios - 10;
-        }
-        return this.numeroFuncionarios;
-    }
-    
-    public int atualizarLimiteFuncionarios(int opcao){
-        // 1 -> contrata 10
-        // 0 -> demite 10 ou o restante
-        if(opcao == 1 && this.limiteFuncionarios >= 10){
-            return this.limiteFuncionarios - 10;            
-        }
-        if(opcao == 0 && this.numeroFuncionarios < 10){
-            return this.limiteFuncionarios + this.numeroFuncionarios;
-        } 
-        if(opcao == 0 & this.numeroFuncionarios >= 10){
-            return this.limiteFuncionarios + 10;
-        }
-        return this.limiteFuncionarios;
-    }
-    
-    public void realizarAcoes(int opMarketing, int opPreco, int opFunc) {
+    private void realizarAcoes(int opMarketing, int opPreco, int opFunc) {
         //Atualizar Preço Carro
         this.carro.alterarPreco(opPreco);
         
         //Atualizar Marketing
-        this.tipoMarketing = opMarketing;
-        this.investimentoMarketing = this.investir(opMarketing);
-        this.capital = this.atualizarCapitalMarketing(opMarketing);
-        
-        //Atualizar Probabilidade
-        this.probabilidadeVenda = this.calcularProbabilidade(opPreco, opMarketing);
-        
-        //Fabricar Carros
-        double custo = this.fabricarCarros();
-        this.capital -= custo;
+        setTipoMarketing(opMarketing);
         
         //Atualizar Funcionários
-        this.numeroFuncionarios = this.atualizarNumeroFuncionarios(opFunc);
-        this.limiteFuncionarios = this.atualizarLimiteFuncionarios(opFunc);
+        setFuncionariosAContratar(opFunc);
+        
+        this.investimentoMarketing = this.investir(opMarketing);
+        this.fecharMes();
     }
     
     public void escolherAcoes(int id){
         switch(id){
             case 0: //MN PN FD
-                this.realizarAcoes(0, 0, 0);
+                this.realizarAcoes(Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, -Empresa.FATOR_FUNCIONARIO_DEMITIR);
                 break;
             case 1: //MN PN FM
-                this.realizarAcoes(0, 0, 100);
+                this.realizarAcoes(Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, 0);
                 break;
             case 2: //MN PN FC
-                this.realizarAcoes(0, 0, 1);
+                this.realizarAcoes(Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                 break;
                 
                 
             case 3: //MN PA FM
-                this.realizarAcoes(0, 1, 100);
+                this.realizarAcoes(Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_CARO, 0);
                 break;
             case 4: //MN PA FC
-                this.realizarAcoes(0, 1, 1);
+                this.realizarAcoes(Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_CARO, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                 break;
                 
             case 5: //MA PN FM
-                this.realizarAcoes(1, 0, 100);
+                this.realizarAcoes(Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_NORMAL, 0);
                 break;
             case 6: //MA PN FC
-                this.realizarAcoes(1, 0, 1);
+                this.realizarAcoes(Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_NORMAL, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                 break;
                 
             case 7: //MA PA FM
-                this.realizarAcoes(1, 1, 100);
+                this.realizarAcoes(Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_CARO, 0);
                 break;
             case 8: //MA PA FC
-                this.realizarAcoes(1, 1, 1);
+                this.realizarAcoes(Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_CARO, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
                 break;
         }
     }
@@ -424,22 +349,6 @@ public class Empresa {
 
     public void setInvestimentoMarketing(double investimentoMarketing) {
         this.investimentoMarketing = investimentoMarketing;
-    }    
-
-    public int getLimiteFuncionarios() {
-        return limiteFuncionarios;
-    }
-
-    public void setLimiteFuncionarios(int limiteFuncionarios) {
-        this.limiteFuncionarios = limiteFuncionarios;
-    }
-
-    public double getGastosTotais() {
-        return gastosTotais;
-    }
-
-    public void setGastosTotais(double gastosTotais) {
-        this.gastosTotais = gastosTotais;
     }
 
     public int getProbabilidadeVenda() {
