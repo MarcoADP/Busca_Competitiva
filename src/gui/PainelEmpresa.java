@@ -42,6 +42,8 @@ public class PainelEmpresa extends javax.swing.JPanel {
             campoNomeEmpresa.setEnabled(false);
             comboFabrica.setEnabled(false);
             comboCarro.setEnabled(false);
+            comboFabrica.setSelectedItem(empresa.getFabrica().getNome());
+            comboCarro.setSelectedItem(empresa.getCarro().getStringModelo());
         }
     }
     

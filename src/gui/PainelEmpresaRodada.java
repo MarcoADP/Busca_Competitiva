@@ -77,7 +77,7 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
     }
     
     private void configurarPrecoCarro(){
-        radioPrecoCaro.setText("Alto - Valor do carro + " + ((Carro.FATOR_PRECO_CARO - 1) * 100) + "%");
+        radioPrecoCaro.setText("Caro - Valor do carro + " + ((Carro.FATOR_PRECO_CARO - 1) * 100) + "%");
         radioPrecoNormal.setText("Normal - Valor do carro normal");
 
         radioPrecoCaro.setActionCommand("Caro");
@@ -126,7 +126,7 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
         labelGastoFabrica.setText("Gasto mensal da fábrica: "+Util.formatarDinheiro(empresa.getFabrica().getGastoPorMes()));
         labelGastoProducao.setText("Gasto mensal de produção: "+Util.formatarDinheiro(empresa.calcularGastoProducaoCarros()));
         labelGastoFuncionario.setText("Gasto total com funcionários: "+Util.formatarDinheiro(empresa.calcularGastoFuncionarios()));
-        labelGastoMarketing.setText("Gasto com marketing: "+grupoMarketing.getSelection().getActionCommand());
+        labelGastoMarketing.setText("Gasto com marketing: "+Util.formatarDinheiro(empresa.calcularInvestimentoMarketing()));
         labelEstoque.setText("Estoque: "+empresa.getEstoqueCarro()+" carros");
         labelEstoqueCapacidade.setText("Capacidade do estoque: "+empresa.getFabrica().getCapacidade()+" carros");
         labelCarroModelo.setText("Modelo do carro: "+empresa.getCarro().getStringModelo());

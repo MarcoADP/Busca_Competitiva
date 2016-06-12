@@ -1,5 +1,7 @@
 package modelos;
 
+import utilitarios.Util;
+
 public class Carro {
 
     public final static int MODELO_POPULAR = 1;
@@ -84,6 +86,11 @@ public class Carro {
         this.precoVenda = (int) (preco * fator);
     }
     
+    public static Carro aleatorio(){
+        int random = Util.getRandomInt(MODELO_LUXO) + 1;
+        return new Carro(random, TIPO_PRECO_NORMAL);
+    }
+    
     //GET e SET
     public int getTipoPreco() {
         return tipoPreco;
@@ -98,15 +105,6 @@ public class Carro {
     }
 
     public int getPrecoVenda() {
-        /*int preçoVenda = 0;
-        switch(tipoPreco){
-            case TIPO_PRECO_NORMAL:
-                preçoVenda = this.precoVenda;
-                break;
-            case TIPO_PRECO_CARO:
-                preçoVenda = (int) (this.precoVenda * 1.5);
-                break;
-        }*/
         return precoVenda;
     }
     

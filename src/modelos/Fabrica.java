@@ -1,5 +1,7 @@
 package modelos;
 
+import utilitarios.Util;
+
 public enum Fabrica {
     PEQUENA("Pequena", 400000, 1, 30000, 50, 10),
     MEDIA("Média", 500000, 2, 50000, 80, 15),
@@ -22,6 +24,12 @@ public enum Fabrica {
         this.gastoPorMes = gasto;
         this.capacidade = capacidade;
         this.numeroFuncionarioInicial = numeroFunc;
+    }
+    
+    public static Fabrica aleatorio(){
+        Fabrica[] fabricas = Fabrica.values();
+        int random = Util.getRandomInt(fabricas.length);
+        return fabricas[random];
     }
 
     public int getPreco() {

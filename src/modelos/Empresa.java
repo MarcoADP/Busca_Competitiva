@@ -2,8 +2,8 @@ package modelos;
 
 public class Empresa {
     
-    public final static double INVESTIMENTO_MARKETING_NORMAL = 0.25; // 25% de investimento do capital
-    public final static double INVESTIMENTO_MARKETING_ALTO = 0.40;   // 40% de investimento do capital
+    public final static double INVESTIMENTO_MARKETING_NORMAL = 0.02; // 5% de investimento do capital
+    public final static double INVESTIMENTO_MARKETING_ALTO = 0.05;   // 10% de investimento do capital
     
     public final static int MARKETING_NORMAL = 0;
     public final static int MARKETING_ALTO = 1;
@@ -12,13 +12,13 @@ public class Empresa {
     public final static int FATOR_FUNCIONARIO_DEMITIR = 10;
     
     public final static int SALARIO_FUNCIONARIO = 1000;
-    public final static int LIMITE_FUNCIONARIO = 100;
+    public final static int LIMITE_FUNCIONARIO = 100;      //Número máximo de funcionários por empresa
     
     //CONFIGURAÇÃO INICIAL
     private String nome;
-    private double capital;             //Começa com um valor de investimento inicial e vai modificando com o decorrer das jogadas
+    private double capital;
     
-    private Carro carro;                //Produto
+    private Carro carro;
     private Fabrica fabrica;
     
     private int estoqueCarro;
@@ -38,16 +38,21 @@ public class Empresa {
     private double lucrouNoMes;
     private int carrosVendidosNoMes;
 
-    public Empresa(String nome, int investimento, boolean isBot, Fabrica fabrica){
+    public Empresa(String nome, int investimento, boolean isBot){
         this.nome = nome;
         this.capital = investimento;
-        this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);        
         this.isBot = isBot;
+        if (isBot){
+            this.carro = Carro.aleatorio();
+            setFabrica(Fabrica.aleatorio());
+        } else {
+            this.carro = new Carro(Carro.MODELO_POPULAR, Carro.TIPO_PRECO_NORMAL);
+            setFabrica(Fabrica.PEQUENA);
+        }
         this.estoqueCarro = 0;
         this.investimentoMarketing = 0;
         this.tipoMarketing = MARKETING_NORMAL;
-        this.limiteFuncionarios = LIMITE_FUNCIONARIO;      //Número máximo de funcionários por empresa
-        setFabrica(fabrica);
+        this.limiteFuncionarios = LIMITE_FUNCIONARIO;
         this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
     }
 
@@ -150,9 +155,12 @@ public class Empresa {
         return calcularGastoFuncionario(numeroFuncionarios);
     }
     
+    public double calcularInvestimentoMarketing() {
+        return investir(tipoMarketing);
+    }
+    
     public double calcularGastoMensal(){
-        // falta investimento em marketing
-        return calcularGastoFixo() + calcularGastoFuncionario(numeroFuncionarios);
+        return calcularGastoFixo() + calcularGastoFuncionario(numeroFuncionarios) + calcularInvestimentoMarketing();
     }
     
     public void fecharMes(){
@@ -212,7 +220,6 @@ public class Empresa {
     }
     
     public Double atualizarCapitalMarketing(int opcao){
-        //this.probabilidadeVenda = this.calcularProbabilidade(this.carro.getTipoPreco(), opcao);
         switch(opcao){
             case MARKETING_NORMAL:
                 return this.capital * (1 - INVESTIMENTO_MARKETING_NORMAL);
@@ -223,14 +230,11 @@ public class Empresa {
     }
     
     public Double investir(int opcao){
-        //this.probabilidadeVenda = this.calcularProbabilidade(this.carro.getTipoPreco(), opcao);
         switch(opcao){
             case MARKETING_NORMAL:
                 return this.capital * INVESTIMENTO_MARKETING_NORMAL;
-                //this.capital = this.capital * 0.75;
             case MARKETING_ALTO:
                 return this.capital * INVESTIMENTO_MARKETING_ALTO;
-                //this.capital = this.capital * 0.6;
         }
         return -1.0;
     }

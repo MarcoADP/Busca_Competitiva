@@ -4,7 +4,6 @@ import modelos.Empresa;
 import gui.TelaPrincipal;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelos.Fabrica;
 import utilitarios.Util;
 
 public class Simulador {
@@ -188,16 +187,15 @@ public class Simulador {
     private ArrayList<Empresa> criarListaJogadores(int numJogadores){
         ArrayList<Empresa> lista = new ArrayList<>(numJogadores);
         for (int i = 0; i < numJogadores; i++) {
-            lista.add(new Empresa("Empresa "+(i+1), investimento, false, Fabrica.PEQUENA));
+            lista.add(new Empresa("Empresa "+(i+1), investimento, false));
         }
         return lista;
     }
     
     private ArrayList<Empresa> criarListaIA(int numIA){
-        //completar atributos usando random
         ArrayList<Empresa> lista = new ArrayList<>(numIA);
         for (int i = 0; i < numIA; i++) {
-            lista.add(new Empresa("IA "+(i+1), investimento, true, Fabrica.PEQUENA));
+            lista.add(new Empresa("IA "+(i+1), investimento, true));
         }
         return lista;
     }
@@ -246,6 +244,7 @@ public class Simulador {
                     maximo = numeroSorteado;
                 }
             }
+            
             if(indEmpresa < listaJogador.size()){
                 empresaVendedora = listaJogador.get(indEmpresa);
             } else {
@@ -256,7 +255,6 @@ public class Simulador {
             if(empresaVendedora.temEstoque()){    //vender carro
                 empresaVendedora.venderCarro();
                 carrosVendidos++;
-                
             } else {    //se a empresa esta com estoque zerado
                 i = i - 1;  //volta o carro para a demanda
                 //o numero sorteado para empresa com estoque vazio sera entre [0 e 1[
