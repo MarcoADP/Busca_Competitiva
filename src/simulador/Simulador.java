@@ -12,8 +12,8 @@ public class Simulador {
     public final static int INVESTIMENTO_INICIAL_MEDIO = 3000000;    // R$ 3.000.000
     public final static int INVESTIMENTO_INICIAL_ALTO = 5000000;     // R$ 5.000.000
     
-    public final static double FATOR_DEMANDA_MIN_RANDOM = 0.8;
-    public final static double FATOR_DEMANDA_MAX_RANDOM = 1.2;
+    public final static double FATOR_DEMANDA_MIN_RANDOM = 0.5;
+    public final static double FATOR_DEMANDA_MAX_RANDOM = 0.9;
     
     public final static int LIMITE_PROFUNDIDADE = 5;
     
