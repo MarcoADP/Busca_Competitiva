@@ -3,12 +3,6 @@ package simulador;
 import java.util.ArrayList;
 import modelos.*;
 
-//Usar a arvore:
-//criar a raiz
-//chama filhos raiz com 0, numero de rodadas desejadas
-//chama melhor folha com 0
-//cada elemento tem um id, a partir desse id voce chama empresa.escolherAcoes(id);
-
 public class TreeElement {
     
     private int id;
@@ -16,7 +10,6 @@ public class TreeElement {
     private final int profundidade;
     private final Empresa empresa;
     private final ArrayList<TreeElement> filhos;
-    private final ArrayList<Integer> caminho;
     private TreeElement melhorFilho;
     
     
@@ -26,7 +19,6 @@ public class TreeElement {
         this.pai = pai;
         this.empresa = empresa;
         this.filhos = new ArrayList<>();
-        this.caminho = new ArrayList<>();
         this.melhorFilho = null;
     }
     
@@ -145,7 +137,6 @@ public class TreeElement {
         
         if (filhos.isEmpty()){
             this.melhorFilho = this;
-            this.caminho.add(this.id);
             return;
         }
         
@@ -159,16 +150,6 @@ public class TreeElement {
                 this.melhorFilho = this.filhos.get(i);
             }
         }
-        this.caminho.add(this.id);
-        this.caminho.addAll(this.melhorFilho.caminho);
-    }
-
-    public ArrayList<Integer> getCaminho() {
-        return caminho;
-    }
-    
-    public Empresa getMelhorEmpresa(){
-        return melhorFilho.empresa;
     }
 
     public int getId() {

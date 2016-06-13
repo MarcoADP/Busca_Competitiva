@@ -38,7 +38,7 @@ public class PainelEmpresa extends javax.swing.JPanel {
         atualizarPainelInfoFabrica();
         atualizarPainelInfoCarro();
                 
-        if (empresa.isIsBot()){
+        if (empresa.isBot()){
             campoNomeEmpresa.setEnabled(false);
             comboFabrica.setEnabled(false);
             comboCarro.setEnabled(false);

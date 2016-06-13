@@ -12,7 +12,7 @@ public class Carro {
     public final static int TIPO_PRECO_CARO = 1;
     
     public final static double FATOR_PRECO_NORMAL = 1.0;
-    public final static double FATOR_PRECO_CARO = 1.5;
+    public final static double FATOR_PRECO_CARO = 1.3;
     
     public final static int PRECO_POPULAR = 20000;
     public final static int PRECO_MEDIO = 35000;

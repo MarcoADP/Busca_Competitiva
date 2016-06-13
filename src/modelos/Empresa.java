@@ -2,8 +2,8 @@ package modelos;
 
 public class Empresa {
     
-    public final static double INVESTIMENTO_MARKETING_NORMAL = 0.02; // 5% de investimento do capital
-    public final static double INVESTIMENTO_MARKETING_ALTO = 0.05;   // 10% de investimento do capital
+    public final static double INVESTIMENTO_MARKETING_NORMAL = 0.05; // 5% de investimento do capital
+    public final static double INVESTIMENTO_MARKETING_ALTO = 0.15;   // 15% de investimento do capital
     
     public final static int MARKETING_NORMAL = 0;
     public final static int MARKETING_ALTO = 1;
@@ -11,7 +11,7 @@ public class Empresa {
     public final static int FATOR_FUNCIONARIO_CONTRATAR = 10;
     public final static int FATOR_FUNCIONARIO_DEMITIR = 10;
     
-    public final static int SALARIO_FUNCIONARIO = 1000;
+    public final static int SALARIO_FUNCIONARIO = 3000;
     public final static int LIMITE_FUNCIONARIO = 100;      //Número máximo de funcionários por empresa
     
     //CONFIGURAÇÃO INICIAL
@@ -91,7 +91,7 @@ public class Empresa {
         if (numeroFuncionarios <= 0){
             fatorFuncionario = 1;
         } else {
-            fatorFuncionario = 1 - ((double)numeroFuncionarios) / (2*(double)LIMITE_FUNCIONARIO);
+            fatorFuncionario = 1 - ((double)numeroFuncionarios) / (4*(double)LIMITE_FUNCIONARIO);
         }
         return (carro.getTempo() / fabrica.getFatorProducao()) * (fatorFuncionario);
     }
@@ -177,7 +177,7 @@ public class Empresa {
         int prob = 0;
         switch(opcao){
             case Carro.TIPO_PRECO_NORMAL: 
-                prob += 25;
+                prob += 35;
                 break;
             case Carro.TIPO_PRECO_CARO:
                 prob += 15;
@@ -192,7 +192,7 @@ public class Empresa {
                 prob += 35;
                 break;
             case MARKETING_ALTO: 
-                prob += 55;
+                prob += 45;
         }
         
         return prob;
@@ -304,7 +304,7 @@ public class Empresa {
         this.nome = nome;
     }
 
-    public boolean isIsBot() {
+    public boolean isBot() {
         return isBot;
     }
     

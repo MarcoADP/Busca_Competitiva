@@ -44,7 +44,7 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
         configurarFuncionario();
         atualizarInfo();
         
-        if (empresa.isIsBot()){
+        if (empresa.isBot()){
             radioFuncionarioContratar.setEnabled(false);
             radioFuncionarioDemitir.setEnabled(false);
             radioFuncionarioManter.setEnabled(false);
@@ -77,7 +77,7 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
     }
     
     private void configurarPrecoCarro(){
-        radioPrecoCaro.setText("Caro - Valor do carro + " + ((Carro.FATOR_PRECO_CARO - 1) * 100) + "%");
+        radioPrecoCaro.setText(String.format("Caro - Valor do carro + %.2f%%", ((Carro.FATOR_PRECO_CARO - 1) * 100)));
         radioPrecoNormal.setText("Normal - Valor do carro normal");
 
         radioPrecoCaro.setActionCommand("Caro");

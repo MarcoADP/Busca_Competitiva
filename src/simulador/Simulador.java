@@ -15,7 +15,7 @@ public class Simulador {
     public final static double FATOR_DEMANDA_MIN_RANDOM = 0.8;
     public final static double FATOR_DEMANDA_MAX_RANDOM = 1.2;
     
-    public final static int LIMITE_PROFUNDIDADE = 6;
+    public final static int LIMITE_PROFUNDIDADE = 5;
     
     private int somaProducaoPorMes;
     
@@ -56,22 +56,29 @@ public class Simulador {
         this.investimento = investimento;
         listaJogador = criarListaJogadores(numJogadores);
         listaIA = criarListaIA(numIA);
-        arvoreIA = criarArvore(numIA, listaIA);
+        arvoreIA = criarArvore(listaIA);
         minimax();
     }
     
     private void minimax(){
         int limite;
-        if (numRodadas > LIMITE_PROFUNDIDADE){
+        if (numRodadas - rodada + 1 > LIMITE_PROFUNDIDADE){
             limite = LIMITE_PROFUNDIDADE;
         } else {
-            limite = numRodadas;
+            limite = numRodadas - rodada + 1;
         }
         
         for (TreeElement raiz : arvoreIA) {
             raiz.gerarFilhos(limite);
             raiz.calcularMelhorFolha();
-        }   
+            
+        }
+        TreeElement m = arvoreIA.get(0);
+        for (int i = 0; i < 6; i++) {
+            System.out.println(m.getId());
+            m = m.getMelhorFilho();
+        }
+        System.out.println("\n");
     }
     
     public void calcularSomaProducao(){
@@ -113,10 +120,14 @@ public class Simulador {
     
         
     private void tomarDecisaoIA(){
+        if ((rodada - 1) % LIMITE_PROFUNDIDADE == 0 && rodada != 1){
+            arvoreIA = criarArvore(listaIA);
+            minimax();
+        }
         for (int i = 0; i < listaIA.size(); i++) {
             Empresa empresa = listaIA.get(i);
-            int caminho = arvoreIA.get(i).getCaminho().get(rodada);
-            empresa.escolherAcoes(caminho);
+            int proximo = arvoreIA.get(i).getMelhorFilho().getId();
+            empresa.escolherAcoes(proximo);
         }
     }
     
@@ -147,6 +158,9 @@ public class Simulador {
             
             if (empresa.getCapital() < 0){
                 Empresa removido = lista.remove(i);
+                if (removido.isBot()){
+                    arvoreIA.remove(i);
+                }
                 mostraCapitalNegativo(removido);
             }
             
@@ -201,8 +215,8 @@ public class Simulador {
         return vencedora;
     }
     
-    private ArrayList<TreeElement> criarArvore(int numIa, ArrayList<Empresa> listaIA){
-        ArrayList<TreeElement> lista = new ArrayList<>(numIa);
+    private ArrayList<TreeElement> criarArvore(ArrayList<Empresa> listaIA){
+        ArrayList<TreeElement> lista = new ArrayList<>(listaIA.size());
         for (Empresa empresa : listaIA) {
             lista.add(new TreeElement(empresa));
         }

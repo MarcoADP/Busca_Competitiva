@@ -3,9 +3,9 @@ package modelos;
 import utilitarios.Util;
 
 public enum Fabrica {
-    PEQUENA("Pequena", 400000, 1, 30000, 50, 10),
-    MEDIA("Média", 500000, 2, 50000, 80, 15),
-    GRANDE("Grande", 600000, 3, 70000, 100, 20);
+    PEQUENA("Pequena", 300000, 1, 30000, 50, 10),
+    MEDIA("Média", 500000, 2, 50000, 80, 10),
+    GRANDE("Grande", 700000, 3, 70000, 100, 10);
     // Pequena (mais barata, produz 1 carro por vez, R$ 30.000 de custo por mês)
     // Media (preço médio, produz 2 carros por vez, R$ 60.000 de custo por mês)
     // Grande (mais cara, produz 3 carros por vez, R$ 90.000 de custo por mês)
