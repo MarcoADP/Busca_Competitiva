@@ -61,6 +61,10 @@ public class Simulador {
     }
     
     private void minimax(){
+        if (arvoreIA.isEmpty()){
+            return;
+        }
+        
         int limite;
         if (numRodadas - rodada + 1 > LIMITE_PROFUNDIDADE){
             limite = LIMITE_PROFUNDIDADE;
@@ -73,12 +77,6 @@ public class Simulador {
             raiz.calcularMelhorFolha();
             
         }
-        TreeElement m = arvoreIA.get(0);
-        for (int i = 0; i < 6; i++) {
-            System.out.println(m.getId());
-            m = m.getMelhorFilho();
-        }
-        System.out.println("\n");
     }
     
     public void calcularSomaProducao(){
