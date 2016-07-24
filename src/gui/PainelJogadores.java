@@ -2,7 +2,7 @@ package gui;
 
 import java.awt.event.ActionListener;
 import modelos.Empresa;
-import simulador.Simulador;
+import servidor.simulador.Simulador;
 
 public class PainelJogadores extends javax.swing.JPanel {
 

@@ -1,4 +1,4 @@
-package simulador;
+package servidor.simulador;
 
 import javax.swing.SwingUtilities;
 

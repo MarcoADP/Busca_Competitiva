@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import simulador.Simulador;
+import servidor.simulador.Simulador;
 import utilitarios.Util;
 
 public class PainelInicial extends javax.swing.JPanel {

@@ -1,7 +1,9 @@
-package simulador;
+package servidor.simulador;
 
 import modelos.Empresa;
 import gui.TelaPrincipal;
+import ia.BuscaCompetitiva;
+import ia.minimax.MiniMax;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import utilitarios.Util;
@@ -12,10 +14,8 @@ public class Simulador {
     public final static int INVESTIMENTO_INICIAL_MEDIO = 3000000;    // R$ 3.000.000
     public final static int INVESTIMENTO_INICIAL_ALTO = 5000000;     // R$ 5.000.000
     
-    public final static double FATOR_DEMANDA_MIN_RANDOM = 0.5;
-    public final static double FATOR_DEMANDA_MAX_RANDOM = 0.9;
-    
-    public final static int LIMITE_PROFUNDIDADE = 5;
+    public final static double FATOR_DEMANDA_MIN_RANDOM = 0.7;
+    public final static double FATOR_DEMANDA_MAX_RANDOM = 1.1;
     
     private int somaProducaoPorMes;
     
@@ -23,9 +23,9 @@ public class Simulador {
     
     private ArrayList<Empresa> listaJogador;
     private ArrayList<Empresa> listaIA;
-    private ArrayList<TreeElement> arvoreIA;
-    private int numRodadas;
-    private int rodada;
+    private ArrayList<BuscaCompetitiva> arvoresIA;
+    private int rodadasTotal;
+    private int rodadaAtual;
     private int investimento;
     private boolean acabou;
     private int demandaPorRodada;
@@ -36,14 +36,14 @@ public class Simulador {
         novoJogo();
     }
     
-    public void novoJogo(){
+    public final void novoJogo(){
         tela = new TelaPrincipal(this);
         investimento = 0;
-        numRodadas = 0;
-        rodada = 1;
+        rodadasTotal = 0;
+        rodadaAtual = 1;
         listaIA = null;
         listaJogador = null;
-        arvoreIA = null;
+        arvoresIA = null;
         acabou = false;
         strInfoRodada = "";
         demandaPorRodada = 0;
@@ -52,30 +52,37 @@ public class Simulador {
     }
     
     public void iniciarJogo(int numJogadores, int numIA, int numRodadas, int investimento){
-        this.numRodadas = numRodadas;
+        this.rodadasTotal = numRodadas;
         this.investimento = investimento;
         listaJogador = criarListaJogadores(numJogadores);
         listaIA = criarListaIA(numIA);
-        arvoreIA = criarArvore(listaIA);
-        minimax();
+        arvoresIA = gerarArvores(listaIA);
+        buscaCompetitiva();
     }
     
-    private void minimax(){
-        if (arvoreIA.isEmpty()){
+    private ArrayList<BuscaCompetitiva> gerarArvores(ArrayList<Empresa> listaIA){
+        ArrayList<BuscaCompetitiva> lista = new ArrayList<>(listaIA.size());
+        for (Empresa empresaIA : listaIA) {
+            lista.add(new MiniMax(empresaIA, rodadasTotal));
+        }
+        return lista;
+    }
+    
+    private void buscaCompetitiva(){
+        if (arvoresIA.isEmpty()){
             return;
         }
         
-        int limite;
-        if (numRodadas - rodada + 1 > LIMITE_PROFUNDIDADE){
-            limite = LIMITE_PROFUNDIDADE;
-        } else {
-            limite = numRodadas - rodada + 1;
+        for (BuscaCompetitiva bc : arvoresIA) {
+            bc.executar();
         }
-        
-        for (TreeElement raiz : arvoreIA) {
-            raiz.gerarFilhos(limite);
-            raiz.calcularMelhorFolha();
-            
+    }
+    
+    private void tomarDecisaoIA() {
+        for (int i = 0; i < listaIA.size(); i++) {
+            Empresa empresa = listaIA.get(i);
+            int proximo = arvoresIA.get(i).proximaAcao();
+            empresa.escolherAcoes(proximo);
         }
     }
     
@@ -108,25 +115,12 @@ public class Simulador {
         verificaCapitalNegativo(listaJogador);
         verificaCapitalNegativo(listaIA);
         
-        rodada++;
-        if (rodada > numRodadas && !acabou) {
+        rodadaAtual++;
+        if (rodadaAtual > rodadasTotal && !acabou) {
             mostraVencedor();
         }
         
         calcularDemanda();
-    }
-    
-        
-    private void tomarDecisaoIA(){
-        if ((rodada - 1) % LIMITE_PROFUNDIDADE == 0 && rodada != 1){
-            arvoreIA = criarArvore(listaIA);
-            minimax();
-        }
-        for (int i = 0; i < listaIA.size(); i++) {
-            Empresa empresa = listaIA.get(i);
-            int proximo = arvoreIA.get(i).getMelhorFilho().getId();
-            empresa.escolherAcoes(proximo);
-        }
     }
     
     private void atualizarInfoRodada(){
@@ -157,7 +151,7 @@ public class Simulador {
             if (empresa.getCapital() < 0){
                 Empresa removido = lista.remove(i);
                 if (removido.isBot()){
-                    arvoreIA.remove(i);
+                    arvoresIA.remove(i);
                 }
                 mostraCapitalNegativo(removido);
             }
@@ -181,6 +175,7 @@ public class Simulador {
         int num = listaJogador.size() + listaIA.size();
         if (num == 2) {
             mostraVencedor();
+            // fazer método encerrarJogo
         }
     }
     
@@ -211,14 +206,6 @@ public class Simulador {
         }
         
         return vencedora;
-    }
-    
-    private ArrayList<TreeElement> criarArvore(ArrayList<Empresa> listaIA){
-        ArrayList<TreeElement> lista = new ArrayList<>(listaIA.size());
-        for (Empresa empresa : listaIA) {
-            lista.add(new TreeElement(empresa));
-        }
-        return lista;
     }
     
     private ArrayList<Empresa> criarListaJogadores(int numJogadores){
@@ -327,8 +314,8 @@ public class Simulador {
         return listaIA;
     }
 
-    public int getRodada() {
-        return rodada;
+    public int getRodadaAtual() {
+        return rodadaAtual;
     }
 
     public int getDemandaPorRodada() {
@@ -343,8 +330,8 @@ public class Simulador {
         return investimento;
     }
 
-    public int getNumRodadas() {
-        return numRodadas;
+    public int getRodadasTotal() {
+        return rodadasTotal;
     }
     
 }

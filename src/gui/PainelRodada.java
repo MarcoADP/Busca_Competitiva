@@ -2,7 +2,7 @@ package gui;
 
 import java.awt.event.ActionListener;
 import modelos.Empresa;
-import simulador.Simulador;
+import servidor.simulador.Simulador;
 
 public class PainelRodada extends javax.swing.JPanel {
 
@@ -33,7 +33,7 @@ public class PainelRodada extends javax.swing.JPanel {
         }
         
         if (!simulador.acabou()){
-            labelRodada.setText("Rodada " + simulador.getRodada()+"/"+simulador.getNumRodadas());
+            labelRodada.setText("Rodada " + simulador.getRodadaAtual()+"/"+simulador.getRodadasTotal());
             labelDemanda.setText("Demanda: " + simulador.getDemandaPorRodada() + " carros");
         }
     }

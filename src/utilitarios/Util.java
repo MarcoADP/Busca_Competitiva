@@ -8,6 +8,8 @@ public class Util {
     private final static Random RANDOM = new Random();
     private final static DecimalFormat DF = new DecimalFormat("R$ #,###,###.##");
     
+    private Util() {}
+    
     public static int getRandomInt(int limite){
         return RANDOM.nextInt(limite);
     }

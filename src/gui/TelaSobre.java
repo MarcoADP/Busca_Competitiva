@@ -55,8 +55,8 @@ public class TelaSobre extends JDialog implements ActionListener{
 
         addLabel(new JLabel("Universidade Estadual de Maringá"), panel);
         addLabel(new JLabel("Curso: Ciência da Computação"), panel);
-        addLabel(new JLabel("Disciplina: Inteligência Artificial"), panel);
-        addLabel(new JLabel("Professor: Wagner Igarashi"), panel);
+        addLabel(new JLabel("Disciplinas: Inteligência Artificial e Redes de Computadores"), panel);
+        addLabel(new JLabel("Professores: Wagner Igarashi e Luciana Martimiano"), panel);
         addLabel(new JLabel("Alunos: Marco Aurélio Deoldoto Paulino - João Otávio Biondo - Matheus Alberto"), panel);
     }
 

@@ -3,7 +3,7 @@ package gui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.SwingWorker;
-import simulador.Simulador;
+import servidor.simulador.Simulador;
 
 public class PainelLoading extends javax.swing.JPanel implements PropertyChangeListener {
 
