@@ -17,6 +17,8 @@ public class TelaPrincipal extends JFrame{
     private PainelJogadores painelJogadores;
     private PainelRodada painelRodada;
     private PainelLoading painelLoading;
+    private PainelCliente painelCliente;
+    private PainelEscolha painelEscolha;
     
     private JMenuBar menuBar;
     private JMenu arquivo;
@@ -68,8 +70,9 @@ public class TelaPrincipal extends JFrame{
     }
     
     private void iniciarPainelInicial(){
-        painelInicial = new PainelInicial(new AcaoBotaoIniciar());
-        add(painelInicial);
+        //painelInicial = new PainelInicial(new AcaoBotaoIniciar());
+        //add(painelInicial);
+        add(new PainelEscolha(new AcaoServidor(), new AcaoCliente()));
     }
     
     private void iniciarJogo(int numPessoas, int numIA, int numRodadas, int investimento){
@@ -137,6 +140,30 @@ public class TelaPrincipal extends JFrame{
             painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
             setPainelRodada();
         }
+    }
+    
+    private class AcaoServidor implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            getContentPane().removeAll();
+            painelInicial = new PainelInicial(new AcaoBotaoIniciar());
+            add(painelInicial);
+            pack();
+            setLocationRelativeTo(null);
+        }
+        
+    }
+    
+    private class AcaoCliente implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            getContentPane().removeAll();
+            painelCliente = new PainelCliente();
+            add(painelCliente);
+            pack();
+            setLocationRelativeTo(null);
+        }
+        
     }
     
     private class AcaoBotaoSimular implements ActionListener {

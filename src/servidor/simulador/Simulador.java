@@ -1,5 +1,6 @@
 package servidor.simulador;
 
+import gui.PainelCliente;
 import modelos.Empresa;
 import gui.TelaPrincipal;
 import ia.BuscaCompetitiva;
