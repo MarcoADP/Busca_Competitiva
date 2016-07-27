@@ -1,7 +1,6 @@
 package ia.minimax;
 
 import ia.BuscaCompetitiva;
-import modelos.Carro;
 import modelos.Empresa;
 
 public class MiniMax implements BuscaCompetitiva{
@@ -70,44 +69,11 @@ public class MiniMax implements BuscaCompetitiva{
         
         int novaProfundidade = profundidade + 1;
         for(int i = 0; i < 9; i++){
-            TreeElement filho;
-            Empresa novaEmpresa = null;
-            switch(i) { 
-                case 0: //Marketing Normal Preço Normal Funcionario Demitido
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, -Empresa.FATOR_FUNCIONARIO_DEMITIR);
-                    break;
-                case 1: //MN PN FM
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, 0);
-                    break;
-                case 2: //MN PN FC
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
-                    break;
-                    
-                    
-                case 3: //MN PA FM
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_CARO, 0);
-                    break;
-                case 4: //MN PA FC
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_CARO, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
-                    break;
-                    
-                    
-                case 5: //MA PN FM
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_NORMAL, 0);
-                    break;
-                case 6: //MA PN FC
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_NORMAL, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
-                    break;
-                
-                    
-                case 7: //MA PA FM
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_CARO, 0);
-                    break;    
-                case 8: //MA PA FC
-                    novaEmpresa = new Empresa(atual.getEmpresa(), Empresa.MARKETING_ALTO, Carro.TIPO_PRECO_CARO, Empresa.FATOR_FUNCIONARIO_CONTRATAR);
-                    break;
-            }
-            filho = new TreeElement(atual, i, novaEmpresa);
+            Empresa novaEmpresa = new Empresa(atual.getEmpresa());
+            novaEmpresa.escolherAcoes(i);
+            novaEmpresa.estimarVenda();
+            
+            TreeElement filho = new TreeElement(atual, i, novaEmpresa);
             atual.addFilho(filho);
             gerarFilhos(filho, limite, novaProfundidade);
         }

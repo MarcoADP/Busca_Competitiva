@@ -30,7 +30,6 @@ public class Empresa {
     private final boolean isBot;          // true se for IA, false se for jogador
             
     //PARÂMETROS VARIÁVEIS
-    private double investimentoMarketing;
     private int tipoMarketing;
     
     // VARIAVEIS QUE MUDAM NO MÊS
@@ -51,12 +50,12 @@ public class Empresa {
         }
         this.funcionariosAContratar = 0;
         this.estoqueCarro = 0;
-        this.investimentoMarketing = 0;
         this.tipoMarketing = MARKETING_NORMAL;
         this.numeroFuncionarios = this.fabrica.getNumeroFuncionarioInicial();
     }
-
-    public Empresa(Empresa empresa, int opInv, int opPreco, int opFunc) {
+    
+    // Construtor de cópia
+    public Empresa(Empresa empresa) {
         //recebe atributos pai
         this.nome = empresa.nome;
         this.capital = empresa.capital;
@@ -65,21 +64,6 @@ public class Empresa {
         this.isBot = empresa.isBot;
         this.estoqueCarro = empresa.estoqueCarro;
         this.numeroFuncionarios = empresa.numeroFuncionarios;
-        
-        realizarAcoes(opInv, opPreco, opFunc);
-        estimarVenda();
-    }
-    
-    private void estimarVenda(){
-        //Vender Carros
-        //System.out.println("Prob => " + this.probabilidadeVenda + "Estoque => " + this.estoqueCarro);
-        int vendaEstimada = this.estoqueCarro * this.probabilidadeVenda/100;
-        //System.out.println("Venda => " + vendaEstimada + "Preco => " + this.carro.getPrecoVenda());
-        int ganhoVenda = vendaEstimada * this.carro.getPrecoVenda();
-        //System.out.println("ganho Venda => "+ ganhoVenda);
-        this.capital += ganhoVenda;
-        //System.out.println("Capital => " + this.capital);
-        this.estoqueCarro -= vendaEstimada;
     }
     
     public boolean temEstoque(){
@@ -129,7 +113,7 @@ public class Empresa {
     }
     
     public double calcularInvestimentoMarketing() {
-        return investir(tipoMarketing);
+        return investimentoMarketing(tipoMarketing);
     }
     
     public double calcularGastoMensal(){
@@ -207,7 +191,7 @@ public class Empresa {
         return calcularProbabilidade(this.carro.getTipoPreco(), this.tipoMarketing);
     }
     
-    public Double investir(int opcao){
+    public Double investimentoMarketing(int opcao){
         switch(opcao){
             case MARKETING_NORMAL:
                 return this.capital * INVESTIMENTO_MARKETING_NORMAL;
@@ -215,6 +199,23 @@ public class Empresa {
                 return this.capital * INVESTIMENTO_MARKETING_ALTO;
         }
         return -1.0;
+    }
+    
+    /* 
+        Métodos para Inteligência Artificial
+    */
+    
+    // Heurística
+    public void estimarVenda(){
+        //Vender Carros
+        //System.out.println("Prob => " + this.probabilidadeVenda + "Estoque => " + this.estoqueCarro);
+        int vendaEstimada = this.estoqueCarro * this.probabilidadeVenda/100;
+        //System.out.println("Venda => " + vendaEstimada + "Preco => " + this.carro.getPrecoVenda());
+        int ganhoVenda = vendaEstimada * this.carro.getPrecoVenda();
+        //System.out.println("ganho Venda => "+ ganhoVenda);
+        this.capital += ganhoVenda;
+        //System.out.println("Capital => " + this.capital);
+        this.estoqueCarro -= vendaEstimada;
     }
     
     private void realizarAcoes(int opMarketing, int opPreco, int opFunc) {
@@ -227,13 +228,12 @@ public class Empresa {
         //Atualizar Funcionários
         setFuncionariosAContratar(opFunc);
         
-        this.investimentoMarketing = this.investir(opMarketing);
         this.fecharMes();
     }
     
     public void escolherAcoes(int id){
         switch(id){
-            case 0: //MN PN FD
+            case 0: //Marketing Normal Preço Normal Funcionario Demitido
                 this.realizarAcoes(Empresa.MARKETING_NORMAL, Carro.TIPO_PRECO_NORMAL, -Empresa.FATOR_FUNCIONARIO_DEMITIR);
                 break;
             case 1: //MN PN FM
@@ -288,7 +288,7 @@ public class Empresa {
         System.out.println("Gastos Funcionarios => " + this.calcularGastoFuncionarios());
         System.out.println("");
         
-        System.out.println("Investimento => " + this.investimentoMarketing);
+        System.out.println("Investimento => " + this.investimentoMarketing(tipoMarketing));
         //System.out.println("Gastos Totais => " + this.gastosTotais);
         System.out.println("Probabilidade Venda => " + this.probabilidadeVenda);
         System.out.println("");
@@ -341,14 +341,6 @@ public class Empresa {
 
     public void setNumeroFuncionarios(int numeroFuncionarios) {
         this.numeroFuncionarios = numeroFuncionarios;
-    }
-
-    public double getInvestimentoMarketing() {
-        return investimentoMarketing;
-    }
-
-    public void setInvestimentoMarketing(double investimentoMarketing) {
-        this.investimentoMarketing = investimentoMarketing;
     }
 
     public int getProbabilidadeVenda() {
