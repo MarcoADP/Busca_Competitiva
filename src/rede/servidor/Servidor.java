@@ -1,9 +1,12 @@
 package rede.servidor;
 
+import gui.AreaLog;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +17,15 @@ public class Servidor implements Runnable{
     private boolean inicializado;
     private boolean executando;
     
-    private List<Atendente> atendentes;
+    private final List<Atendente> atendentes;
     
     private Thread thread;
     
+    private String logMsg;
+    
     public Servidor(int porta) throws IOException{
         atendentes = new ArrayList<>();
+        logMsg = "";
         
         inicializado = false;
         executando = false;
@@ -77,31 +83,50 @@ public class Servidor implements Runnable{
             atendente.send(msg);
         }
     }
+    
+    private void appendLog(String msg){
+        logMsg += msg;
+        AreaLog.appendLog(msg);
+    }
 
     @Override
     public void run() {
-        //janela.append("Aguardando conexão\n");
+        appendLog("Aguardando conexões...\n");
         while (executando){
             try {
                 server.setSoTimeout(2500);
                 
                 Socket socket = server.accept();
-                //janela.append("Conexão estabelecida\n");
+                appendLog("Conexão do cliente ["+
+                        socket.getInetAddress().getHostAddress() + ":"+socket.getPort()+"] estabelecida.\n");
                 
                 Atendente atendente = new Atendente(socket);
                 atendente.start();
                 atendentes.add(atendente);
                 
-                
             } catch (SocketTimeoutException ex) {
-                //System.out.println("EXCEÇÃO TIMEOUT");
-                //System.out.println(ex);
+                // ignorar
             } catch (IOException ex) {
-                //janela.append("EXCEÇÃO IO\n");
                 System.out.println(ex);
             }
         }
         close();
+    }
+    
+    public String getEndereco(){
+        try {
+            return Inet4Address.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) { }
+        
+        return "0.0.0.0";
+    }
+    
+    public int getPorta(){
+        return server.getLocalPort();
+    }
+    
+    public String getLog(){
+        return logMsg;
     }
     
 }

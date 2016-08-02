@@ -1,5 +1,6 @@
 package rede.servidor;
 
+import gui.AreaLog;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -93,6 +94,10 @@ public class Atendente implements Runnable {
     public void send(String msg){
         out.println(msg);
     }
+    
+    private void appendLog(String msg){
+        AreaLog.appendLog(msg);
+    }
 
     @Override
     public void run() {
@@ -101,27 +106,31 @@ public class Atendente implements Runnable {
             try {
                 socket.setSoTimeout(2500);
                 msg = in.readLine();
+                
                 if (msg == null){
                     break;
                 }
-                System.out.println(Arrays.toString(msg.getBytes()));
                 
-                /*janela.append("Mensagem recebida do client ["
+                appendLog("Mensagem recebida do cliente ["
                         + socket.getInetAddress().getHostName() + 
                         ":" + socket.getPort() + 
                         "]: "
-                        + msg+"\n");*/
+                        + msg+"\n");
+                
                 if (msg.equals("FIM")) {
                     break;
                 }
                 out.println(msg);
             } catch (SocketTimeoutException ex){
-                //System.out.println(ex);
+                // ignorar
             } catch (IOException ex) {
+                break;
                 //System.out.println(ex);
             }
         }
-        //janela.append("Encerrando conexão");
+        appendLog("Cliente ["
+                + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "] desconectado.\n");
+
         close();
     }
     

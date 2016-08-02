@@ -1,6 +1,10 @@
 package gui;
 
-import servidor.simulador.Simulador;
+import controlador.cliente.ControladorCliente;
+import controlador.servidor.ControladorServidor;
+import gui.cliente.PainelInicialCliente;
+import gui.servidor.PainelInicialServidor;
+import simulador.Simulador;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,23 +15,28 @@ import javax.swing.JMenuItem;
 import javax.swing.*;
 import modelos.Empresa;
 
-public class TelaPrincipal extends JFrame{
+public class Janela extends JFrame {
     
-    private PainelInicial painelInicial;
+    private PainelInicialServidor painelInicialServidor;
     private PainelJogadores painelJogadores;
     private PainelRodada painelRodada;
     private PainelLoading painelLoading;
-    private PainelCliente painelCliente;
-    private PainelEscolha painelEscolha;
+    private PainelInicialCliente painelCliente;
+    private PainelEscolhaInicial painelEscolhaInicial;
     
     private JMenuBar menuBar;
     private JMenu arquivo;
     private JMenu ajuda;
     
-    private final Simulador simulador;
+    private Simulador simulador;
 
-    public TelaPrincipal(Simulador simulador) {
+    public Janela(Simulador simulador) {
         this.simulador = simulador;
+        setSystemLookAndFeel();
+        iniciarComponentes();
+    }
+    
+    public Janela() {
         setSystemLookAndFeel();
         iniciarComponentes();
     }
@@ -70,9 +79,8 @@ public class TelaPrincipal extends JFrame{
     }
     
     private void iniciarPainelInicial(){
-        //painelInicial = new PainelInicial(new AcaoBotaoIniciar());
-        //add(painelInicial);
-        add(new PainelEscolha(new AcaoServidor(), new AcaoCliente()));
+        painelEscolhaInicial = new PainelEscolhaInicial(new AcaoIniciarServidor(), new AcaoIniciarCliente());
+        add(painelEscolhaInicial);
     }
     
     private void iniciarJogo(int numPessoas, int numIA, int numRodadas, int investimento){
@@ -106,31 +114,25 @@ public class TelaPrincipal extends JFrame{
         pack();
         setLocationRelativeTo(null);
     }
+    
+    public void mostrarMsgErro(String msg){
+        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void mudarPainel(JPanel painel){
+        this.getContentPane().removeAll();
+        this.add(painel);
+        this.pack();
+        this.setLocationRelativeTo(null);
+    }
 
     public PainelRodada getPainelRodada() {
         return painelRodada;
     }
     
-    private class AcaoBotaoIniciar implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int numPessoas = (int)painelInicial.getSpinnerPessoas().getValue();
-            int numIA = (int)painelInicial.getSpinnerIA().getValue();
-            int numRodadas = (int)painelInicial.getSpinnerRodadas().getValue();
-            int investimento = painelInicial.getSliderInvestimento().getValue();
-            
-            if (numPessoas == 0 && numIA == 0){
-                JOptionPane.showMessageDialog(null, "Erro: Número de pessoas e de IA não podem ser 0.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            } else if (numPessoas == 0 && numIA < 2){
-                JOptionPane.showMessageDialog(null, "Erro: É preciso pelo menos 2 jogadores.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            } else if (numPessoas < 2 && numIA == 0){
-                JOptionPane.showMessageDialog(null, "Erro: É preciso pelo menos 2 jogadores.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            iniciarJogo(numPessoas, numIA, numRodadas, investimento);
-        }
+    public void novoJogo(){
+        Janela j = new Janela();
+        dispose();
     }
     
     private class AcaoBotaoComecar implements ActionListener {
@@ -142,35 +144,27 @@ public class TelaPrincipal extends JFrame{
         }
     }
     
-    private class AcaoServidor implements ActionListener{
+    private class AcaoIniciarServidor implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            getContentPane().removeAll();
-            painelInicial = new PainelInicial(new AcaoBotaoIniciar());
-            add(painelInicial);
-            pack();
-            setLocationRelativeTo(null);
+            ControladorServidor controladorServidor = new ControladorServidor();
+            dispose();
         }
-        
     }
     
-    private class AcaoCliente implements ActionListener{
+    private class AcaoIniciarCliente implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            getContentPane().removeAll();
-            painelCliente = new PainelCliente();
-            add(painelCliente);
-            pack();
-            setLocationRelativeTo(null);
+            ControladorCliente controladorCliente = new ControladorCliente();
+            dispose();
         }
-        
     }
     
     private class AcaoBotaoSimular implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             getContentPane().removeAll();
-            painelLoading = new PainelLoading(TelaPrincipal.this, simulador);
+            painelLoading = new PainelLoading(Janela.this, simulador);
             add(painelLoading);
             pack();
             setLocationRelativeTo(null);
@@ -183,8 +177,7 @@ public class TelaPrincipal extends JFrame{
     private class AcaoNovoJogo implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            dispose();
-            simulador.novoJogo();
+            novoJogo();
         }
     }
     

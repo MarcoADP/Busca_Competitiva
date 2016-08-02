@@ -1,5 +1,6 @@
-package servidor.simulador;
+package simulador;
 
+import gui.Janela;
 import javax.swing.SwingUtilities;
 
 public class Main {
@@ -8,7 +9,8 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Simulador simulador = new Simulador();
+                //Simulador simulador = new Simulador();
+                Janela janela = new Janela();
             }
         });
     }

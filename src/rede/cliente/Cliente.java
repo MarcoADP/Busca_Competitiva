@@ -23,6 +23,7 @@ public class Cliente implements Runnable{
     public Cliente(String endereco, int porta) throws Exception {
         inicializado = false;
         executando = false;
+        
         open(endereco, porta);
     }
 
@@ -105,7 +106,7 @@ public class Cliente implements Runnable{
     @Override
     public void run() {
         while(executando){
-            try{
+            try {
                 socket.setSoTimeout(2500);
                 
                 String mensagem = in.readLine();

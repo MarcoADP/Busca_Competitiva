@@ -235,11 +235,6 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
         radioMarketingNormal.setText("Normal");
 
         radioMarketingAlto.setText("Alto");
-        radioMarketingAlto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioMarketingAltoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout painelMarketingLayout = new javax.swing.GroupLayout(painelMarketing);
         painelMarketing.setLayout(painelMarketingLayout);
@@ -296,20 +291,10 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
         painelPrecoCarro.setBorder(javax.swing.BorderFactory.createTitledBorder("Controlar preço do carro"));
 
         radioPrecoNormal.setText("Normal - Valor do carro normal");
-        radioPrecoNormal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioPrecoNormalActionPerformed(evt);
-            }
-        });
 
         labelPrecoCarro.setText("Preço do carro:");
 
         radioPrecoCaro.setText("Caro");
-        radioPrecoCaro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioPrecoCaroActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout painelPrecoCarroLayout = new javax.swing.GroupLayout(painelPrecoCarro);
         painelPrecoCarro.setLayout(painelPrecoCarroLayout);
@@ -535,18 +520,6 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void radioMarketingAltoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMarketingAltoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioMarketingAltoActionPerformed
-
-    private void radioPrecoCaroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPrecoCaroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioPrecoCaroActionPerformed
-
-    private void radioPrecoNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPrecoNormalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioPrecoNormalActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,8 +1,7 @@
-package servidor.simulador;
+package simulador;
 
-import gui.PainelCliente;
 import modelos.Empresa;
-import gui.TelaPrincipal;
+import gui.Janela;
 import ia.BuscaCompetitiva;
 import ia.minimax.MiniMax;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Simulador {
     
     private int somaProducaoPorMes;
     
-    private TelaPrincipal tela;
+    private Janela tela;
     
     private ArrayList<Empresa> listaJogador;
     private ArrayList<Empresa> listaIA;
@@ -38,7 +37,6 @@ public class Simulador {
     }
     
     public final void novoJogo(){
-        tela = new TelaPrincipal(this);
         investimento = 0;
         rodadasTotal = 0;
         rodadaAtual = 1;

@@ -125,9 +125,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Alto"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioMarketingAltoActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -222,9 +219,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Normal - Valor do carro normal"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPrecoNormalActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelPrecoCarro">
           <Properties>
@@ -235,9 +229,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Caro"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPrecoCaroActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

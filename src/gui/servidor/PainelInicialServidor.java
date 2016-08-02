@@ -1,25 +1,28 @@
-package gui;
+package gui.servidor;
 
 import java.awt.event.ActionListener;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.util.Hashtable;
 import javax.swing.JLabel;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import servidor.simulador.Simulador;
+import simulador.Simulador;
 import utilitarios.Util;
 
-public class PainelInicial extends javax.swing.JPanel {
+public class PainelInicialServidor extends javax.swing.JPanel {
        
-    public PainelInicial(ActionListener acaoBotaoIniciar) {
+    public PainelInicialServidor(ActionListener acaoBotaoIniciar) {
         initComponents();
         configurarComponentes(acaoBotaoIniciar);
     }
     
     private void configurarComponentes(ActionListener acaoBotaoIniciar){
-        spinnerJogadores.setModel(new SpinnerNumberModel(1, 0, 5, 1));
-        spinnerPorta.setModel(new SpinnerNumberModel(2525, 2000, 9999, 1));
+        spinnerJogadores.setModel(new SpinnerNumberModel(2, 2, 10, 1));
+        spinnerPorta.setModel(new SpinnerNumberModel(2525, 2000, 65535, 1));
         spinnerRodadas.setModel(new SpinnerNumberModel(5, 1, 15, 1));
+        
+        spinnerPorta.setEditor(new JSpinner.NumberEditor(spinnerPorta, "#"));
         
         botaoIniciar.addActionListener(acaoBotaoIniciar);
         
@@ -37,23 +40,30 @@ public class PainelInicial extends javax.swing.JPanel {
         sliderInvestimento.setSnapToTicks(true);
         sliderInvestimento.setPaintLabels(true);
         sliderInvestimento.setPaintTicks(true);
+        
+        try {
+            labelIP.setText("IP deste Servidor: "+Inet4Address.getLocalHost().getHostAddress());
+        } catch (UnknownHostException ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    public int getPorta(){
+        return (int) spinnerPorta.getValue();
+    }
+    
+    public int getNumJogadores(){
+        return (int) spinnerJogadores.getValue();
+    }
+    
+    public int getNumRodadas(){
+        return (int) spinnerRodadas.getValue();
+    }
+    
+    public int getInvestimento(){
+        return (int) sliderInvestimento.getValue();
     }
 
-    public JSpinner getSpinnerIA() {
-        return spinnerPorta;
-    }
-
-    public JSpinner getSpinnerPessoas() {
-        return spinnerJogadores;
-    }
-
-    public JSpinner getSpinnerRodadas() {
-        return spinnerRodadas;
-    }
-
-    public JSlider getSliderInvestimento() {
-        return sliderInvestimento;
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -63,13 +73,15 @@ public class PainelInicial extends javax.swing.JPanel {
         painelJogadores = new javax.swing.JPanel();
         numPessoas = new javax.swing.JLabel();
         spinnerJogadores = new javax.swing.JSpinner();
-        numIA = new javax.swing.JLabel();
-        spinnerPorta = new javax.swing.JSpinner();
         painelRodadas = new javax.swing.JPanel();
         numRodadas = new javax.swing.JLabel();
         spinnerRodadas = new javax.swing.JSpinner();
         labelInvestimento = new javax.swing.JLabel();
         sliderInvestimento = new javax.swing.JSlider();
+        painelConfigServidor = new javax.swing.JPanel();
+        numIA = new javax.swing.JLabel();
+        spinnerPorta = new javax.swing.JSpinner();
+        labelIP = new javax.swing.JLabel();
 
         botaoIniciar.setText("Iniciar");
 
@@ -77,21 +89,15 @@ public class PainelInicial extends javax.swing.JPanel {
 
         numPessoas.setText("Número de Jogadores:");
 
-        numIA.setText("Númerod da porta para conexão:");
-
         javax.swing.GroupLayout painelJogadoresLayout = new javax.swing.GroupLayout(painelJogadores);
         painelJogadores.setLayout(painelJogadoresLayout);
         painelJogadoresLayout.setHorizontalGroup(
             painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelJogadoresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(numIA)
-                    .addComponent(numPessoas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spinnerJogadores)
-                    .addComponent(spinnerPorta))
+                .addComponent(numPessoas)
+                .addGap(18, 18, 18)
+                .addComponent(spinnerJogadores)
                 .addContainerGap())
         );
         painelJogadoresLayout.setVerticalGroup(
@@ -101,10 +107,6 @@ public class PainelInicial extends javax.swing.JPanel {
                 .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(numPessoas)
                     .addComponent(spinnerJogadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelJogadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numIA)
-                    .addComponent(spinnerPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -145,28 +147,65 @@ public class PainelInicial extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        painelConfigServidor.setBorder(javax.swing.BorderFactory.createTitledBorder("Configuração do Servidor"));
+
+        numIA.setText("Número da porta para conexão:");
+
+        labelIP.setText("IP do Servidor: ");
+
+        javax.swing.GroupLayout painelConfigServidorLayout = new javax.swing.GroupLayout(painelConfigServidor);
+        painelConfigServidor.setLayout(painelConfigServidorLayout);
+        painelConfigServidorLayout.setHorizontalGroup(
+            painelConfigServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelConfigServidorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelConfigServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelConfigServidorLayout.createSequentialGroup()
+                        .addComponent(numIA)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spinnerPorta))
+                    .addGroup(painelConfigServidorLayout.createSequentialGroup()
+                        .addComponent(labelIP)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        painelConfigServidorLayout.setVerticalGroup(
+            painelConfigServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelConfigServidorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelConfigServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numIA)
+                    .addComponent(spinnerPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelIP)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(painelRodadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelJogadores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(painelRodadas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelJogadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botaoIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(botaoIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(painelConfigServidor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelJogadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelConfigServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(painelJogadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(painelRodadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botaoIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
@@ -175,10 +214,12 @@ public class PainelInicial extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoIniciar;
+    private javax.swing.JLabel labelIP;
     private javax.swing.JLabel labelInvestimento;
     private javax.swing.JLabel numIA;
     private javax.swing.JLabel numPessoas;
     private javax.swing.JLabel numRodadas;
+    private javax.swing.JPanel painelConfigServidor;
     private javax.swing.JPanel painelJogadores;
     private javax.swing.JPanel painelRodadas;
     private javax.swing.JSlider sliderInvestimento;

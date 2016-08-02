@@ -3,14 +3,14 @@ package gui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.SwingWorker;
-import servidor.simulador.Simulador;
+import simulador.Simulador;
 
 public class PainelLoading extends javax.swing.JPanel implements PropertyChangeListener {
 
-    private final TelaPrincipal tela;
+    private final Janela tela;
     private final Simulador simulador;
     
-    public PainelLoading(TelaPrincipal tela, Simulador simulador) {
+    public PainelLoading(Janela tela, Simulador simulador) {
         initComponents();
         this.tela = tela;
         this.simulador = simulador;
