@@ -86,7 +86,7 @@ public class Janela extends JFrame {
     private void iniciarJogo(int numPessoas, int numIA, int numRodadas, int investimento){
         getContentPane().removeAll();
         
-        simulador.iniciarJogo(numPessoas, numIA, numRodadas, investimento);
+        //simulador.iniciarJogo(numPessoas, numIA, numRodadas, investimento);
         
         painelJogadores = new PainelJogadores(simulador, new AcaoBotaoComecar());
         add(painelJogadores);

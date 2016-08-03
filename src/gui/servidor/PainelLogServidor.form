@@ -22,7 +22,7 @@
                   <Component id="scrollPane" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="painelInfoServidor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="painelInfoJogo" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -64,7 +64,7 @@
                       <Component id="labelIP" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="labelPorta" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="66" max="32767" attributes="0"/>
+                  <EmptySpace pref="36" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -111,7 +111,7 @@
                       <Component id="labelRodadaAtual" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="labelTotalRodadas" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="58" max="32767" attributes="0"/>
+                  <EmptySpace pref="43" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="labelJogadores" min="-2" max="-2" attributes="0"/>
                       <Component id="labelTotalJogadores" min="-2" max="-2" attributes="0"/>

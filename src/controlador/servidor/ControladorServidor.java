@@ -16,15 +16,15 @@ public class ControladorServidor {
     
     public ControladorServidor() {
         janela = new JanelaServidor(this);
+        //protocolo = new Protocolo(this);
     }
     
     public void iniciarServidor(int porta, int numJogadores, int numRodadas, int investimento) throws IOException{
-        servidor = new Servidor(porta);
+        servidor = new Servidor(porta, protocolo);
         simulador = new Simulador();
-        simulador.iniciarJogo(numJogadores, 0, numRodadas, investimento);
+        simulador.iniciarJogo(numJogadores, numRodadas, investimento);
         
         servidor.start();
-        
     }
     
     public void fecharServidor(){
@@ -44,11 +44,11 @@ public class ControladorServidor {
     }
     
     public int getTotalRodadas(){
-        return 0;
+        return simulador.getRodadasTotal();
     }
     
     public int getTotalJogadores(){
-        return 0;
+        return simulador.getNumJogadores();
     }
 
 }

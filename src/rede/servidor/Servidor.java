@@ -9,8 +9,9 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import rede.protocolo.Protocolo;
 
-public class Servidor implements Runnable{
+public class Servidor implements Runnable {
     
     private ServerSocket server;
     
@@ -23,7 +24,10 @@ public class Servidor implements Runnable{
     
     private String logMsg;
     
-    public Servidor(int porta) throws IOException{
+    private final Protocolo protocolo;
+    
+    public Servidor(int porta, Protocolo protocolo) throws IOException{
+        this.protocolo = protocolo;
         atendentes = new ArrayList<>();
         logMsg = "";
         
@@ -100,7 +104,7 @@ public class Servidor implements Runnable{
                 appendLog("Conexão do cliente ["+
                         socket.getInetAddress().getHostAddress() + ":"+socket.getPort()+"] estabelecida.\n");
                 
-                Atendente atendente = new Atendente(socket);
+                Atendente atendente = new Atendente(socket, protocolo);
                 atendente.start();
                 atendentes.add(atendente);
                 

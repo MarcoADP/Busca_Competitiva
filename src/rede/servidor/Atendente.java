@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.Arrays;
+import rede.protocolo.Protocolo;
 
 public class Atendente implements Runnable {
     
@@ -21,7 +21,10 @@ public class Atendente implements Runnable {
     
     private Thread thread;
     
-    public Atendente(Socket socket) throws IOException{
+    private final Protocolo protocolo;
+    
+    public Atendente(Socket socket, Protocolo protocolo) throws IOException{
+        this.protocolo = protocolo;
         this.socket = socket;
         
         this.inicializado = false;
@@ -92,6 +95,7 @@ public class Atendente implements Runnable {
     }
     
     public void send(String msg){
+        //protocolo.processar(msg) -> send
         out.println(msg);
     }
     

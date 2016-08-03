@@ -25,16 +25,15 @@ public class JanelaServidor extends Janela {
         mudarPainel(painelInicialServidor);
     }
     
-    private void iniciarPainelLog(){
-        painelLog = new PainelLogServidor(controlador.getPorta(), controlador.getEndereco(), controlador.getTotalRodadas(), controlador.getTotalJogadores());
-        mudarPainel(painelLog);
-    }
-
-    
     @Override
     public void novoJogo() {
         controlador.fecharServidor();
         super.novoJogo();
+    }
+    
+    private void iniciarPainelLog(){
+        painelLog = new PainelLogServidor(controlador.getPorta(), controlador.getEndereco(), controlador.getTotalRodadas(), controlador.getTotalJogadores());
+        mudarPainel(painelLog);
     }
     
     private class AcaoBotaoIniciar implements ActionListener {

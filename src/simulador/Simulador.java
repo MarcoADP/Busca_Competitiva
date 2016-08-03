@@ -22,11 +22,12 @@ public class Simulador {
     private Janela tela;
     
     private ArrayList<Empresa> listaJogador;
-    private ArrayList<Empresa> listaIA;
-    private ArrayList<BuscaCompetitiva> arvoresIA;
+    
     private int rodadasTotal;
     private int rodadaAtual;
+    
     private int investimento;
+    
     private boolean acabou;
     private int demandaPorRodada;
     private String strInfoRodada;
@@ -40,9 +41,7 @@ public class Simulador {
         investimento = 0;
         rodadasTotal = 0;
         rodadaAtual = 1;
-        listaIA = null;
         listaJogador = null;
-        arvoresIA = null;
         acabou = false;
         strInfoRodada = "";
         demandaPorRodada = 0;
@@ -50,16 +49,13 @@ public class Simulador {
         somaProducaoPorMes = 0;
     }
     
-    public void iniciarJogo(int numJogadores, int numIA, int numRodadas, int investimento){
+    public void iniciarJogo(int numJogadores, int numRodadas, int investimento){
         this.rodadasTotal = numRodadas;
         this.investimento = investimento;
         listaJogador = criarListaJogadores(numJogadores);
-        listaIA = criarListaIA(numIA);
-        arvoresIA = gerarArvores(listaIA);
-        buscaCompetitiva();
     }
     
-    private ArrayList<BuscaCompetitiva> gerarArvores(ArrayList<Empresa> listaIA){
+    /*private ArrayList<BuscaCompetitiva> gerarArvores(ArrayList<Empresa> listaIA){
         ArrayList<BuscaCompetitiva> lista = new ArrayList<>(listaIA.size());
         for (Empresa empresaIA : listaIA) {
             lista.add(new MiniMax(empresaIA, rodadasTotal));
@@ -83,16 +79,16 @@ public class Simulador {
             int proximo = arvoresIA.get(i).proximaAcao();
             empresa.escolherAcoes(proximo);
         }
-    }
+    }*/
     
     public void calcularSomaProducao(){
         int soma = 0;
         for (Empresa empresa : listaJogador) {
             soma += empresa.carrosPorMes();
         }
-        for (Empresa empresa : listaIA) {
+        /*for (Empresa empresa : listaIA) {
             soma += empresa.carrosPorMes();
-        }
+        }*/
         somaProducaoPorMes = soma;
         calcularDemanda();
     }
@@ -106,13 +102,13 @@ public class Simulador {
     
     public void proximaRodada(){
         fecharMesEmpresas(listaJogador);
-        tomarDecisaoIA();
+        //tomarDecisaoIA();
         
         atenderDemanda();
         atualizarInfoRodada();
         
         verificaCapitalNegativo(listaJogador);
-        verificaCapitalNegativo(listaIA);
+        //verificaCapitalNegativo(listaIA);
         
         rodadaAtual++;
         if (rodadaAtual > rodadasTotal && !acabou) {
@@ -129,11 +125,11 @@ public class Simulador {
             appendInfoRodada(" e lucrou "+Util.formatarDinheiro(empresa.getLucrouNoMes()));
             appendInfoRodada("\n---------------------------------\n");
         }
-        for (Empresa empresa : listaIA) {
+        /*for (Empresa empresa : listaIA) {
             appendInfoRodada(empresa.getNome()+" vendeu "+empresa.getCarrosVendidosNoMes()+" carros");
             appendInfoRodada(" e lucrou "+Util.formatarDinheiro(empresa.getLucrouNoMes()));
             appendInfoRodada("\n---------------------------------\n");
-        }
+        }*/
         appendInfoRodada("Total de carros vendidos: "+carrosVendidos);
     }
     
@@ -150,7 +146,7 @@ public class Simulador {
             if (empresa.getCapital() < 0){
                 Empresa removido = lista.remove(i);
                 if (removido.isBot()){
-                    arvoresIA.remove(i);
+                    //arvoresIA.remove(i);
                 }
                 mostraCapitalNegativo(removido);
             }
@@ -171,7 +167,7 @@ public class Simulador {
     
     private void mostraCapitalNegativo(Empresa empresa){
         JOptionPane.showMessageDialog(null, empresa.getNome() + " perdeu, pois o capital ficou negativo!");
-        int num = listaJogador.size() + listaIA.size();
+        int num = listaJogador.size();// + listaIA.size();
         if (num == 2) {
             mostraVencedor();
             // fazer método encerrarJogo
@@ -193,12 +189,12 @@ public class Simulador {
             }
         }
         
-        for (Empresa empresa : listaIA) {
+        /*for (Empresa empresa : listaIA) {
             if (empresa.getCapital() > maior){
                 maior = empresa.getCapital();
                 vencedora = empresa;
             }
-        }
+        }*/
         
         if (vencedora != null){
             acabou = true;
@@ -215,14 +211,6 @@ public class Simulador {
         return lista;
     }
     
-    private ArrayList<Empresa> criarListaIA(int numIA){
-        ArrayList<Empresa> lista = new ArrayList<>(numIA);
-        for (int i = 0; i < numIA; i++) {
-            lista.add(new Empresa("IA "+(i+1), investimento, true));
-        }
-        return lista;
-    }
-    
     public void atenderDemanda(){  
         carrosVendidos = 0;
         
@@ -231,9 +219,9 @@ public class Simulador {
         for(Empresa empresa : listaJogador){
             totalProb += empresa.getProbabilidadeVenda();
         }
-        for(Empresa empresa : listaIA){
+        /*for(Empresa empresa : listaIA){
             totalProb += empresa.getProbabilidadeVenda();
-        }
+        }*/
         
         //calcular a prob de cada
         //0 a listaJogador.size-1 -> jogadores reais
@@ -248,17 +236,17 @@ public class Simulador {
         }
         
         //listaJogador.size a listaIA.size-1 -> IA
-        for(Empresa empresa : listaIA){
+        /*for(Empresa empresa : listaIA){
             Integer prob = (int) (100 * empresa.getProbabilidadeVenda() / totalProb);
             listaProb.add(prob);
-        }
+        }*/
         
         //vender cada carro
         int i, j, limite, maximo, numeroSorteado, indEmpresa = -1;
         Empresa empresaVendedora;
         for(i = 0; i < demandaPorRodada; i++){
             maximo = Integer.MIN_VALUE;
-            int numeroEmpresa = listaJogador.size()+listaIA.size();
+            int numeroEmpresa = listaJogador.size();//+listaIA.size();
             for(j = 0; j < numeroEmpresa; j++){
                 limite = listaProb.get(j);
                 numeroSorteado = Util.getRandomInt(limite);
@@ -272,7 +260,7 @@ public class Simulador {
                 empresaVendedora = listaJogador.get(indEmpresa);
             } else {
                 int ind = indEmpresa - listaJogador.size();
-                empresaVendedora = listaIA.get(ind);
+                empresaVendedora = null;//listaIA.get(ind);
             }
             
             if(empresaVendedora.temEstoque()){    //vender carro
@@ -296,11 +284,11 @@ public class Simulador {
                 return false;
             }
         }
-        for(Empresa empresa : listaIA){
+        /*for(Empresa empresa : listaIA){
             if(empresa.temEstoque()){
                 return false;
             }
-        }
+        }*/
         
         return true;
     }
@@ -310,7 +298,7 @@ public class Simulador {
     }
 
     public ArrayList<Empresa> getListaIA() {
-        return listaIA;
+        return null;//listaIA;
     }
 
     public int getRodadaAtual() {
@@ -331,6 +319,10 @@ public class Simulador {
 
     public int getRodadasTotal() {
         return rodadasTotal;
+    }
+    
+    public int getNumJogadores() {
+        return listaJogador.size();
     }
     
 }

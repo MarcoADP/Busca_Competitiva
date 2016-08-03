@@ -76,7 +76,7 @@ public class PainelLogServidor extends javax.swing.JPanel {
                 .addGroup(painelInfoServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelIP)
                     .addComponent(labelPorta))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         painelInfoServidorLayout.setVerticalGroup(
             painelInfoServidorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,7 +107,7 @@ public class PainelLogServidor extends javax.swing.JPanel {
                 .addGroup(painelInfoJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelRodadaAtual)
                     .addComponent(labelTotalRodadas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(painelInfoJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelJogadores)
                     .addComponent(labelTotalJogadores))
@@ -141,7 +141,7 @@ public class PainelLogServidor extends javax.swing.JPanel {
                     .addComponent(scrollPane)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(painelInfoServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(painelInfoJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
