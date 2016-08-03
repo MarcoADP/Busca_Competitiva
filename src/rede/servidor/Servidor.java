@@ -1,5 +1,6 @@
 package rede.servidor;
 
+import controlador.servidor.ControladorServidor;
 import gui.AreaLog;
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -24,10 +25,10 @@ public class Servidor implements Runnable {
     
     private String logMsg;
     
-    private final Protocolo protocolo;
+    private final ControladorServidor controlador;
     
-    public Servidor(int porta, Protocolo protocolo) throws IOException{
-        this.protocolo = protocolo;
+    public Servidor(int porta, ControladorServidor controlador) throws IOException{
+        this.controlador = controlador;
         atendentes = new ArrayList<>();
         logMsg = "";
         
@@ -75,6 +76,7 @@ public class Servidor implements Runnable {
     }
     
     public void stop() throws InterruptedException{
+        appendLog("Todos os jogadores conectados. Servidor fechado para conexões.\n");
         executando = false;
         
         if (thread != null) {
@@ -104,9 +106,13 @@ public class Servidor implements Runnable {
                 appendLog("Conexão do cliente ["+
                         socket.getInetAddress().getHostAddress() + ":"+socket.getPort()+"] estabelecida.\n");
                 
-                Atendente atendente = new Atendente(socket, protocolo);
+                Atendente atendente = new Atendente(socket, controlador);
                 atendente.start();
                 atendentes.add(atendente);
+                
+                synchronized(controlador){
+                    controlador.addCliente();
+                }
                 
             } catch (SocketTimeoutException ex) {
                 // ignorar

@@ -2,6 +2,8 @@ package controlador.servidor;
 
 import gui.servidor.JanelaServidor;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import rede.protocolo.Protocolo;
 import rede.servidor.Servidor;
 import simulador.Simulador;
@@ -14,13 +16,16 @@ public class ControladorServidor {
     private final JanelaServidor janela;
     private Simulador simulador;
     
+    private int jogadoresConectados;
+    
     public ControladorServidor() {
         janela = new JanelaServidor(this);
         //protocolo = new Protocolo(this);
+        jogadoresConectados = 0;
     }
     
     public void iniciarServidor(int porta, int numJogadores, int numRodadas, int investimento) throws IOException{
-        servidor = new Servidor(porta, protocolo);
+        servidor = new Servidor(porta, this);
         simulador = new Simulador();
         simulador.iniciarJogo(numJogadores, numRodadas, investimento);
         
@@ -29,10 +34,30 @@ public class ControladorServidor {
     
     public void fecharServidor(){
         try {
-            servidor.stop();
+            if (servidor != null){
+                servidor.stop();
+            }
         } catch (InterruptedException ex) {
             System.out.println(ex);
         }
+    }
+    
+    public void addCliente(){
+        jogadoresConectados++;
+        janela.atualizarJogadoresConectados(jogadoresConectados);
+        
+        if (jogadoresConectados == simulador.getNumJogadores()){
+            try {
+                servidor.stop();
+            } catch (InterruptedException ex) {
+                System.out.println(ex);
+            }
+        }
+    }
+    
+    public void removeCliente(){
+        jogadoresConectados--;
+        janela.atualizarJogadoresConectados(jogadoresConectados);
     }
     
     public String getEndereco(){

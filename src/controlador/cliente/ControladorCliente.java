@@ -25,7 +25,9 @@ public class ControladorCliente {
     
     public void fecharCliente(){
         try {
-            cliente.stop();
+            if (cliente != null){
+                cliente.stop();
+            }
         } catch (Exception ex) {
             System.out.println(ex);
         }

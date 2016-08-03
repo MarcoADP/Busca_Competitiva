@@ -1,5 +1,6 @@
 package rede.servidor;
 
+import controlador.servidor.ControladorServidor;
 import gui.AreaLog;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +8,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import rede.protocolo.Protocolo;
 
 public class Atendente implements Runnable {
     
@@ -21,10 +21,10 @@ public class Atendente implements Runnable {
     
     private Thread thread;
     
-    private final Protocolo protocolo;
+    private final ControladorServidor controlador;
     
-    public Atendente(Socket socket, Protocolo protocolo) throws IOException{
-        this.protocolo = protocolo;
+    public Atendente(Socket socket, ControladorServidor controlador) throws IOException{
+        this.controlador = controlador;
         this.socket = socket;
         
         this.inicializado = false;
@@ -134,6 +134,10 @@ public class Atendente implements Runnable {
         }
         appendLog("Cliente ["
                 + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "] desconectado.\n");
+        
+        synchronized (controlador) {
+            controlador.removeCliente();
+        }
 
         close();
     }

@@ -36,6 +36,10 @@ public class JanelaServidor extends Janela {
         mudarPainel(painelLog);
     }
     
+    public void atualizarJogadoresConectados(int jogadores){
+        painelLog.atualizarJogadoresConectados(jogadores);
+    }
+    
     private class AcaoBotaoIniciar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -46,12 +50,12 @@ public class JanelaServidor extends Janela {
             
             try {
                 controlador.iniciarServidor(porta, numJogadores, numRodadas, investimento);
+                
+                iniciarPainelLog();
             } catch (IOException ex) {
                 mostrarMsgErro("ERRO: Não foi possível iniciar o servidor.");
                 System.out.println(ex);
             }
-            
-            iniciarPainelLog();
         }
     }
     

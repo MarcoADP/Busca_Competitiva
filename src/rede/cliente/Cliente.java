@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
@@ -29,7 +30,8 @@ public class Cliente implements Runnable{
 
     private void open(String endereco, int porta) throws Exception {
         try {
-            socket = new Socket(endereco, porta);
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(endereco, porta), 2000);
             
             InputStream input = socket.getInputStream();
             OutputStream output = socket.getOutputStream();

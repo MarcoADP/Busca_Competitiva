@@ -8,7 +8,9 @@ import java.awt.event.ActionListener;
 public class JanelaCliente extends Janela {
     
     private final ControladorCliente controlador;
+    
     private PainelInicialCliente painelInicialCliente;
+    private PainelLoadingJogadores painelLoadingJogadores;
     
     public JanelaCliente(ControladorCliente controlador) {
         this.controlador = controlador;
@@ -27,6 +29,11 @@ public class JanelaCliente extends Janela {
         controlador.fecharCliente();
     }
     
+    private void iniciarPainelLoadingJogadores(){
+        painelLoadingJogadores = new PainelLoadingJogadores(new AcaoBotaoContinuar());
+        mudarPainel(painelLoadingJogadores);
+    }
+    
     private class AcaoBotaoJogar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -36,9 +43,18 @@ public class JanelaCliente extends Janela {
             
             try {
                 controlador.iniciarCliente(endereco, porta, tipoJogador);
+                
+                iniciarPainelLoadingJogadores();
             } catch (Exception ex) {
-                mostrarMsgErro("ERRO: Não foi possível iniciar o cliente.");
+                mostrarMsgErro("ERRO: Não foi possível conectar ao servidor.");
             }
+        }
+    }
+    
+    private class AcaoBotaoContinuar implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
         }
     }
 }
