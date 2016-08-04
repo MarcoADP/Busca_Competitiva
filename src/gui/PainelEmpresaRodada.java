@@ -158,9 +158,11 @@ public class PainelEmpresaRodada extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent e) {
             switch(grupoPrecoCarro.getSelection().getActionCommand()){
                 case "Normal":
+                    empresa.getCarro().setTipoCarro(Carro.TIPO_PRECO_NORMAL);
                     empresa.getCarro().alterarPreco(Carro.TIPO_PRECO_NORMAL);
                     break;
                 case "Caro":
+                    empresa.getCarro().setTipoCarro(Carro.TIPO_PRECO_CARO);
                     empresa.getCarro().alterarPreco(Carro.TIPO_PRECO_CARO);
                     break;
             }

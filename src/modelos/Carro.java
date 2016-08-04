@@ -33,6 +33,7 @@ public class Carro {
     private int tempo;
     private int tipoPreco;
     private int precoVenda;
+    private int tipoCarro;
     private String nomeModelo;
     
     public Carro(int modelo, int tipo_preco){
@@ -61,10 +62,11 @@ public class Carro {
     }
     
     public void alterarPreco(int tipo){
+        this.tipoCarro = tipo;
         this.tipoPreco = tipo;
         double fator = 0;
         int preco = 0;
-        switch(tipo){
+        switch(tipoCarro){
             case TIPO_PRECO_NORMAL:
                 fator = FATOR_PRECO_NORMAL;
                 break;
@@ -115,5 +117,14 @@ public class Carro {
     public void setTipoPreco(int tipoPreco) {
         this.tipoPreco = tipoPreco;
     }
+
+    public int getTipoCarro() {
+        return tipoCarro;
+    }
+
+    public void setTipoCarro(int tipoCarro) {
+        this.tipoCarro = tipoCarro;
+    }
+    
     
 }

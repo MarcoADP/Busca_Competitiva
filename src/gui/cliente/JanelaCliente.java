@@ -4,6 +4,7 @@ import controlador.cliente.ControladorCliente;
 import gui.Janela;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 
 public class JanelaCliente extends Janela {
     
@@ -29,7 +30,7 @@ public class JanelaCliente extends Janela {
         controlador.fecharCliente();
     }
     
-    private void iniciarPainelLoadingJogadores(){
+    private void iniciarPainelLoadingJogadores() throws MalformedURLException{
         painelLoadingJogadores = new PainelLoadingJogadores(new AcaoBotaoContinuar());
         mudarPainel(painelLoadingJogadores);
     }

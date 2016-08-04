@@ -152,7 +152,11 @@ public class Empresa {
         this.estoqueCarro += calcularCarrosProduzidos();
         return calcularGastoProducaoCarros();
     }
-    
+
+    public int getFuncionariosAContratar() {
+        return funcionariosAContratar;
+    }
+            
     public void setFuncionariosAContratar(int numFuncionarios){
         funcionariosAContratar = numFuncionarios;
     }

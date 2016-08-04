@@ -1,12 +1,21 @@
 package gui.cliente;
 
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class PainelLoadingJogadores extends javax.swing.JPanel {
 
-    public PainelLoadingJogadores(ActionListener acaoBotaoContinuar) {
+    public PainelLoadingJogadores(ActionListener acaoBotaoContinuar) throws MalformedURLException {
         initComponents();
         configurarComponentes(acaoBotaoContinuar);
+        
+        URL url = new URL("https://aconquistablog.files.wordpress.com/2013/06/paciencia-carregando.gif");
+        
+        inserirGIF(url);
     }
     
     private void configurarComponentes(ActionListener acaoBotaoContinuar){
@@ -16,8 +25,14 @@ public class PainelLoadingJogadores extends javax.swing.JPanel {
     
     public void habilitarBotaoContinuar(){
         botaoContinuar.setEnabled(true);
+    }    
+    
+    public final void inserirGIF(URL url) throws MalformedURLException{
+        //URL url = new URL("https://aconquistablog.files.wordpress.com/2013/06/paciencia-carregando.gif");
+        ImageIcon icon = new ImageIcon(url);
+        labelGIF.setIcon(icon);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,7 +49,6 @@ public class PainelLoadingJogadores extends javax.swing.JPanel {
         botaoContinuar.setText("Continuar");
 
         labelGIF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelGIF.setText("GIF");
 
         labelMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMsg.setText("Esperando outros jogadores se conectarem...");
@@ -60,7 +74,7 @@ public class PainelLoadingJogadores extends javax.swing.JPanel {
                 .addComponent(labelGIF)
                 .addGap(32, 32, 32)
                 .addComponent(labelMsg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(botaoContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

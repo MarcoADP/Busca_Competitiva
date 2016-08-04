@@ -37,7 +37,7 @@
               <Component id="labelGIF" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="labelMsg" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <EmptySpace pref="53" max="32767" attributes="0"/>
               <Component id="botaoContinuar" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -53,7 +53,6 @@
     <Component class="javax.swing.JLabel" name="labelGIF">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="GIF"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelMsg">
