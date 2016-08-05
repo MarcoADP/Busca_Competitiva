@@ -1,5 +1,9 @@
 package rede.protocolo;
 
-public class Protocolo {
+public interface Protocolo {
+    
+    abstract void enviar(String msg);
+    
+    abstract void receber(String msg);
     
 }

@@ -1,6 +1,5 @@
 package rede.servidor;
 
-import controlador.servidor.ControladorServidor;
 import gui.AreaLog;
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -10,6 +9,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import rede.protocolo.ProtocoloServidor;
 
 public class Servidor implements Runnable {
     
@@ -24,10 +24,10 @@ public class Servidor implements Runnable {
     
     private String logMsg;
     
-    private final ControladorServidor controlador;
+    private final ProtocoloServidor protocolo;
     
-    public Servidor(int porta, ControladorServidor controlador) throws IOException{
-        this.controlador = controlador;
+    public Servidor(int porta, ProtocoloServidor protocolo) throws IOException{
+        this.protocolo = protocolo;
         atendentes = new ArrayList<>();
         logMsg = "";
         
@@ -43,13 +43,13 @@ public class Servidor implements Runnable {
     }
     
     private void close() {
-        for (Atendente atendente : atendentes) {
+        /*for (Atendente atendente : atendentes) {
             try {
                 atendente.stop();
             } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
-        }
+        }*/
         
         try {
             server.close();
@@ -75,7 +75,6 @@ public class Servidor implements Runnable {
     }
     
     public void stop() throws InterruptedException{
-        appendLog("Todos os jogadores conectados. Servidor fechado para conexões.\n");
         executando = false;
         
         if (thread != null) {
@@ -102,16 +101,10 @@ public class Servidor implements Runnable {
                 server.setSoTimeout(2500);
                 
                 Socket socket = server.accept();
-                appendLog("Conexão do cliente ["+
-                        socket.getInetAddress().getHostAddress() + ":"+socket.getPort()+"] estabelecida.\n");
                 
-                Atendente atendente = new Atendente(socket, controlador);
+                Atendente atendente = new Atendente(socket, protocolo);
                 atendente.start();
                 atendentes.add(atendente);
-                
-                synchronized(controlador){
-                    controlador.addCliente();
-                }
                 
             } catch (SocketTimeoutException ex) {
                 // ignorar
@@ -119,7 +112,8 @@ public class Servidor implements Runnable {
                 System.out.println(ex);
             }
         }
-        close();
+        
+        //close();
     }
     
     public String getEndereco(){

@@ -2,14 +2,14 @@ package controlador.servidor;
 
 import gui.servidor.JanelaServidor;
 import java.io.IOException;
-import rede.protocolo.Protocolo;
+import rede.protocolo.ProtocoloServidor;
 import rede.servidor.Servidor;
 import simulador.Simulador;
 
 public class ControladorServidor {
     
     private Servidor servidor;
-    private Protocolo protocolo;
+    private ProtocoloServidor protocolo;
     
     private final JanelaServidor janela;
     private Simulador simulador;
@@ -18,12 +18,12 @@ public class ControladorServidor {
     
     public ControladorServidor() {
         janela = new JanelaServidor(this);
-        //protocolo = new Protocolo(this);
         jogadoresConectados = 0;
     }
     
     public void iniciarServidor(int porta, int numJogadores, int numRodadas, int investimento) throws IOException{
-        servidor = new Servidor(porta, this);
+        protocolo = new ProtocoloServidor(this);
+        servidor = new Servidor(porta, protocolo);
         simulador = new Simulador();
         simulador.iniciarJogo(numJogadores, numRodadas, investimento);
         
@@ -40,18 +40,9 @@ public class ControladorServidor {
         }
     }
     
-    public void addCliente(){
+    public void addCliente(String msg){
         jogadoresConectados++;
         janela.atualizarJogadoresConectados(jogadoresConectados);
-        
-        if (jogadoresConectados == simulador.getNumJogadores()){
-            try {
-                enviarMensagemConfirmacaoJogadores();
-                servidor.stop();
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
-            }
-        }
     }
     
     public void removeCliente(){
@@ -59,8 +50,22 @@ public class ControladorServidor {
         janela.atualizarJogadoresConectados(jogadoresConectados);
     }
     
+    public void notificarTodosConectados() {
+        try {
+            enviarMensagemConfirmacaoJogadores();
+
+            servidor.stop();
+        } catch (InterruptedException ex) {
+            System.out.println(ex);
+        }
+    }
+    
     public void enviarMensagemConfirmacaoJogadores(){
         servidor.sendAll("OK!");
+    }
+    
+    public boolean todosConectados() {
+        return simulador.getNumJogadores() == jogadoresConectados;
     }
     
     public String getEndereco(){

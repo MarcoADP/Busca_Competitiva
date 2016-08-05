@@ -1,6 +1,5 @@
 package rede.servidor;
 
-import controlador.servidor.ControladorServidor;
 import gui.AreaLog;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import rede.protocolo.ProtocoloServidor;
 
 public class Atendente implements Runnable {
     
@@ -21,14 +21,14 @@ public class Atendente implements Runnable {
     
     private Thread thread;
     
-    private final ControladorServidor controlador;
+    private final ProtocoloServidor protocolo;
     
     private String mensagem;
     
     String id;
     
-    public Atendente(Socket socket, ControladorServidor controlador) throws IOException{
-        this.controlador = controlador;
+    public Atendente(Socket socket, ProtocoloServidor protocolo) throws IOException{
+        this.protocolo = protocolo;
         this.socket = socket;
         
         this.inicializado = false;
@@ -105,45 +105,41 @@ public class Atendente implements Runnable {
         out.println(msg);
     }
     
-    private void appendLog(String msg){
-        AreaLog.appendLog(msg);
+    private void enviarParaProtocolo(String msg){
+        new Thread(() -> protocolo.receber(msg)).start();
     }
 
     @Override
     public void run() {
+        enviarParaProtocolo(id); // Enviando id para o protocolo
         while (executando){
             try {
                 socket.setSoTimeout(2500);
                 mensagem = in.readLine();
                 
+                //enviarParaProtocolo(mensagem);
+                
                 if (mensagem == null){
                     break;
                 }
                 
-                appendLog("Mensagem recebida do cliente ["+id+"]: "+ mensagem+"\n");
-                
-                if (mensagem.equals("FIM")) {
-                    break;
-                }
-                
-                out.println(mensagem);
-                
             } catch (SocketTimeoutException ex){
                 // ignorar
             } catch (IOException ex) {
+                System.out.println(ex);
                 break;
             }
         }
-        appendLog("Cliente ["+id+"] desconectado.\n");
-        
-        synchronized (controlador) {
-            controlador.removeCliente();
-        }
+        new Thread(() -> protocolo.disconectarCliente(id)).start();
 
         close();
     }
 
     public String getMensagem() {
         return mensagem;
+    }
+    
+    public String getID() {
+        return id;
     }
 }
