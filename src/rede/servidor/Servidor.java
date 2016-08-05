@@ -10,7 +10,6 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import rede.protocolo.Protocolo;
 
 public class Servidor implements Runnable {
     

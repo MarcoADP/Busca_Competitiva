@@ -2,11 +2,8 @@ package gui.cliente;
 
 import controlador.cliente.ControladorCliente;
 import gui.Janela;
-import gui.PainelJogadores;
-import gui.PainelRodada;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
 import simulador.Simulador;
 
 public class JanelaCliente extends Janela {
@@ -15,6 +12,7 @@ public class JanelaCliente extends Janela {
     
     private PainelInicialCliente painelInicialCliente;
     private PainelLoadingJogadores painelLoadingJogadores;
+    private PainelJogadores painelJogadores;
     private PainelRodada painelRodada;
     
     public JanelaCliente(ControladorCliente controlador) {
@@ -29,18 +27,29 @@ public class JanelaCliente extends Janela {
         mudarPainel(painelInicialCliente);
     }
     
-    public void habilitarBotaoContinuar() throws MalformedURLException{
+    public void habilitarBotaoContinuar() {
         painelLoadingJogadores.habilitarBotaoContinuar();
     }
     
     @Override
     public void novoJogo(){
         controlador.fecharCliente();
+        super.novoJogo();
     }
     
-    private void iniciarPainelLoadingJogadores() throws MalformedURLException{
+    private void iniciarPainelLoadingJogadores() {
         painelLoadingJogadores = new PainelLoadingJogadores(new AcaoBotaoContinuar());
         mudarPainel(painelLoadingJogadores);
+    }
+    
+    private void iniciarPainelJogadores(){
+        painelJogadores = new PainelJogadores(controlador.getEmpresa(), new AcaoBotaoComecar());
+        mudarPainel(painelJogadores);
+    }
+    
+    private void iniciarPainelRodada(){
+        painelRodada = new PainelRodada(new Simulador(), new AcaoBotaoSimular());
+        mudarPainel(painelRodada);
     }
         
     private class AcaoBotaoJogar implements ActionListener {
@@ -51,26 +60,35 @@ public class JanelaCliente extends Janela {
             String tipoJogador = painelInicialCliente.getTipoJogador();
             
             try {                
-                iniciarPainelLoadingJogadores();
                 controlador.iniciarCliente(endereco, porta, tipoJogador);
+                
+                iniciarPainelLoadingJogadores();
             } catch (Exception ex) {
                 mostrarMsgErro("ERRO: Não foi possível conectar ao servidor.");
             }
         }
     }
     
-    public class AcaoBotaoSimular implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-        }
-    }
-    
     private class AcaoBotaoContinuar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            painelRodada = new PainelRodada(new Simulador(), new AcaoBotaoSimular());
-            mudarPainel(painelRodada);
+            iniciarPainelJogadores();
+        }
+    }
+    
+    private class AcaoBotaoComecar implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // enviar dados para servidor
+            // esperar até todos enviarem
+        }
+    }
+    
+    public class AcaoBotaoSimular implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // enviar dados para servidor
+            // esperar até todos enviarem
         }
     }
     

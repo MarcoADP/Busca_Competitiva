@@ -23,7 +23,9 @@ public class Atendente implements Runnable {
     
     private final ControladorServidor controlador;
     
-    private String msg;
+    private String mensagem;
+    
+    String id;
     
     public Atendente(Socket socket, ControladorServidor controlador) throws IOException{
         this.controlador = controlador;
@@ -33,6 +35,8 @@ public class Atendente implements Runnable {
         this.executando = false;
         
         open();
+        
+        id = socket.getInetAddress().getHostName() + ":" + socket.getPort();
     }
     
     private void open() throws IOException{
@@ -110,31 +114,27 @@ public class Atendente implements Runnable {
         while (executando){
             try {
                 socket.setSoTimeout(2500);
-                msg = in.readLine();
+                mensagem = in.readLine();
                 
-                if (msg == null){
+                if (mensagem == null){
                     break;
                 }
                 
-                appendLog("Mensagem recebida do cliente ["
-                        + socket.getInetAddress().getHostName() + 
-                        ":" + socket.getPort() + 
-                        "]: "
-                        + msg+"\n");
+                appendLog("Mensagem recebida do cliente ["+id+"]: "+ mensagem+"\n");
                 
-                if (msg.equals("FIM")) {
+                if (mensagem.equals("FIM")) {
                     break;
                 }
-                out.println(msg);
+                
+                out.println(mensagem);
+                
             } catch (SocketTimeoutException ex){
                 // ignorar
             } catch (IOException ex) {
                 break;
-                //System.out.println(ex);
             }
         }
-        appendLog("Cliente ["
-                + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "] desconectado.\n");
+        appendLog("Cliente ["+id+"] desconectado.\n");
         
         synchronized (controlador) {
             controlador.removeCliente();
@@ -143,7 +143,7 @@ public class Atendente implements Runnable {
         close();
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMensagem() {
+        return mensagem;
     }
 }

@@ -3,16 +3,18 @@ package gui.cliente;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 public class PainelLoadingJogadores extends javax.swing.JPanel {
 
-    public PainelLoadingJogadores(ActionListener acaoBotaoContinuar) throws MalformedURLException {
+    public PainelLoadingJogadores(ActionListener acaoBotaoContinuar) {
         initComponents();
         configurarComponentes(acaoBotaoContinuar);
         
-        URL url = new URL("https://aconquistablog.files.wordpress.com/2013/06/paciencia-carregando.gif");
+        URL url = null;
+        try {
+            url = new URL("https://aconquistablog.files.wordpress.com/2013/06/paciencia-carregando.gif");
+        } catch (MalformedURLException ex) {}
         
         inserirGIF(url);
     }
@@ -22,16 +24,22 @@ public class PainelLoadingJogadores extends javax.swing.JPanel {
         botaoContinuar.addActionListener(acaoBotaoContinuar);
     }
     
-    public void habilitarBotaoContinuar() throws MalformedURLException{
+    public void habilitarBotaoContinuar() {
         botaoContinuar.setEnabled(true);
-        URL url = new URL("http://www.funwithmyspace.com/picture_library/game14.gif");
+        labelMsg.setText("Todos os jogadores conectados!");
+        URL url = null;
+        try {
+            url = new URL("http://www.funwithmyspace.com/picture_library/game14.gif");
+        } catch (MalformedURLException ex) {}
+        
         inserirGIF(url);
     }    
     
-    public final void inserirGIF(URL url) throws MalformedURLException{
+    public final void inserirGIF(URL url) {
         ImageIcon icon = new ImageIcon(url);
         labelGIF.setIcon(icon);
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

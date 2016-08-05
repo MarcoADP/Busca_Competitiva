@@ -2,11 +2,7 @@ package controlador.servidor;
 
 import gui.servidor.JanelaServidor;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import rede.protocolo.Protocolo;
-import rede.servidor.Atendente;
 import rede.servidor.Servidor;
 import simulador.Simulador;
 
@@ -50,6 +46,7 @@ public class ControladorServidor {
         
         if (jogadoresConectados == simulador.getNumJogadores()){
             try {
+                enviarMensagemConfirmacaoJogadores();
                 servidor.stop();
             } catch (InterruptedException ex) {
                 System.out.println(ex);
@@ -62,7 +59,7 @@ public class ControladorServidor {
         janela.atualizarJogadoresConectados(jogadoresConectados);
     }
     
-    public void enviarMensagemConfirmaçaoJogadores(){
+    public void enviarMensagemConfirmacaoJogadores(){
         servidor.sendAll("OK!");
     }
     

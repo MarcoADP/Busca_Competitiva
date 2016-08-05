@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class Cliente implements Runnable{
@@ -21,9 +22,9 @@ public class Cliente implements Runnable{
     private boolean executando;
     
     private Thread thread;
-    private String mensagem;
     
     private final ControladorCliente controlador;
+    private String mensagem;
     
     public Cliente(ControladorCliente controlador, String endereco, int porta) throws Exception {
         this.controlador = controlador;
@@ -127,11 +128,12 @@ public class Cliente implements Runnable{
                 synchronized(controlador){
                     controlador.receberMensagemServidor(mensagem);
                 }
-            }
-            catch(SocketTimeoutException e){
+            } catch(SocketTimeoutException e){
                 // ignorar
-            }
-            catch(Exception e){
+            } catch(SocketException e){
+                new Thread(() -> controlador.servidorDesconectado()).start();
+                break;
+            }catch(Exception e){
                 System.out.println(e);
                 break;
             }

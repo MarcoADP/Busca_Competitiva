@@ -1,4 +1,4 @@
-package gui;
+package gui.cliente;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;

@@ -1,5 +1,7 @@
 package gui;
 
+import gui.cliente.PainelJogadores;
+import gui.cliente.PainelRodada;
 import controlador.cliente.ControladorCliente;
 import controlador.servidor.ControladorServidor;
 import gui.cliente.PainelInicialCliente;
@@ -83,17 +85,6 @@ public class Janela extends JFrame {
         add(painelEscolhaInicial);
     }
     
-    private void iniciarJogo(int numPessoas, int numIA, int numRodadas, int investimento){
-        getContentPane().removeAll();
-        
-        //simulador.iniciarJogo(numPessoas, numIA, numRodadas, investimento);
-        
-        painelJogadores = new PainelJogadores(simulador, new AcaoBotaoComecar());
-        add(painelJogadores);
-        pack();
-        setLocationRelativeTo(null);
-    }
-    
     public void mostrarVencedor(Empresa empresa){
         painelRodada.venceu(new AcaoNovoJogo(), empresa);
         JLabel label;
@@ -123,7 +114,6 @@ public class Janela extends JFrame {
         this.getContentPane().removeAll();
         this.add(painel);
         this.pack();
-        this.setLocationRelativeTo(null);
     }
 
     public PainelRodada getPainelRodada() {
@@ -133,15 +123,6 @@ public class Janela extends JFrame {
     public void novoJogo(){
         Janela j = new Janela();
         dispose();
-    }
-    
-    private class AcaoBotaoComecar implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            simulador.calcularSomaProducao();
-            painelRodada = new PainelRodada(simulador, new AcaoBotaoSimular());
-            setPainelRodada();
-        }
     }
     
     private class AcaoIniciarServidor implements ActionListener{
@@ -157,20 +138,6 @@ public class Janela extends JFrame {
         public void actionPerformed(ActionEvent e) {
             ControladorCliente controladorCliente = new ControladorCliente();
             dispose();
-        }
-    }
-    
-    private class AcaoBotaoSimular implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            getContentPane().removeAll();
-            painelLoading = new PainelLoading(Janela.this, simulador);
-            add(painelLoading);
-            pack();
-            setLocationRelativeTo(null);
-            painelLoading.executar();
-            
-            simulador.proximaRodada();
         }
     }
     
