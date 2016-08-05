@@ -1,6 +1,7 @@
 package controlador.cliente;
 
 import gui.cliente.JanelaCliente;
+import java.net.MalformedURLException;
 import modelos.Empresa;
 import rede.cliente.Cliente;
 import rede.protocolo.Protocolo;
@@ -19,7 +20,7 @@ public class ControladorCliente {
     }
 
     public void iniciarCliente(String endereco, int porta, String tipoJogador) throws Exception {
-        cliente = new Cliente(endereco, porta);
+        cliente = new Cliente(this, endereco, porta);
         cliente.start();
     }
 
@@ -32,8 +33,18 @@ public class ControladorCliente {
             System.out.println(ex);
         }
     }
+    
+    public void receberMensagemServidor(String mensagem) throws MalformedURLException{
+        if(mensagem.equals("OK!")){
+            janela.habilitarBotaoContinuar();
+        }
+    }
+    
+    public void enviarMensagemServidor(){
+        cliente.send(criarMensagemRodada());
+    }
 
-    public String criarMensagemInicial(Empresa empresa) {
+    public String criarMensagemInicial() {
         //NÚMERO DE CAMPOS, NOME DA EMPRESA, TIPO FABRICA, MODELO CARRO
         String mensagem = "3|";
         mensagem += empresa.getNome();
@@ -42,7 +53,7 @@ public class ControladorCliente {
         return mensagem;
     }
 
-    public String criarMensagemRodada(Empresa empresa) {
+    public String criarMensagemRodada() {
         //NÚMERO DE CAMPOS, FUNCIONARIOS A CONTRATAR, TIPO CARRO, TIPO MARKENTING
         String mensagem = "3|";
         mensagem += empresa.getFuncionariosAContratar();

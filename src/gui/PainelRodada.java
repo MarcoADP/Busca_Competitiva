@@ -62,11 +62,6 @@ public class PainelRodada extends javax.swing.JPanel {
 
         botaoSimular.setText("Simular Rodada");
         botaoSimular.setActionCommand("SimularRodada");
-        botaoSimular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSimularActionPerformed(evt);
-            }
-        });
 
         labelRodada.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelRodada.setText("Rodada");
@@ -100,10 +95,6 @@ public class PainelRodada extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void botaoSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSimularActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoSimularActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

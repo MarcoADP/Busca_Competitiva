@@ -23,6 +23,8 @@ public class Atendente implements Runnable {
     
     private final ControladorServidor controlador;
     
+    private String msg;
+    
     public Atendente(Socket socket, ControladorServidor controlador) throws IOException{
         this.controlador = controlador;
         this.socket = socket;
@@ -106,7 +108,6 @@ public class Atendente implements Runnable {
     @Override
     public void run() {
         while (executando){
-            String msg;
             try {
                 socket.setSoTimeout(2500);
                 msg = in.readLine();
@@ -141,5 +142,8 @@ public class Atendente implements Runnable {
 
         close();
     }
-    
+
+    public String getMsg() {
+        return msg;
+    }
 }

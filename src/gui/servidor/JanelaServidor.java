@@ -38,6 +38,9 @@ public class JanelaServidor extends Janela {
     
     public void atualizarJogadoresConectados(int jogadores){
         painelLog.atualizarJogadoresConectados(jogadores);
+        if(jogadores == controlador.getTotalJogadores()){
+            controlador.enviarMensagemConfirmaçaoJogadores();
+        }
     }
     
     private class AcaoBotaoIniciar implements ActionListener {

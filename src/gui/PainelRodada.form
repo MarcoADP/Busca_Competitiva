@@ -49,9 +49,6 @@
         <Property name="text" type="java.lang.String" value="Simular Rodada"/>
         <Property name="actionCommand" type="java.lang.String" value="SimularRodada"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSimularActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelRodada">
       <Properties>

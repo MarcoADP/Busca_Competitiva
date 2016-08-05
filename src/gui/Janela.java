@@ -28,7 +28,7 @@ public class Janela extends JFrame {
     private JMenu arquivo;
     private JMenu ajuda;
     
-    private Simulador simulador;
+    public Simulador simulador;
 
     public Janela(Simulador simulador) {
         this.simulador = simulador;

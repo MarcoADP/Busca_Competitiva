@@ -2,9 +2,11 @@ package controlador.servidor;
 
 import gui.servidor.JanelaServidor;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rede.protocolo.Protocolo;
+import rede.servidor.Atendente;
 import rede.servidor.Servidor;
 import simulador.Simulador;
 
@@ -58,6 +60,10 @@ public class ControladorServidor {
     public void removeCliente(){
         jogadoresConectados--;
         janela.atualizarJogadoresConectados(jogadoresConectados);
+    }
+    
+    public void enviarMensagemConfirmaçaoJogadores(){
+        servidor.sendAll("OK!");
     }
     
     public String getEndereco(){
