@@ -18,12 +18,16 @@ public class ProtocoloCliente implements Protocolo {
     }
 
     @Override
-    public void enviar(String msg) {
-        
-    }
-
-    @Override
     public void receber(String msg) {
+        String[] cabecalho = Protocolo.getCabecalho(msg);
+        msg = Protocolo.decodificarCabecalho(msg);
+        
+        switch (Protocolo.getTipo(cabecalho)){
+            case Protocolo.TIPO_MENSAGEM:
+                controlador.mostrarMensagem(msg);
+                return;
+        }
+        
         switch (estado) {
             case ESPERANDO_PARAMETROS_SERVIDOR: // Recebe total de rodadas e investimento inicial
                 controlador.receberParametrosServidor(msg);

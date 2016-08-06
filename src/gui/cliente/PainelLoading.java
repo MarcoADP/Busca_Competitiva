@@ -1,5 +1,6 @@
-package gui;
+package gui.cliente;
 
+import gui.Janela;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.SwingWorker;

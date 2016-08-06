@@ -1,6 +1,7 @@
 package controlador.cliente;
 
 import gui.cliente.JanelaCliente;
+import java.util.Arrays;
 import modelos.Empresa;
 import rede.cliente.Cliente;
 import rede.protocolo.ProtocoloCliente;
@@ -42,7 +43,8 @@ public class ControladorCliente {
         int investimento = Integer.parseInt(parametros[1]);
         
         simulador.iniciarSimulador(rodadasTotal, investimento);
-
+        
+        //tenta habilitar até parar de dar NullPointerException
         while (true) {
             try {
                 janela.habilitarBotaoContinuar();
@@ -59,7 +61,7 @@ public class ControladorCliente {
 
     public String criarMensagemInicial() {
         //NÚMERO DE CAMPOS, NOME DA EMPRESA, TIPO FABRICA, MODELO CARRO
-        String mensagem = "3|";
+        String mensagem = "";
         mensagem += simulador.getEmpresa().getNome()+"|";
         mensagem += simulador.getEmpresa().getFabrica().getNome()+"|";
         mensagem += simulador.getEmpresa().getCarro().getModelo()+"|";
@@ -73,6 +75,10 @@ public class ControladorCliente {
         mensagem += simulador.getEmpresa().getCarro().getTipoPreco()+"|";
         mensagem += simulador.getEmpresa().getTipoMarketing()+"|";
         return mensagem;
+    }
+    
+    public void mostrarMensagem(String msg){
+        janela.mostrarMsgAviso(msg);
     }
     
     public void servidorDesconectado(){

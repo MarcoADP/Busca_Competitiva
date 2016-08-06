@@ -88,10 +88,11 @@ public class Servidor implements Runnable {
         }
     }
     
-    public void removerAtendente(String id){
-        for (int i = atendentes.size(); i >= 0; i++){
+    public synchronized void removerAtendente(String id){
+        for (int i = atendentes.size() - 1; i >= 0; i++){
             if (atendentes.get(i).getID().equals(id)){
                 atendentes.remove(i);
+                break;
             }
         }
     }

@@ -2,7 +2,7 @@ package controlador.servidor;
 
 import gui.servidor.JanelaServidor;
 import java.io.IOException;
-import java.util.Arrays;
+import rede.protocolo.Protocolo;
 import rede.protocolo.ProtocoloServidor;
 import rede.servidor.Servidor;
 import simulador.Simulador;
@@ -53,7 +53,7 @@ public class ControladorServidor {
         servidor.removerAtendente(id);
         
         if (jogadoresConectados < 2){
-            // jogador que sobrou ganha
+            servidor.sendAll(Protocolo.adicionarCabecalho("Todos os jogadores foram desconectados.", Protocolo.TIPO_MENSAGEM));
         }
     }
     
@@ -67,7 +67,7 @@ public class ControladorServidor {
         mensagem = simulador.getRodadasTotal() + "|";
         mensagem += simulador.getInvestimento() + "|";
         
-        servidor.sendAll(mensagem);
+        servidor.sendAll(Protocolo.adicionarCabecalho(mensagem, Protocolo.TIPO_DADOS));
     }
     
     public boolean todosConectados() {

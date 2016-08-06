@@ -83,6 +83,10 @@ public class Janela extends JFrame {
         JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
     }
     
+    public void mostrarMsgAviso(String msg){
+        JOptionPane.showMessageDialog(null, msg, "Aviso", JOptionPane.PLAIN_MESSAGE);
+    }
+    
     public void mudarPainel(JPanel painel){
         this.getContentPane().removeAll();
         this.add(painel);

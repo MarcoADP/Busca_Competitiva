@@ -21,11 +21,6 @@ public class ProtocoloServidor implements Protocolo {
     }
 
     @Override
-    public void enviar(String msg) {
-        
-    }
-
-    @Override
     public void receber(String msg) {
         switch (estado) {
             case ESPERANDO_CONEXOES: // Recebe id do cliente

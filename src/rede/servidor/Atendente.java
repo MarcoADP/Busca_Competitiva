@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import rede.protocolo.Protocolo;
 import rede.protocolo.ProtocoloServidor;
 
 public class Atendente implements Runnable {
@@ -113,17 +114,21 @@ public class Atendente implements Runnable {
         while (executando){
             try {
                 socket.setSoTimeout(2500);
-                mensagem = in.readLine();
                 
-                //enviarParaProtocolo(mensagem);
+                mensagem = Protocolo.lerMensagem(in);
                 
                 if (mensagem == null){
                     break;
                 }
                 
+                enviarParaProtocolo(mensagem);
+                
             } catch (SocketTimeoutException ex){
                 // ignorar
             } catch (IOException ex) {
+                System.out.println(ex);
+                break;
+            } catch (Exception ex){
                 System.out.println(ex);
                 break;
             }

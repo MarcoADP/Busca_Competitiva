@@ -1,6 +1,7 @@
 package rede.cliente;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -9,6 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import rede.protocolo.Protocolo;
 import rede.protocolo.ProtocoloCliente;
 
 public class Cliente implements Runnable{
@@ -116,8 +118,8 @@ public class Cliente implements Runnable{
         while(executando){
             try {
                 socket.setSoTimeout(2500);
-
-                mensagem = in.readLine();
+                
+                mensagem = Protocolo.lerMensagem(in);
                 
                 if(mensagem==null) {
                     break;
@@ -128,9 +130,10 @@ public class Cliente implements Runnable{
             } catch(SocketTimeoutException e){
                 // ignorar
             } catch(SocketException e){
+                System.out.println(e);
                 new Thread(() -> protocolo.servidorDesconectado()).start();
                 break;
-            }catch(Exception e){
+            } catch(Exception e){
                 System.out.println(e);
                 break;
             }
