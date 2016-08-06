@@ -1,6 +1,5 @@
 package rede.servidor;
 
-import gui.AreaLog;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -101,7 +100,6 @@ public class Atendente implements Runnable {
     }
     
     public void send(String msg){
-        //protocolo.processar(msg) -> send
         out.println(msg);
     }
     

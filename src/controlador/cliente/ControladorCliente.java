@@ -3,25 +3,26 @@ package controlador.cliente;
 import gui.cliente.JanelaCliente;
 import modelos.Empresa;
 import rede.cliente.Cliente;
-import rede.protocolo.Protocolo;
+import rede.protocolo.ProtocoloCliente;
+import simulador.SimuladorCliente;
 
 public class ControladorCliente {
 
     private Cliente cliente;
-    private Protocolo protocolo;
-
-    private Empresa empresa;
+    private ProtocoloCliente protocolo;
 
     private final JanelaCliente janela;
+    private SimuladorCliente simulador;
 
     public ControladorCliente() {
         janela = new JanelaCliente(this);
     }
 
     public void iniciarCliente(String endereco, int porta, String tipoJogador) throws Exception {
-        cliente = new Cliente(this, endereco, porta);
+        simulador = new SimuladorCliente(tipoJogador);
+        protocolo = new ProtocoloCliente(this);
+        cliente = new Cliente(endereco, porta, protocolo);
         cliente.start();
-        
     }
 
     public void fecharCliente() {
@@ -34,17 +35,20 @@ public class ControladorCliente {
         }
     }
     
-    public void receberMensagemServidor(String mensagem) {
-        if(mensagem.equals("OK!")){
-            empresa = new Empresa("Empresa", 1000000, false);
-            
-            while (true) {
-                try {
-                    janela.habilitarBotaoContinuar();
-                    break;
-                } catch (NullPointerException e) {
-                    
-                }
+    public void receberParametrosServidor(String mensagem) {
+        String[] parametros = mensagem.split("\\|");
+        
+        int rodadasTotal = Integer.parseInt(parametros[0]);
+        int investimento = Integer.parseInt(parametros[1]);
+        
+        simulador.iniciarSimulador(rodadasTotal, investimento);
+
+        while (true) {
+            try {
+                janela.habilitarBotaoContinuar();
+                break;
+            } catch (NullPointerException e) {
+
             }
         }
     }
@@ -56,18 +60,18 @@ public class ControladorCliente {
     public String criarMensagemInicial() {
         //NÚMERO DE CAMPOS, NOME DA EMPRESA, TIPO FABRICA, MODELO CARRO
         String mensagem = "3|";
-        mensagem += empresa.getNome()+"|";
-        mensagem += empresa.getFabrica().getNome()+"|";
-        mensagem += empresa.getCarro().getModelo()+"|";
+        mensagem += simulador.getEmpresa().getNome()+"|";
+        mensagem += simulador.getEmpresa().getFabrica().getNome()+"|";
+        mensagem += simulador.getEmpresa().getCarro().getModelo()+"|";
         return mensagem;
     }
 
     public String criarMensagemRodada() {
         //NÚMERO DE CAMPOS, FUNCIONARIOS A CONTRATAR, TIPO CARRO, TIPO MARKENTING
         String mensagem = "3|";
-        mensagem += empresa.getFuncionariosAContratar()+"|";
-        mensagem += empresa.getCarro().getTipoPreco()+"|";
-        mensagem += empresa.getTipoMarketing()+"|";
+        mensagem += simulador.getEmpresa().getFuncionariosAContratar()+"|";
+        mensagem += simulador.getEmpresa().getCarro().getTipoPreco()+"|";
+        mensagem += simulador.getEmpresa().getTipoMarketing()+"|";
         return mensagem;
     }
     
@@ -77,7 +81,15 @@ public class ControladorCliente {
     }
     
     public Empresa getEmpresa(){
-        return empresa;
+        return simulador.getEmpresa();
+    }
+    
+    public int getInvestimentoInicial(){
+        return simulador.getInvestimentoInicial();
+    }
+    
+    public SimuladorCliente getSimulador(){
+        return simulador;
     }
 
 }

@@ -42,7 +42,7 @@ public class Servidor implements Runnable {
         inicializado = true;
     }
     
-    private void close() {
+    public void close() {
         /*for (Atendente atendente : atendentes) {
             try {
                 atendente.stop();
@@ -88,6 +88,14 @@ public class Servidor implements Runnable {
         }
     }
     
+    public void removerAtendente(String id){
+        for (int i = atendentes.size(); i >= 0; i++){
+            if (atendentes.get(i).getID().equals(id)){
+                atendentes.remove(i);
+            }
+        }
+    }
+    
     private void appendLog(String msg){
         logMsg += msg;
         AreaLog.appendLog(msg);
@@ -99,7 +107,6 @@ public class Servidor implements Runnable {
         while (executando){
             try {
                 server.setSoTimeout(2500);
-                
                 Socket socket = server.accept();
                 
                 Atendente atendente = new Atendente(socket, protocolo);

@@ -1,6 +1,5 @@
 package rede.cliente;
 
-import controlador.cliente.ControladorCliente;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,7 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.Arrays;
+import rede.protocolo.ProtocoloCliente;
 
 public class Cliente implements Runnable{
     
@@ -24,11 +23,11 @@ public class Cliente implements Runnable{
     
     private Thread thread;
     
-    private final ControladorCliente controlador;
+    private final ProtocoloCliente protocolo;
     private String mensagem;
     
-    public Cliente(ControladorCliente controlador, String endereco, int porta) throws Exception {
-        this.controlador = controlador;
+    public Cliente(String endereco, int porta, ProtocoloCliente protocolo) throws Exception {
+        this.protocolo = protocolo;
         inicializado = false;
         executando = false;
         
@@ -117,22 +116,19 @@ public class Cliente implements Runnable{
         while(executando){
             try {
                 socket.setSoTimeout(2500);
-                
+
                 mensagem = in.readLine();
                 
                 if(mensagem==null) {
                     break;
                 }
                 
-                System.out.println("Mensagem enviada do servidor: " + mensagem);
+                new Thread(() -> protocolo.receber(mensagem)).start();
                 
-                synchronized(controlador){
-                    controlador.receberMensagemServidor(mensagem);
-                }
             } catch(SocketTimeoutException e){
                 // ignorar
             } catch(SocketException e){
-                new Thread(() -> controlador.servidorDesconectado()).start();
+                new Thread(() -> protocolo.servidorDesconectado()).start();
                 break;
             }catch(Exception e){
                 System.out.println(e);

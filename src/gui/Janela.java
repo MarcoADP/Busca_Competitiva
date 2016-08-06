@@ -1,13 +1,8 @@
 package gui;
 
-import gui.cliente.PainelJogadores;
-import gui.cliente.PainelRodada;
 import controlador.cliente.ControladorCliente;
 import controlador.servidor.ControladorServidor;
-import gui.cliente.PainelInicialCliente;
-import gui.servidor.PainelInicialServidor;
 import simulador.Simulador;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -15,28 +10,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.*;
-import modelos.Empresa;
 
 public class Janela extends JFrame {
     
-    private PainelInicialServidor painelInicialServidor;
-    private PainelJogadores painelJogadores;
-    private PainelRodada painelRodada;
-    private PainelLoading painelLoading;
-    private PainelInicialCliente painelCliente;
     private PainelEscolhaInicial painelEscolhaInicial;
     
     private JMenuBar menuBar;
     private JMenu arquivo;
     private JMenu ajuda;
-    
-    public Simulador simulador;
-
-    public Janela(Simulador simulador) {
-        this.simulador = simulador;
-        setSystemLookAndFeel();
-        iniciarComponentes();
-    }
     
     public Janela() {
         setSystemLookAndFeel();
@@ -85,7 +66,7 @@ public class Janela extends JFrame {
         add(painelEscolhaInicial);
     }
     
-    public void mostrarVencedor(Empresa empresa){
+    /*public void mostrarVencedor(Empresa empresa){
         painelRodada.venceu(new AcaoNovoJogo(), empresa);
         JLabel label;
         if (empresa == null){
@@ -96,15 +77,7 @@ public class Janela extends JFrame {
         
         label.setFont(new Font("Arial", Font.BOLD, 36));
         JOptionPane.showMessageDialog(null, label, "Vencedor", JOptionPane.PLAIN_MESSAGE);
-    }
-      
-    public void setPainelRodada(){
-        painelRodada.atualizar();
-        getContentPane().removeAll();
-        add(painelRodada);
-        pack();
-        setLocationRelativeTo(null);
-    }
+    }*/
     
     public void mostrarMsgErro(String msg){
         JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -114,10 +87,6 @@ public class Janela extends JFrame {
         this.getContentPane().removeAll();
         this.add(painel);
         this.pack();
-    }
-
-    public PainelRodada getPainelRodada() {
-        return painelRodada;
     }
     
     public void novoJogo(){

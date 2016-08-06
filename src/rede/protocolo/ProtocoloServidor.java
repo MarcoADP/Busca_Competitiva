@@ -38,7 +38,7 @@ public class ProtocoloServidor implements Protocolo {
                 if (controlador.todosConectados()){
                     AreaLog.appendLog("Todos os jogadores conectados. Servidor fechado para conexões.\n");
                     estado = ESPERANDO_PARAMETROS;
-                    AreaLog.appendLog("Esperando parâmetros da empresa dos jogadores...\n");
+                    AreaLog.appendLog("\nEsperando parâmetros da empresa dos jogadores...\n");
                     controlador.notificarTodosConectados();
                 }
                 
@@ -54,7 +54,7 @@ public class ProtocoloServidor implements Protocolo {
         AreaLog.appendLog("Cliente [" + id + "] desconectado.\n");
 
         synchronized (controlador) {
-            controlador.removeCliente();
+            controlador.removeCliente(id);
         }
     }
     

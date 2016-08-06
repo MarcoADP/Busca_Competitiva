@@ -19,8 +19,6 @@ public class Simulador {
     
     private int somaProducaoPorMes;
     
-    private Janela tela;
-    
     private ArrayList<Empresa> listaJogador;
     
     private int rodadasTotal;
@@ -176,7 +174,7 @@ public class Simulador {
     
     private void mostraVencedor() {
         Empresa vencedor = verificaVencedor();
-        tela.mostrarVencedor(vencedor);
+        //tela.mostrarVencedor(vencedor);
     }
     
     private Empresa verificaVencedor(){

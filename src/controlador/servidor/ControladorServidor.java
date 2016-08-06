@@ -2,6 +2,7 @@ package controlador.servidor;
 
 import gui.servidor.JanelaServidor;
 import java.io.IOException;
+import java.util.Arrays;
 import rede.protocolo.ProtocoloServidor;
 import rede.servidor.Servidor;
 import simulador.Simulador;
@@ -34,34 +35,39 @@ public class ControladorServidor {
         try {
             if (servidor != null){
                 servidor.stop();
+                servidor.close();
             }
         } catch (InterruptedException ex) {
             System.out.println(ex);
         }
     }
     
-    public void addCliente(String msg){
+    public void addCliente(String id){
         jogadoresConectados++;
         janela.atualizarJogadoresConectados(jogadoresConectados);
     }
     
-    public void removeCliente(){
+    public void removeCliente(String id){
         jogadoresConectados--;
         janela.atualizarJogadoresConectados(jogadoresConectados);
-    }
-    
-    public void notificarTodosConectados() {
-        try {
-            enviarMensagemConfirmacaoJogadores();
-
-            servidor.stop();
-        } catch (InterruptedException ex) {
-            System.out.println(ex);
+        servidor.removerAtendente(id);
+        
+        if (jogadoresConectados < 2){
+            // jogador que sobrou ganha
         }
     }
     
+    public void notificarTodosConectados() {
+        enviarMensagemConfirmacaoJogadores();
+        fecharServidor();
+    }
+    
     public void enviarMensagemConfirmacaoJogadores(){
-        servidor.sendAll("OK!");
+        String mensagem;
+        mensagem = simulador.getRodadasTotal() + "|";
+        mensagem += simulador.getInvestimento() + "|";
+        
+        servidor.sendAll(mensagem);
     }
     
     public boolean todosConectados() {

@@ -12,7 +12,7 @@ public class JanelaCliente extends Janela {
     
     private PainelInicialCliente painelInicialCliente;
     private PainelLoadingJogadores painelLoadingJogadores;
-    private PainelJogadores painelJogadores;
+    private PainelParametrosEmpresa painelJogadores;
     private PainelRodada painelRodada;
     
     public JanelaCliente(ControladorCliente controlador) {
@@ -42,8 +42,8 @@ public class JanelaCliente extends Janela {
         mudarPainel(painelLoadingJogadores);
     }
     
-    private void iniciarPainelJogadores(){
-        painelJogadores = new PainelJogadores(controlador.getEmpresa(), new AcaoBotaoComecar());
+    private void iniciarPainelParametrosEmpresa(){
+        painelJogadores = new PainelParametrosEmpresa(controlador.getEmpresa(), controlador.getInvestimentoInicial(), new AcaoBotaoComecar());
         mudarPainel(painelJogadores);
     }
     
@@ -72,7 +72,7 @@ public class JanelaCliente extends Janela {
     private class AcaoBotaoContinuar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            iniciarPainelJogadores();
+            iniciarPainelParametrosEmpresa();
         }
     }
     

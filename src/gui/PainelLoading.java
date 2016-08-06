@@ -136,7 +136,7 @@ public class PainelLoading extends javax.swing.JPanel implements PropertyChangeL
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoContinuarActionPerformed
-        tela.setPainelRodada();
+        //tela.setPainelRodada();
     }//GEN-LAST:event_botaoContinuarActionPerformed
 
 

@@ -3,18 +3,18 @@ package gui.cliente;
 import java.awt.event.ActionListener;
 import modelos.Empresa;
 
-public class PainelJogadores extends javax.swing.JPanel {
+public class PainelParametrosEmpresa extends javax.swing.JPanel {
     
     private final Empresa empresa;
     
-    public PainelJogadores(Empresa empresa, ActionListener acaoComecar) {
+    public PainelParametrosEmpresa(Empresa empresa, int investimento, ActionListener acaoComecar) {
         initComponents();
         this.empresa = empresa;
-        configurarComponentes(acaoComecar);
+        configurarComponentes(acaoComecar, investimento);
     }
     
-    private void configurarComponentes(ActionListener acaoComecar){
-        painelTab.add(empresa.getNome(), new PainelEmpresa(empresa, (int) empresa.getCapital()));
+    private void configurarComponentes(ActionListener acaoComecar, int investimento){
+        painelTab.add(empresa.getNome(), new PainelEmpresa(empresa, investimento));
         
         botaoComecar.addActionListener(acaoComecar);
     }
