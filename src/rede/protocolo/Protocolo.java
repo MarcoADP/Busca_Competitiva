@@ -38,6 +38,10 @@ public interface Protocolo {
     static String lerMensagem(BufferedReader in) throws Exception {
         String msg = in.readLine();
         
+        if (msg == null){
+            return null;
+        }
+        
         String[] cabecalho = getCabecalho(msg);
         
         short tamanho = getTamanhoMensagem(cabecalho);

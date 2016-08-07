@@ -52,7 +52,9 @@ public class Servidor implements Runnable {
         }*/
         
         try {
-            server.close();
+            if (server != null){
+                server.close();
+            }
         } catch (IOException ex) {
             System.out.println(ex);
         }
@@ -82,6 +84,15 @@ public class Servidor implements Runnable {
         }
     }
     
+    public void send(String atendenteID, String mensagem){
+        for (Atendente atendente : atendentes) {
+            if (atendente.getID().equals(atendenteID)){
+                atendente.send(mensagem);
+                break;
+            }
+        }
+    }
+    
     public void sendAll(String msg){
         for (Atendente atendente : atendentes) {
             atendente.send(msg);
@@ -89,7 +100,7 @@ public class Servidor implements Runnable {
     }
     
     public synchronized void removerAtendente(String id){
-        for (int i = atendentes.size() - 1; i >= 0; i++){
+        for (int i = atendentes.size() - 1; i >= 0; i--){
             if (atendentes.get(i).getID().equals(id)){
                 atendentes.remove(i);
                 break;
@@ -120,8 +131,6 @@ public class Servidor implements Runnable {
                 System.out.println(ex);
             }
         }
-        
-        //close();
     }
     
     public String getEndereco(){

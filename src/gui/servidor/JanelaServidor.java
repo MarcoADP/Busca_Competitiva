@@ -20,6 +20,7 @@ public class JanelaServidor extends Janela {
 
     private void configurarComponentes() {
         this.setTitle("Simulador Empresa - Servidor");
+        this.setResizable(true);
         
         painelInicialServidor = new PainelInicialServidor(new AcaoBotaoIniciar());
         mudarPainel(painelInicialServidor);
@@ -38,6 +39,10 @@ public class JanelaServidor extends Janela {
     
     public void atualizarJogadoresConectados(int jogadores){
         painelLog.atualizarJogadoresConectados(jogadores);
+    }
+    
+    public void atualizarRodadaAtual(int rodada){
+        painelLog.atualizarRodadaAtual(rodada);
     }
     
     private class AcaoBotaoIniciar implements ActionListener {

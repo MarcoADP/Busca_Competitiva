@@ -34,8 +34,11 @@ public class ProtocoloCliente implements Protocolo {
                 estado = ESPERANDO_DEMANDA_RODADA;
                 break;
             case ESPERANDO_DEMANDA_RODADA: // Recebe demanda
+                controlador.receberDemandaRodada(msg);
+                estado = ESPERANDO_FIM_RODADA;
                 break;
             case ESPERANDO_FIM_RODADA: // Recebe informações da rodada e quantos carros vendeu
+                controlador.receberInformacoesRodada(msg);
                 break;
         }
     }

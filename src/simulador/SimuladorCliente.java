@@ -1,6 +1,7 @@
 package simulador;
 
 import ia.BuscaCompetitiva;
+import ia.antsystem.AntSystem;
 import ia.minimax.MiniMax;
 import modelos.Empresa;
 
@@ -17,9 +18,11 @@ public class SimuladorCliente {
     
     private final String tipoJogador;
     
+    private int demandaPorRodada;
+    
     public SimuladorCliente(String tipoJogador){
         this.tipoJogador = tipoJogador;
-        rodadaAtual = 0;
+        rodadaAtual = 1;
     }
     
     public void iniciarSimulador(int rodadasTotal, int investimento){
@@ -33,16 +36,45 @@ public class SimuladorCliente {
             case "IA1":
                 empresa = new Empresa("IA-MiniMax", investimento, true);
                 buscaCompetitiva = new MiniMax(empresa, rodadasTotal);
+                buscaCompetitiva.executar();
                 break;
             case "IA2":
                 empresa = new Empresa("IA-AntSystem", investimento, true);
-                //buscaCompetitiva = ant system
+                buscaCompetitiva = new AntSystem(empresa, rodadasTotal);
+                buscaCompetitiva.executar();
                 break;
         }
     }
     
-    public void proximaRodada(int demanda){
-        rodadaAtual++;
+    public void proximaRodada(int demandaProximaRodada, int carrosVendidos){
+        int acaoIA = -1;
+        if (empresa.isBot()){
+            acaoIA = buscaCompetitiva.proximaAcao();
+            empresa.escolherAcoes(acaoIA);
+        } else {
+            empresa.fecharMes();
+        }
+        
+        empresa.venderCarros(carrosVendidos);
+        
+        if (empresa.isBot() && buscaCompetitiva instanceof AntSystem){
+            ((AntSystem)buscaCompetitiva).atualizaFeromonio(acaoIA, empresa.getCapital());
+        }
+        
+        rodadaAtual++; 
+        demandaPorRodada = demandaProximaRodada;
+    }
+    
+    public void setDemandaPorRodada(int demandaPorRodada){
+        this.demandaPorRodada = demandaPorRodada;
+    }
+    
+    public boolean acabouJogo(){
+        return rodadaAtual >= rodadasTotal;
+    }
+    
+    public int getDemandaPorRodada(){
+        return demandaPorRodada;
     }
 
     public Empresa getEmpresa() {

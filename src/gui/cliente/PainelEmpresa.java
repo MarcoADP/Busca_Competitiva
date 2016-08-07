@@ -47,6 +47,10 @@ public class PainelEmpresa extends javax.swing.JPanel {
         }
     }
     
+    public String getNomeEmpresa(){
+        return campoNomeEmpresa.getText();
+    }
+    
     private void mudarLabelGasto(){
         double gasto = empresa.calcularGastoFixo();
         String str = Util.formatarDinheiro(gasto);

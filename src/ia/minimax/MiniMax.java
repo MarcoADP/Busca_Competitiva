@@ -34,14 +34,6 @@ public class MiniMax implements BuscaCompetitiva{
         gerarArvore(limite);
         arvoreIA.calcularMelhorFolha();
         melhorAtual = arvoreIA.getMelhorFilho();
-        
-        System.out.println("\n\n");
-        TreeElement m = arvoreIA;
-         for (int i = 0; i < 6; i++) {
-             System.out.print(m.getId()+" ");
-             m = m.getMelhorFilho();
-         }
-         System.out.println("\n\n");
     }
     
     @Override

@@ -1,42 +1,36 @@
 package gui.cliente;
 
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class PainelLoadingJogadores extends javax.swing.JPanel {
-
-    public PainelLoadingJogadores(ActionListener acaoBotaoContinuar) {
+    
+    private String msg1;
+    private String msg2;
+        
+    public PainelLoadingJogadores(ActionListener acaoBotaoContinuar, String msg1, String msg2) {
+        this.msg1 = msg1;
+        this.msg2 = msg2;
         initComponents();
         configurarComponentes(acaoBotaoContinuar);
         
-        URL url = null;
-        try {
-            url = new URL("https://aconquistablog.files.wordpress.com/2013/06/paciencia-carregando.gif");
-        } catch (MalformedURLException ex) {}
-        
-        inserirGIF(url);
+        inserirGifLoading();
     }
     
     private void configurarComponentes(ActionListener acaoBotaoContinuar){
         botaoContinuar.setEnabled(false);
         botaoContinuar.addActionListener(acaoBotaoContinuar);
+        labelMsg.setText(msg1);
     }
     
     public void habilitarBotaoContinuar() {
         botaoContinuar.setEnabled(true);
-        labelMsg.setText("Todos os jogadores conectados!");
-        URL url = null;
-        try {
-            url = new URL("http://www.funwithmyspace.com/picture_library/game14.gif");
-        } catch (MalformedURLException ex) {}
         
-        inserirGIF(url);
-    }    
+        labelMsg.setText(msg2);
+    }
     
-    public final void inserirGIF(URL url) {
-        ImageIcon icon = new ImageIcon(url);
+    public final void inserirGifLoading() {
+        ImageIcon icon = new ImageIcon("images/loading.gif");
         labelGIF.setIcon(icon);
     }
     

@@ -2,9 +2,11 @@ package gui.cliente;
 
 import controlador.cliente.ControladorCliente;
 import gui.Janela;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import simulador.Simulador;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class JanelaCliente extends Janela {
     
@@ -12,8 +14,9 @@ public class JanelaCliente extends Janela {
     
     private PainelInicialCliente painelInicialCliente;
     private PainelLoadingJogadores painelLoadingJogadores;
-    private PainelParametrosEmpresa painelJogadores;
+    private PainelParametrosEmpresa painelParametrosEmpresa;
     private PainelRodada painelRodada;
+    private PainelLoadingRodada painelLoadingRodada;
     
     public JanelaCliente(ControladorCliente controlador) {
         this.controlador = controlador;
@@ -28,7 +31,31 @@ public class JanelaCliente extends Janela {
     }
     
     public void habilitarBotaoContinuar() {
-        painelLoadingJogadores.habilitarBotaoContinuar();
+        //tenta habilitar até parar de dar NullPointerException
+        while (true) {
+            try {
+                painelLoadingJogadores.habilitarBotaoContinuar();
+                break;
+            } catch (NullPointerException e) {}
+        }
+    }
+    
+    public void habilitarBotaoContinuarRodada(){
+        while (true) {
+            try {
+                painelLoadingRodada.habilitarBotaoContinuar();
+                break;
+            } catch (NullPointerException e) {}
+        }
+    }
+    
+    public void mostrarInfoRodada(String info) {
+        while (true) {
+            try {
+                painelLoadingRodada.mostrarInfo(info);
+                break;
+            } catch (NullPointerException e) {}
+        }
     }
     
     @Override
@@ -37,19 +64,57 @@ public class JanelaCliente extends Janela {
         super.novoJogo();
     }
     
+    public void mostrarMsgVenceu(){
+        JLabel label = new JLabel("Você Venceu!");
+        label.setFont(new Font("Arial", Font.BOLD, 36));
+        JOptionPane.showMessageDialog(this, label, "Vencedor", JOptionPane.PLAIN_MESSAGE);
+    }
+    
+    public void mostrarMsgPerdeu(String empresaVencedor){
+        JLabel labelPerdeu = new JLabel("<html>Você Perdeu :(<br></html>");
+        labelPerdeu.setFont(new Font("Arial", Font.BOLD, 36));
+        
+        if (empresaVencedor == null) {
+            JOptionPane.showMessageDialog(this, labelPerdeu, "Perdeu", JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+        
+        JLabel labelGanhou = new JLabel("Jogador "+empresaVencedor+" ganhou.");
+        labelGanhou.setFont(new Font("Arial", Font.PLAIN, 18));
+        
+        JLabel[] labels = {labelPerdeu, labelGanhou};
+        JOptionPane.showMessageDialog(this, labels, "Perdeu", JOptionPane.PLAIN_MESSAGE);
+    }
+    
     private void iniciarPainelLoadingJogadores() {
-        painelLoadingJogadores = new PainelLoadingJogadores(new AcaoBotaoContinuar());
+        painelLoadingJogadores = new PainelLoadingJogadores(
+                new AcaoBotaoContinuarParametros(), "Esperando outros jogadores se conectarem...", "Todos os jogadores conectados!");
         mudarPainel(painelLoadingJogadores);
     }
     
     private void iniciarPainelParametrosEmpresa(){
-        painelJogadores = new PainelParametrosEmpresa(controlador.getEmpresa(), controlador.getInvestimentoInicial(), new AcaoBotaoComecar());
-        mudarPainel(painelJogadores);
+        painelLoadingJogadores = null;
+        painelParametrosEmpresa = new PainelParametrosEmpresa(controlador.getEmpresa(), controlador.getInvestimentoInicial(), new AcaoBotaoComecar());
+        mudarPainel(painelParametrosEmpresa);
+    }
+    
+    private void iniciarPainelLoadingParametrosJogadores(){
+        painelLoadingJogadores = new PainelLoadingJogadores(
+                new AcaoBotaoContinuarRodada(), "Esperando outros jogadores...", "Todos os jogadores prontos!");
+        mudarPainel(painelLoadingJogadores);
     }
     
     private void iniciarPainelRodada(){
-        painelRodada = new PainelRodada(new Simulador(), new AcaoBotaoSimular());
+        painelLoadingJogadores = null;
+        painelLoadingRodada = null;
+        painelRodada = new PainelRodada(controlador.getSimulador(), new AcaoBotaoSimular());
         mudarPainel(painelRodada);
+    }
+    
+    private void iniciarPainelLoadingRodada(){
+        painelLoadingRodada = new PainelLoadingRodada(
+                new AcaoBotaoContinuarRodada(), "Esperando outros jogadores...", "Todos os jogadores prontos!");
+        mudarPainel(painelLoadingRodada);
     }
         
     private class AcaoBotaoJogar implements ActionListener {
@@ -69,26 +134,33 @@ public class JanelaCliente extends Janela {
         }
     }
     
-    private class AcaoBotaoContinuar implements ActionListener {
+    private class AcaoBotaoContinuarParametros implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             iniciarPainelParametrosEmpresa();
         }
     }
     
+    private class AcaoBotaoContinuarRodada implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            iniciarPainelRodada();
+        }
+    }
+    
     private class AcaoBotaoComecar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // enviar dados para servidor
-            // esperar até todos enviarem
+            controlador.enviarMensagemParametros(painelParametrosEmpresa.getNomeEmpresa());
+            iniciarPainelLoadingParametrosJogadores();
         }
     }
     
     public class AcaoBotaoSimular implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // enviar dados para servidor
-            // esperar até todos enviarem
+            controlador.enviarMensagemRodada();
+            iniciarPainelLoadingRodada();
         }
     }
     

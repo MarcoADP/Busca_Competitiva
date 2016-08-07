@@ -110,7 +110,8 @@ public class Atendente implements Runnable {
 
     @Override
     public void run() {
-        enviarParaProtocolo(id); // Enviando id para o protocolo
+        String msgID = Protocolo.adicionarCabecalho(id, Protocolo.TIPO_DADOS);
+        enviarParaProtocolo(msgID); // Enviando id para o protocolo
         while (executando){
             try {
                 socket.setSoTimeout(2500);
@@ -129,7 +130,7 @@ public class Atendente implements Runnable {
                 System.out.println(ex);
                 break;
             } catch (Exception ex){
-                System.out.println(ex);
+                ex.printStackTrace();
                 break;
             }
         }

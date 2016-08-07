@@ -2,7 +2,6 @@ package gui;
 
 import controlador.cliente.ControladorCliente;
 import controlador.servidor.ControladorServidor;
-import simulador.Simulador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -66,25 +65,12 @@ public class Janela extends JFrame {
         add(painelEscolhaInicial);
     }
     
-    /*public void mostrarVencedor(Empresa empresa){
-        painelRodada.venceu(new AcaoNovoJogo(), empresa);
-        JLabel label;
-        if (empresa == null){
-            label = new JLabel("Todos perderam!");
-        } else {
-            label = new JLabel(empresa.getNome()+" Venceu!");
-        }
-        
-        label.setFont(new Font("Arial", Font.BOLD, 36));
-        JOptionPane.showMessageDialog(null, label, "Vencedor", JOptionPane.PLAIN_MESSAGE);
-    }*/
-    
     public void mostrarMsgErro(String msg){
-        JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, msg, "Erro", JOptionPane.ERROR_MESSAGE);
     }
     
     public void mostrarMsgAviso(String msg){
-        JOptionPane.showMessageDialog(null, msg, "Aviso", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, msg, "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void mudarPainel(JPanel painel){

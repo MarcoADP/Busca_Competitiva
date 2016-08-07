@@ -2,14 +2,14 @@ package gui.cliente;
 
 import java.awt.event.ActionListener;
 import modelos.Empresa;
-import simulador.Simulador;
+import simulador.SimuladorCliente;
 
 public class PainelRodada extends javax.swing.JPanel {
 
-    private final Simulador simulador;
+    private final SimuladorCliente simulador;
     private final ActionListener acaoSimular;
     
-    public PainelRodada(Simulador simulador, ActionListener acaoSimular) {
+    public PainelRodada(SimuladorCliente simulador, ActionListener acaoSimular) {
         initComponents();
         this.acaoSimular = acaoSimular;
         this.simulador = simulador;
@@ -24,18 +24,10 @@ public class PainelRodada extends javax.swing.JPanel {
     public void atualizar(){
         painelTab.removeAll();
         
-        for (Empresa empresa : simulador.getListaJogador()) {
-            painelTab.add(empresa.getNome(), new PainelEmpresaRodada(empresa));
-        }
-        
-        for (Empresa empresa : simulador.getListaIA()) {
-            painelTab.add(empresa.getNome(), new PainelEmpresaRodada(empresa));
-        }
-        
-        if (!simulador.acabou()){
-            labelRodada.setText("Rodada " + simulador.getRodadaAtual()+"/"+simulador.getRodadasTotal());
-            labelDemanda.setText("Demanda: " + simulador.getDemandaPorRodada() + " carros");
-        }
+        painelTab.add(simulador.getEmpresa().getNome(), new PainelEmpresaRodada(simulador.getEmpresa()));
+
+        labelRodada.setText("Rodada " + simulador.getRodadaAtual()+"/"+simulador.getRodadasTotal());
+        labelDemanda.setText("Demanda: " + simulador.getDemandaPorRodada() + " carros");
     }
     
     public void venceu(ActionListener novaAcao, Empresa empresa){

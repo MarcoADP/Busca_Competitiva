@@ -7,7 +7,7 @@ import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import simulador.Simulador;
+import simulador.SimuladorServidor;
 import utilitarios.Util;
 
 public class PainelInicialServidor extends javax.swing.JPanel {
@@ -27,16 +27,16 @@ public class PainelInicialServidor extends javax.swing.JPanel {
         botaoIniciar.addActionListener(acaoBotaoIniciar);
         
         Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-        String strBaixo = Util.formatarDinheiro(Simulador.INVESTIMENTO_INICIAL_BAIXO);
-        String strMedio = Util.formatarDinheiro(Simulador.INVESTIMENTO_INICIAL_MEDIO);
-        String strAlto = Util.formatarDinheiro(Simulador.INVESTIMENTO_INICIAL_ALTO);
-        labelTable.put(Simulador.INVESTIMENTO_INICIAL_BAIXO, new JLabel("<html><center>Baixo</center></br>"+strBaixo+"</html>"));
-        labelTable.put(Simulador.INVESTIMENTO_INICIAL_MEDIO, new JLabel("<html><center>Médio</center></br>"+strMedio+"</html>"));
-        labelTable.put(Simulador.INVESTIMENTO_INICIAL_ALTO, new JLabel("<html><center>Alto</center></br>"+strAlto+"</html>"));
+        String strBaixo = Util.formatarDinheiro(SimuladorServidor.INVESTIMENTO_INICIAL_BAIXO);
+        String strMedio = Util.formatarDinheiro(SimuladorServidor.INVESTIMENTO_INICIAL_MEDIO);
+        String strAlto = Util.formatarDinheiro(SimuladorServidor.INVESTIMENTO_INICIAL_ALTO);
+        labelTable.put(SimuladorServidor.INVESTIMENTO_INICIAL_BAIXO, new JLabel("<html><center>Baixo</center></br>"+strBaixo+"</html>"));
+        labelTable.put(SimuladorServidor.INVESTIMENTO_INICIAL_MEDIO, new JLabel("<html><center>Médio</center></br>"+strMedio+"</html>"));
+        labelTable.put(SimuladorServidor.INVESTIMENTO_INICIAL_ALTO, new JLabel("<html><center>Alto</center></br>"+strAlto+"</html>"));
         sliderInvestimento.setLabelTable(labelTable);
-        sliderInvestimento.setMaximum(Simulador.INVESTIMENTO_INICIAL_ALTO);
-        sliderInvestimento.setMinimum(Simulador.INVESTIMENTO_INICIAL_BAIXO);
-        sliderInvestimento.setMajorTickSpacing(Simulador.INVESTIMENTO_INICIAL_MEDIO - Simulador.INVESTIMENTO_INICIAL_BAIXO);
+        sliderInvestimento.setMaximum(SimuladorServidor.INVESTIMENTO_INICIAL_ALTO);
+        sliderInvestimento.setMinimum(SimuladorServidor.INVESTIMENTO_INICIAL_BAIXO);
+        sliderInvestimento.setMajorTickSpacing(SimuladorServidor.INVESTIMENTO_INICIAL_MEDIO - SimuladorServidor.INVESTIMENTO_INICIAL_BAIXO);
         sliderInvestimento.setSnapToTicks(true);
         sliderInvestimento.setPaintLabels(true);
         sliderInvestimento.setPaintTicks(true);

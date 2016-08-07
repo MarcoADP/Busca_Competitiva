@@ -6,6 +6,7 @@ import modelos.Empresa;
 public class PainelParametrosEmpresa extends javax.swing.JPanel {
     
     private final Empresa empresa;
+    private PainelEmpresa painelEmpresa;
     
     public PainelParametrosEmpresa(Empresa empresa, int investimento, ActionListener acaoComecar) {
         initComponents();
@@ -14,9 +15,14 @@ public class PainelParametrosEmpresa extends javax.swing.JPanel {
     }
     
     private void configurarComponentes(ActionListener acaoComecar, int investimento){
-        painelTab.add(empresa.getNome(), new PainelEmpresa(empresa, investimento));
+        painelEmpresa = new PainelEmpresa(empresa, investimento);
+        painelTab.add(empresa.getNome(), painelEmpresa);
         
         botaoComecar.addActionListener(acaoComecar);
+    }
+    
+    public String getNomeEmpresa(){
+        return painelEmpresa.getNomeEmpresa();
     }
 
     /**

@@ -128,6 +128,7 @@ public class Empresa {
         this.capital -= gastoMensal; 
         this.probabilidadeVenda = calcularProbabilidade();
         this.fabricarCarros();
+        setFuncionariosAContratar(0);
     }
     
     private void contratarFuncionarios(){
@@ -139,6 +140,13 @@ public class Empresa {
         } else {
             numeroFuncionarios = num;
         }
+    }
+    
+    public void venderCarros(int quantidade){
+        carrosVendidosNoMes = quantidade;
+        lucrouNoMes += carro.getPrecoVenda()*quantidade;
+        capital += lucrouNoMes;
+        this.estoqueCarro -= quantidade;
     }
     
     public void venderCarro() {
