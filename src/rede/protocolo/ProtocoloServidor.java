@@ -26,6 +26,12 @@ public class ProtocoloServidor implements Protocolo {
         String[] cabecalho = Protocolo.getCabecalho(msg);
         msg = Protocolo.decodificarCabecalho(msg);
         
+        switch (Protocolo.getTipo(cabecalho)){
+            case Protocolo.TIPO_MSG_CHAT:
+                controlador.receberMensagemChat(msg);
+                return;
+        }
+        
         switch (estado) {
             case ESPERANDO_CONEXOES: // Recebe id do cliente
                 synchronized(controlador){

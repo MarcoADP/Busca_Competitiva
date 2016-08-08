@@ -17,6 +17,7 @@ public class JanelaCliente extends Janela {
     private PainelParametrosEmpresa painelParametrosEmpresa;
     private PainelRodada painelRodada;
     private PainelLoadingRodada painelLoadingRodada;
+    private PainelChat painelChat;
     
     public JanelaCliente(ControladorCliente controlador) {
         this.controlador = controlador;
@@ -25,6 +26,8 @@ public class JanelaCliente extends Janela {
 
     private void configurarComponentes() {
         this.setTitle("Simulador Empresa - Cliente");
+        
+        painelChat = new PainelChat(new AcaoBotaoEnviarChat());
         
         painelInicialCliente = new PainelInicialCliente(new AcaoBotaoJogar());
         mudarPainel(painelInicialCliente);
@@ -107,7 +110,7 @@ public class JanelaCliente extends Janela {
     private void iniciarPainelRodada(){
         painelLoadingJogadores = null;
         painelLoadingRodada = null;
-        painelRodada = new PainelRodada(controlador.getSimulador(), new AcaoBotaoSimular());
+        painelRodada = new PainelRodada(controlador.getSimulador(), new AcaoBotaoSimular(), painelChat);
         mudarPainel(painelRodada);
     }
     
@@ -162,6 +165,17 @@ public class JanelaCliente extends Janela {
             controlador.enviarMensagemRodada();
             iniciarPainelLoadingRodada();
         }
+    }
+    
+    public class AcaoBotaoEnviarChat implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            controlador.enviarMensagemChat(painelChat.getTexto());
+        }
+    }
+    
+    public void appendMsgChat(String msg){
+        painelChat.appendMsg(msg);
     }
     
 }

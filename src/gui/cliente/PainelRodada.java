@@ -9,8 +9,11 @@ public class PainelRodada extends javax.swing.JPanel {
     private final SimuladorCliente simulador;
     private final ActionListener acaoSimular;
     
-    public PainelRodada(SimuladorCliente simulador, ActionListener acaoSimular) {
+    private final PainelChat painelChat;
+    
+    public PainelRodada(SimuladorCliente simulador, ActionListener acaoSimular, PainelChat painelChat) {
         initComponents();
+        this.painelChat = painelChat;
         this.acaoSimular = acaoSimular;
         this.simulador = simulador;
         configurarComponentes();
@@ -25,6 +28,7 @@ public class PainelRodada extends javax.swing.JPanel {
         painelTab.removeAll();
         
         painelTab.add(simulador.getEmpresa().getNome(), new PainelEmpresaRodada(simulador.getEmpresa()));
+        painelTab.add("Chat", painelChat);
 
         labelRodada.setText("Rodada " + simulador.getRodadaAtual()+"/"+simulador.getRodadasTotal());
         labelDemanda.setText("Demanda: " + simulador.getDemandaPorRodada() + " carros");

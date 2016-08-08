@@ -78,6 +78,10 @@ public class ControladorServidor {
         simulador.realizarAcaoEmpresa(id, funcionariosContratar, tipoPrecoCarro, tipoMarketing);
     }
     
+    public void receberMensagemChat(String mensagem){
+        servidor.sendAll(Protocolo.adicionarCabecalho(mensagem, Protocolo.TIPO_MSG_CHAT));
+    }
+    
     public void addCliente(String id){
         jogadoresConectados++;
         janela.atualizarJogadoresConectados(jogadoresConectados);

@@ -20,6 +20,25 @@ public class ControladorCliente {
     public ControladorCliente() {
         janela = new JanelaCliente(this);
     }
+    
+    public void enviarMensagemChat(String texto){
+        String msgChat = texto;
+        String mensagem = clienteID+"|";
+        mensagem += msgChat+"|";
+        
+        cliente.send(Protocolo.adicionarCabecalho(mensagem, Protocolo.TIPO_MSG_CHAT));
+        janela.appendMsgChat("Você: "+msgChat);
+    }
+    
+    public void receberMensagemChat(String mensagem){
+        String[] parametros = mensagem.split("\\|");
+        String id = parametros[0];
+        String msg = parametros[1];
+        
+        if (!id.equals(clienteID)){
+            janela.appendMsgChat(id+": "+msg);
+        }
+    }
 
     public void iniciarCliente(String endereco, int porta, String tipoJogador) throws Exception {
         simulador = new SimuladorCliente(tipoJogador);

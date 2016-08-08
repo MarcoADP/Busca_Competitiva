@@ -6,6 +6,7 @@ public interface Protocolo {
     
     static final short TIPO_MENSAGEM = 0;
     static final short TIPO_DADOS = 1;
+    static final short TIPO_MSG_CHAT = 2;
     
     abstract void receber(String msg);
     

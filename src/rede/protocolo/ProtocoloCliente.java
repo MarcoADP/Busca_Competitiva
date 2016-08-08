@@ -22,9 +22,13 @@ public class ProtocoloCliente implements Protocolo {
         String[] cabecalho = Protocolo.getCabecalho(msg);
         msg = Protocolo.decodificarCabecalho(msg);
         
+        
         switch (Protocolo.getTipo(cabecalho)){
             case Protocolo.TIPO_MENSAGEM:
                 controlador.mostrarMensagem(msg);
+                return;
+            case Protocolo.TIPO_MSG_CHAT:
+                controlador.receberMensagemChat(msg);
                 return;
         }
         
